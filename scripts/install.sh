@@ -3,7 +3,7 @@
 # LinkBreeze — One-line installer
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/Manak-hash/LinkBreeze/main/scripts/install.sh | bash
+#   curl -fsSL https://linkbreeze.omnirise.dev/install.sh | bash
 #
 # Or clone and run locally:
 #   bash scripts/install.sh
@@ -35,7 +35,7 @@ warn()    { echo -e "${YELLOW}⚠${NC}  $*"; }
 error()   { echo -e "${RED}✗${NC}  $*" >&2; }
 
 # ── Config ───────────────────────────────────────────────────────────────────
-IMAGE="ghcr.io/manak-hash/linkbreeze:latest"
+IMAGE="docker.io/omnirise/linkbreeze:latest"
 CONTAINER_NAME="linkbreeze"
 PORT="${LINKBREEZE_PORT:-3000}"
 DATA_VOLUME="linkbreeze-data"
@@ -197,5 +197,5 @@ echo ""
 echo -e "  Open:  ${BOLD}http://localhost:${PORT}${NC}"
 echo ""
 echo -e "  ${BLUE}First time?${NC} The setup wizard will create your admin account."
-echo -e "  ${BLUE}Docs:${NC}     https://github.com/Manak-hash/LinkBreeze#readme"
+echo -e "  ${BLUE}Docs:${NC}     https://linkbreeze.omnirise.dev/docs"
 echo ""

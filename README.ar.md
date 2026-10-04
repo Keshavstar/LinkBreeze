@@ -59,7 +59,7 @@
 **أمر واحد — صفر إعداد — على الخط في 30 ثانية:**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Manak-hash/LinkBreeze/main/scripts/install.sh | bash
+curl -fsSL https://linkbreeze.omnirise.dev/install.sh | bash
 ```
 
 يكتشف السكربت Docker أو Podman، يجلب الصورة، يشغّل الحاوية، ويهيّئ اختياريًا خدمة systemd للتشغيل التلقائي عند الإقلاع. تريد التشغيل التلقائي؟ شغّله بـ `sudo bash` وأجب **y** عند السؤال.
@@ -68,7 +68,7 @@ curl -fsSL https://raw.githubusercontent.com/Manak-hash/LinkBreeze/main/scripts/
 <summary>لا تحب التمرير إلى bash؟</summary>
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Manak-hash/LinkBreeze/main/scripts/install.sh -o install.sh
+curl -fsSL https://linkbreeze.omnirise.dev/install.sh -o install.sh
 less install.sh
 bash install.sh
 ```

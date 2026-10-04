@@ -1,6 +1,6 @@
 {
   "version": "1.4.1",
   "releasedAt": "2026-09-23",
-  "url": "https://github.com/Manak-hash/LinkBreeze/releases/tag/v1.4.1",
+  "url": "https://gitlab.com/omnirise00/linkbreeze/-/releases/v1.4.1",
   "notes": "The admin preview pane now follows every edit in real time: one shared save flow refreshes router data and cache-busts the preview after every action, and the forms it watches (theme editor, profile identity + social links, Settings General/Integration/Appearance) autosave as you type - with their dead Save buttons removed. Image uploads gain non-destructive fit/focus/zoom positioning for avatar, banner, and background with a shared drag-to-position picker that auto-opens after upload. The preview keeps its scroll position across reloads, cleared text fields no longer revert on refresh, the social picker no longer offers the X logo twice, media URLs are scheme-allowlisted (closes the CodeQL XSS alerts), and a transitive joi prototype-pollution override clears both Dependabot alerts."
 }

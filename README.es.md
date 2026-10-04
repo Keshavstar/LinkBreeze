@@ -59,7 +59,7 @@
 **Un comando — cero configuración — en línea en 30 segundos:**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Manak-hash/LinkBreeze/main/scripts/install.sh | bash
+curl -fsSL https://linkbreeze.omnirise.dev/install.sh | bash
 ```
 
 El script detecta Docker o Podman, descarga la imagen, inicia el contenedor y, opcionalmente, configura un servicio systemd para iniciar automáticamente el servicio al arrancar el sistema. ¿Quieres habilitar el inicio automático? Ejecútalo con `sudo bash` y responde **y** cuando se te solicite.
@@ -68,7 +68,7 @@ El script detecta Docker o Podman, descarga la imagen, inicia el contenedor y, o
 <summary>¿No te gusta enviar contenido directamente a bash mediante pipe?</summary>
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Manak-hash/LinkBreeze/main/scripts/install.sh -o install.sh
+curl -fsSL https://linkbreeze.omnirise.dev/install.sh -o install.sh
 less install.sh
 bash install.sh
 ```

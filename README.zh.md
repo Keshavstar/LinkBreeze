@@ -59,7 +59,7 @@
 **一条命令 — 零配置 — 30 秒上线：**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Manak-hash/LinkBreeze/main/scripts/install.sh | bash
+curl -fsSL https://linkbreeze.omnirise.dev/install.sh | bash
 ```
 
 脚本会自动检测 Docker 或 Podman，拉取镜像，启动容器，并可选择配置 systemd 服务实现开机自启。想要开机自启？用 `sudo bash` 运行，并在提示时回答 **y**。
@@ -68,7 +68,7 @@ curl -fsSL https://raw.githubusercontent.com/Manak-hash/LinkBreeze/main/scripts/
 <summary>不喜欢管道到 bash？</summary>
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Manak-hash/LinkBreeze/main/scripts/install.sh -o install.sh
+curl -fsSL https://linkbreeze.omnirise.dev/install.sh -o install.sh
 less install.sh
 bash install.sh
 ```
