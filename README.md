@@ -82,7 +82,7 @@ No Node.js, no npm, no config files needed. Multi-arch images: `linux/amd64` and
 **Linux / macOS / Windows CMD:**
 
 ```bash
-docker run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data ghcr.io/manak-hash/linkbreeze:latest
+docker run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data docker.io/omnirise/linkbreeze:latest
 ```
 
 **Windows PowerShell** — use backticks for line breaks:
@@ -93,7 +93,7 @@ docker run -d `
   --restart unless-stopped `
   -p 3000:3000 `
   -v linkbreeze-data:/app/data `
-  ghcr.io/manak-hash/linkbreeze:latest
+  docker.io/omnirise/linkbreeze:latest
 ```
 
 > **Database migrations run automatically** on container startup — no manual
@@ -113,7 +113,7 @@ Create a `docker-compose.yml`:
 ```yaml
 services:
   linkbreeze:
-    image: ghcr.io/manak-hash/linkbreeze:latest
+    image: docker.io/omnirise/linkbreeze:latest
     ports:
       - "3000:3000"
     volumes:
@@ -153,7 +153,7 @@ Running [Coolify](https://coolify.io/) on your VPS?
 ```yaml
 services:
   linkbreeze:
-    image: ghcr.io/manak-hash/linkbreeze:latest
+    image: docker.io/omnirise/linkbreeze:latest
     ports:
       - "3000:3000"
     volumes:
@@ -175,7 +175,7 @@ volumes:
 Running [Synology DiskStation](https://www.synology.com/) with Container Manager (DSM 7.2+)?
 
 1. Open **Container Manager** → **Container** → **Create**
-2. **Image:** `ghcr.io/manak-hash/linkbreeze:latest` (pull it first via **Image** → **Add** if not found)
+2. **Image:** `docker.io/omnirise/linkbreeze:latest` (pull it first via **Image** → **Add** if not found)
 3. Container settings:
    - **Name:** `linkbreeze`
    - **Port:** Local `3000` → Container `3000`
@@ -193,7 +193,7 @@ Running [Synology DiskStation](https://www.synology.com/) with Container Manager
 Using [Podman](https://podman.io/) instead of Docker (RHEL, Fedora, CentOS)? Replace `docker` with `podman`:
 
 ```bash
-podman run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data ghcr.io/manak-hash/linkbreeze:latest
+podman run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data docker.io/omnirise/linkbreeze:latest
 ```
 
 If you get permission errors on the volume, create it first: `podman volume create linkbreeze-data`
@@ -215,7 +215,7 @@ Using [Portainer](https://www.portainer.io/) to manage containers? Deploy as a S
 ```yaml
 services:
   linkbreeze:
-    image: ghcr.io/manak-hash/linkbreeze:latest
+    image: docker.io/omnirise/linkbreeze:latest
     ports:
       - "3000:3000"
     volumes:

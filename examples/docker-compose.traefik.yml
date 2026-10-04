@@ -63,7 +63,7 @@ services:
       - traefik-net
 
   linkbreeze:
-    image: ghcr.io/manak-hash/linkbreeze:latest
+    image: docker.io/omnirise/linkbreeze:latest
     container_name: linkbreeze
     restart: unless-stopped
     volumes:

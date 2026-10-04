@@ -17,6 +17,9 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
+  # Official Docker Hub image (omnirise/linkbreeze) — the default public
+  # pull path as LinkBreeze moves under the OmniRise brand.
+  DOCKERHUB_IMAGE: omnirise/linkbreeze
 
 jobs:
   setup:
@@ -69,6 +72,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Log in to Docker Hub
+        if: needs.setup.outputs.mode != 'dryrun'
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       # Dry-run path (workflow_dispatch, publish_test=false): build only, push nothing.
       - name: Build (dry-run)
         if: needs.setup.outputs.mode == 'dryrun'
@@ -79,8 +89,8 @@ jobs:
           cache-from: type=gha,scope=build-${{ env.PLATFORM_PAIR }}
           cache-to: type=gha,mode=max,scope=build-${{ env.PLATFORM_PAIR }}
 
-      # Test + release paths (publish): push the per-platform image by digest;
-      # the manifest list is assembled by the merge job.
+      # Build and push by digest to BOTH registries (GHCR + Docker Hub mirror);
+      # the manifest lists are assembled by the merge job.
       - name: Build and push by digest
         id: build
         if: needs.setup.outputs.mode != 'dryrun'
@@ -89,6 +99,15 @@ jobs:
           context: .
           platforms: ${{ matrix.platform }}
           outputs: type=image,name=${{ env.IMAGE }},push-by-digest=true,name-canonical=true,push=true
+
+      - name: Push Docker Hub by digest
+        id: build-hub
+        if: needs.setup.outputs.mode != 'dryrun'
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          platforms: ${{ matrix.platform }}
+          outputs: type=image,name=${{ env.DOCKERHUB_IMAGE }},push-by-digest=true,name-canonical=true,push=true
           cache-from: type=gha,scope=build-${{ env.PLATFORM_PAIR }}
           cache-to: type=gha,mode=max,scope=build-${{ env.PLATFORM_PAIR }}
 
@@ -96,6 +115,8 @@ jobs:
         if: needs.setup.outputs.mode != 'dryrun'
         run: |
           mkdir -p /tmp/digests
+          # Both registries serve the same content-addressed digests for the
+          # same build, so one digest file covers the Hub merge too.
           digest="${{ steps.build.outputs.digest }}"
           touch "/tmp/digests/${digest#sha256:}"
 
@@ -117,6 +138,7 @@ jobs:
       - name: Prepare
         run: |
           echo "IMAGE=${REGISTRY}/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+          echo "HUB_IMAGE=${DOCKERHUB_IMAGE}" >> "$GITHUB_ENV"
 
       - name: Download digests
         uses: actions/download-artifact@v7
@@ -131,6 +153,12 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # Release path: latest + <version> tags. Test path: just :test.
       - name: Docker meta (release)
@@ -152,7 +180,7 @@ jobs:
           tags: |
             type=raw,value=test
 
-      - name: Create manifest list and push
+      - name: Create manifest list and push (GHCR)
         working-directory: /tmp/digests
         run: |
           tags="$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON")"
@@ -161,5 +189,18 @@ jobs:
           # shellcheck disable=SC2046,SC2086
           docker buildx imagetools create $tags $digests
 
-      - name: Inspect image
-        run: docker buildx imagetools inspect "${{ env.IMAGE }}:${{ steps.meta.outputs.version || steps.meta-test.outputs.version }}"
+      # Same digests re-tagged under the official OmniRise Docker Hub image —
+      # identical content, brand-home pull path.
+      - name: Create manifest list and push (Docker Hub)
+        working-directory: /tmp/digests
+        run: |
+          tags="$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON" | sed "s|${{ env.IMAGE }}|${{ env.HUB_IMAGE }}|g")"
+          digests="$(printf "${{ env.HUB_IMAGE }}@sha256:%s " *)"
+          # Intentional word splitting: $tags and $digests are multi-word arg lists.
+          # shellcheck disable=SC2046,SC2086
+          docker buildx imagetools create $tags $digests
+
+      - name: Inspect images
+        run: |
+          docker buildx imagetools inspect "${{ env.IMAGE }}:${{ steps.meta.outputs.version || steps.meta-test.outputs.version }}"
+          docker buildx imagetools inspect "${{ env.HUB_IMAGE }}:${{ steps.meta.outputs.version || steps.meta-test.outputs.version }}"

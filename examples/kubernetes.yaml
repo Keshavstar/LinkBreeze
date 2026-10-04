@@ -103,7 +103,7 @@ spec:
     spec:
       containers:
         - name: linkbreeze
-          image: ghcr.io/manak-hash/linkbreeze:latest
+          image: docker.io/omnirise/linkbreeze:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3000

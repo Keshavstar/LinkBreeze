@@ -87,7 +87,7 @@ bash install.sh
 **Linux / macOS / Windows CMD:**
 
 ```bash
-docker run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data ghcr.io/manak-hash/linkbreeze:latest
+docker run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data docker.io/omnirise/linkbreeze:latest
 ```
 
 **Windows PowerShell** — استخدم backticks لكسر الأسطر:
@@ -98,7 +98,7 @@ docker run -d `
   --restart unless-stopped `
   -p 3000:3000 `
   -v linkbreeze-data:/app/data `
-  ghcr.io/manak-hash/linkbreeze:latest
+  docker.io/omnirise/linkbreeze:latest
 ```
 
 > **تهجرات قاعدة البيانات تعمل تلقائيًا** عند تشغيل الحاوية — لا حاجة
@@ -118,7 +118,7 @@ docker run -d `
 ```yaml
 services:
   linkbreeze:
-    image: ghcr.io/manak-hash/linkbreeze:latest
+    image: docker.io/omnirise/linkbreeze:latest
     ports:
       - "3000:3000"
     volumes:
@@ -158,7 +158,7 @@ docker compose up -d --build
 ```yaml
 services:
   linkbreeze:
-    image: ghcr.io/manak-hash/linkbreeze:latest
+    image: docker.io/omnirise/linkbreeze:latest
     ports:
       - "3000:3000"
     volumes:
@@ -180,7 +180,7 @@ volumes:
 تشغّل [Synology DiskStation](https://www.synology.com/) مع Container Manager‏ (DSM 7.2+)؟
 
 1. افتح **Container Manager** → **Container** → **Create**
-2. **الصورة:** `ghcr.io/manak-hash/linkbreeze:latest` (اجلبها أولًا عبر **Image** → **Add** إن لم توجد)
+2. **الصورة:** `docker.io/omnirise/linkbreeze:latest` (اجلبها أولًا عبر **Image** → **Add** إن لم توجد)
 3. إعدادات الحاوية:
    - **الاسم:** `linkbreeze`
    - **المنفذ:** المحلي `3000` → الحاوية `3000`
@@ -198,7 +198,7 @@ volumes:
 تستخدم [Podman](https://podman.io/) بدل Docker‏ (RHEL، Fedora، CentOS)؟ استبدل `docker` بـ `podman`:
 
 ```bash
-podman run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data ghcr.io/manak-hash/linkbreeze:latest
+podman run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data docker.io/omnirise/linkbreeze:latest
 ```
 
 إن ظهرت أخطاء صلاحيات على الوحدة التخزينية، أنشئها أولًا: `podman volume create linkbreeze-data`
@@ -220,7 +220,7 @@ podman run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbre
 ```yaml
 services:
   linkbreeze:
-    image: ghcr.io/manak-hash/linkbreeze:latest
+    image: docker.io/omnirise/linkbreeze:latest
     ports:
       - "3000:3000"
     volumes:

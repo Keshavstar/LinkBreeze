@@ -26,7 +26,7 @@ PowerShell does not support `\` for line continuation (that's bash syntax).
 Either run the `docker run` command as a single line (recommended):
 
 ```powershell
-docker run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data ghcr.io/manak-hash/linkbreeze:latest
+docker run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data docker.io/omnirise/linkbreeze:latest
 ```
 
 Or use backticks `` ` `` instead of backslashes for multi-line:
@@ -37,7 +37,7 @@ docker run -d `
   --restart unless-stopped `
   -p 3000:3000 `
   -v linkbreeze-data:/app/data `
-  ghcr.io/manak-hash/linkbreeze:latest
+  docker.io/omnirise/linkbreeze:latest
 ```
 
 ---
@@ -104,7 +104,7 @@ npm run dev   # Visit the app → setup wizard appears
 Either stop the other process or map to a different port:
 
 ```bash
-docker run -d --name linkbreeze -p 8080:3000 -v linkbreeze-data:/app/data ghcr.io/manak-hash/linkbreeze:latest
+docker run -d --name linkbreeze -p 8080:3000 -v linkbreeze-data:/app/data docker.io/omnirise/linkbreeze:latest
 ```
 
 ---

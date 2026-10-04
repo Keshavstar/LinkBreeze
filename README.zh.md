@@ -87,7 +87,7 @@ bash install.sh
 **Linux / macOS / Windows CMD：**
 
 ```bash
-docker run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data ghcr.io/manak-hash/linkbreeze:latest
+docker run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data docker.io/omnirise/linkbreeze:latest
 ```
 
 **Windows PowerShell** — 换行使用反引号：
@@ -98,7 +98,7 @@ docker run -d `
   --restart unless-stopped `
   -p 3000:3000 `
   -v linkbreeze-data:/app/data `
-  ghcr.io/manak-hash/linkbreeze:latest
+  docker.io/omnirise/linkbreeze:latest
 ```
 
 > **数据库迁移在容器启动时自动运行** — Docker 部署无需手动执行
@@ -118,7 +118,7 @@ docker run -d `
 ```yaml
 services:
   linkbreeze:
-    image: ghcr.io/manak-hash/linkbreeze:latest
+    image: docker.io/omnirise/linkbreeze:latest
     ports:
       - "3000:3000"
     volumes:
@@ -158,7 +158,7 @@ docker compose up -d --build
 ```yaml
 services:
   linkbreeze:
-    image: ghcr.io/manak-hash/linkbreeze:latest
+    image: docker.io/omnirise/linkbreeze:latest
     ports:
       - "3000:3000"
     volumes:
@@ -180,7 +180,7 @@ volumes:
 在使用 [Synology DiskStation](https://www.synology.com/) 和 Container Manager（DSM 7.2+）？
 
 1. 打开 **Container Manager** → **Container** → **Create**
-2. **镜像：** `ghcr.io/manak-hash/linkbreeze:latest`（如未找到，先通过 **Image** → **Add** 拉取）
+2. **镜像：** `docker.io/omnirise/linkbreeze:latest`（如未找到，先通过 **Image** → **Add** 拉取）
 3. 容器设置：
    - **名称：** `linkbreeze`
    - **端口：** 本地 `3000` → 容器 `3000`
@@ -198,7 +198,7 @@ volumes:
 用 [Podman](https://podman.io/) 代替 Docker（RHEL、Fedora、CentOS）？把 `docker` 换成 `podman`：
 
 ```bash
-podman run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data ghcr.io/manak-hash/linkbreeze:latest
+podman run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data docker.io/omnirise/linkbreeze:latest
 ```
 
 如果卷出现权限错误，先创建它：`podman volume create linkbreeze-data`
@@ -220,7 +220,7 @@ rootless Podman 的 systemd 集成：启动容器后执行 `podman generate syst
 ```yaml
 services:
   linkbreeze:
-    image: ghcr.io/manak-hash/linkbreeze:latest
+    image: docker.io/omnirise/linkbreeze:latest
     ports:
       - "3000:3000"
     volumes:
