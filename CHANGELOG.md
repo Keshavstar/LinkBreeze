@@ -28,6 +28,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Official OmniRise Docker Hub image (`omnirise/linkbreeze`)** — LinkBreeze is moving under the OmniRise brand with an official Docker Hub presence as the default public pull path. The release workflow now publishes per-platform images to both Docker Hub and GHCR and assembles both manifest lists from the same content-addressed digests (one build, two registries, byte-identical images), and the dry-run mode still builds without pushing anything. First published tags: `latest` and `v1.4.1`, multi-arch `linux/amd64` + `linux/arm64`, anonymous pulls verified working.
+- **One-shot update script (`update.sh`)** — Self-hosted instances on any install method can now update with `curl -fsSL https://linkbreeze.omnirise.dev/update.sh | sh`. The script finds the existing container (by name or by image), backs up the data volume to `~/.linkbreeze/backups/<timestamp>/`, pulls the current image, and recreates the container with the same port mapping, volumes, environment variables, and restart policy — then prints the new version, the backup path, and a ready-to-paste rollback command. Tested end-to-end against both a standard named-volume install and a bind-mount compose install: data, env vars, and ports all survive; the script warns and continues if the backup itself fails, never touching the data volume until the new image is pulled.
+- **Update banner shows the exact update command** — The "new version available" banner previously linked to release notes only, leaving operators to figure out the update steps themselves. It now displays the copy-paste command (`docker pull omnirise/linkbreeze:latest && docker restart linkbreeze`) plus the one-shot `update.sh` URL right in the banner, next to the release-notes link.
+
+### Changed
+
+- **Install script and update checks served from linkbreeze.omnirise.dev instead of raw.githubusercontent** — The one-line installer lives at `linkbreeze.omnirise.dev/install.sh` (marketing site, proper `text/x-shellscript` content type), and the update checker polls `linkbreeze.omnirise.dev/latest-version.json`. Both previously depended on `raw.githubusercontent.com`, which is unreachable during any GitHub account visibility issue — instances v1.2.0–v1.4.0 polled a 404 and silently never saw update banners; this change restores the notification chain for every install from this release forward (older installs pick it up when they next update). `latest-version.json` release URLs now point at the GitLab mirror's releases page.
+- **All documentation and examples reference the official registries** — Every README translation (7 languages), TROUBLESHOOTING, docker-compose.yml, the demo compose file, all seven example compose files, and kubernetes.yaml now use `docker.io/omnirise/linkbreeze:latest`. The README gains a "Repositories & Registry" section (GitLab mirror, GitHub, Docker Hub) with the Docker badge linking to the Hub page, and the Quick Start adds the direct `docker run` alternative alongside the install script. README translation hashes re-synced (`docs:check` green).
+- **Source mirrored to GitLab (`gitlab.com/omnirise00/linkbreeze`)** — A public pull mirror (8h interval) of the canonical GitHub repository, giving LinkBreeze a second independent forge home. README's new registry section links it as the canonical public mirror.
+
 ## [1.4.1] - 2026-09-23
 
 ### Added
