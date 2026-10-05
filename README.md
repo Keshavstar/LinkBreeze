@@ -9,7 +9,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://github.com/users/Manak-hash/packages/container/package/linkbreeze)
+[![Docker](https://img.shields.io/badge/Docker-omnirise%2Flinkbreeze-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/omnirise/linkbreeze)
 [![Website](https://img.shields.io/badge/Website-linkbreeze-533fd6?style=for-the-badge&logo=googlechrome&logoColor=white)](https://linkbreeze.omnirise.dev/)
 [![OmniRise](https://img.shields.io/badge/OmniRise-omnirise-06B6D4?style=for-the-badge&logo=rocket&logoColor=white)](https://omnirise.dev)
 [![YouTube](https://img.shields.io/badge/Watch-YouTube-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=_Ipf-_1B4BY)
@@ -55,6 +55,12 @@
 
 ```bash
 curl -fsSL https://linkbreeze.omnirise.dev/install.sh | bash
+```
+
+or pull the multi-arch image directly:
+
+```bash
+docker run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data docker.io/omnirise/linkbreeze:latest
 ```
 
 The script detects Docker or Podman, pulls the image, starts the container, and optionally sets up a systemd service for auto-start on boot. Want auto-start on boot? Run it with `sudo bash` instead and answer **y** when prompted.
@@ -432,6 +438,17 @@ For a complete Docker Compose setup with Cloudflare Tunnel, see [`examples/docke
 - [Troubleshooting](TROUBLESHOOTING.md)
 - [Architecture Decisions](docs/adr/)
 - [Configuration Reference](#configuration)
+
+## 🛳️ Repositories & Registry
+
+| Where | URL |
+|---|---|
+| Source (GitLab, canonical public mirror) | [gitlab.com/omnirise00/linkbreeze](https://gitlab.com/omnirise00/linkbreeze) |
+| Source (GitHub) | [github.com/Manak-hash/LinkBreeze](https://github.com/Manak-hash/LinkBreeze) |
+| Container image | `docker.io/omnirise/linkbreeze` ([Docker Hub](https://hub.docker.com/r/omnirise/linkbreeze)) |
+
+All mirrors sync automatically — open issues/PRs on either forge.
+
 
 ## ⚙️ Configuration
 
