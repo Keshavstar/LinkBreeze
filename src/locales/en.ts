@@ -1061,6 +1061,8 @@ const en = {
     running: "You're running v{version}",
     viewReleaseNotes: "View release notes",
     checkAgain: "Check again",
+    updateCommand: "docker pull omnirise/linkbreeze:latest && docker restart linkbreeze",
+    orScript: "or one-shot: curl -fsSL https://linkbreeze.omnirise.dev/update.sh | sh",
     dismiss: "Dismiss update notification",
   },
 };

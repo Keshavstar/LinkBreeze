@@ -41,6 +41,14 @@ export function UpdateBanner({ result, onDismiss, onRefresh, refreshing }: Updat
             {t("viewReleaseNotes")}
           </a>
         ) : null}
+      </div>
+      <div className="flex flex-col items-end gap-1">
+        <code className="hidden max-w-full overflow-x-auto rounded bg-muted px-2 py-1 text-xs text-muted-foreground md:block">
+          {t("updateCommand")}
+        </code>
+        <span className="text-xs text-muted-foreground">{t("orScript")}</span>
+      </div>
+      <div className="flex items-center gap-2">
         <Button
           variant="ghost"
           size="icon-sm"
