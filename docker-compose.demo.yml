@@ -9,6 +9,9 @@ services:
         - DEMO_AUTO_LOGIN=true
         - DEMO_FRAME_ORIGIN=https://linkbreeze.omnirise.dev
         - NEXT_PUBLIC_DEMO_MODE=true
+        # Cloudflare injects its analytics beacon into the demo host; without
+        # this the demo CSP blocks it (console violation on every page).
+        - EXTRA_SCRIPT_SRC=static.cloudflareinsights.com
     ports:
       - "3010:3000"
     volumes:
