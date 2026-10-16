@@ -6,9 +6,11 @@ const mocks = vi.hoisted(() => ({
   destroySession: vi.fn(async () => undefined),
   hashPassword: vi.fn(async () => "hashed:pword"),
   verifyPassword: vi.fn(async () => true),
+  isLegacyBcryptHash: vi.fn(() => false),
   getUserByUsername: vi.fn(async (): Promise<{ id: number; username: string; passwordHash: string; passwordVersion: number } | null> => ({ id: 1, username: "admin", passwordHash: "hashed:pword", passwordVersion: 1 })),
   getUserCount: vi.fn(async (): Promise<number> => 1),
   createUser: vi.fn(async () => ({ id: 1, username: "newuser" })),
+  updateUserPassword: vi.fn(async () => undefined),
   getSetting: vi.fn(async () => "1"),
   rateLimit: vi.fn(() => ({ ok: true, remaining: 4, resetAt: Date.now() + 60000 })),
 }));
@@ -19,12 +21,14 @@ vi.mock("@/lib/auth", () => ({
   destroySession: mocks.destroySession,
   hashPassword: mocks.hashPassword,
   verifyPassword: mocks.verifyPassword,
+  isLegacyBcryptHash: mocks.isLegacyBcryptHash,
 }));
 vi.mock("@/server/queries", () => ({
   getUserByUsername: mocks.getUserByUsername,
   getUserCount: mocks.getUserCount,
   createUser: mocks.createUser,
   getSetting: mocks.getSetting,
+  updateUserPassword: mocks.updateUserPassword,
 }));
 vi.mock("@/db", () => ({ db: {} }));
 vi.mock("@/db/schema", () => ({ users: {} }));
@@ -83,6 +87,45 @@ describe("login", () => {
     if (!res.success) expect(res.error).toContain("Too many");
     // verifyPassword should never be called when rate-limited
     expect(mocks.verifyPassword).not.toHaveBeenCalled();
+  });
+});
+
+describe("login legacy hash upgrade (#76)", () => {
+  beforeEach(() => {
+    // Tests above poison the shared mocks ("user not found" persists its
+    // null); restore the authenticated-admin baseline explicitly.
+    mocks.getUserByUsername.mockResolvedValue({ id: 1, username: "admin", passwordHash: "hashed:pword", passwordVersion: 1 });
+  });
+
+  it("rehashes a legacy bcrypt hash with argon2 and persists it", async () => {
+    mocks.isLegacyBcryptHash.mockReturnValue(true);
+    const res = await login(makeFormData({ username: "admin", password: "pass1234" }));
+    expect(res.success).toBe(true);
+    expect(mocks.updateUserPassword).toHaveBeenCalledOnce();
+    expect(mocks.updateUserPassword).toHaveBeenCalledWith(1, "hashed:pword");
+  });
+
+  it("does not bump sessionVersion on the login rehash", async () => {
+    mocks.isLegacyBcryptHash.mockReturnValue(true);
+    await login(makeFormData({ username: "admin", password: "pass1234" }));
+    // createSession is mocked, so any getSetting call would come from a
+    // sessionVersion bump — there must be none (the user just authenticated).
+    expect(mocks.getSetting).not.toHaveBeenCalled();
+  });
+
+  it("does not rehash when the stored hash is already argon2", async () => {
+    mocks.isLegacyBcryptHash.mockReturnValue(false);
+    const res = await login(makeFormData({ username: "admin", password: "pass1234" }));
+    expect(res.success).toBe(true);
+    expect(mocks.updateUserPassword).not.toHaveBeenCalled();
+  });
+
+  it("still logs in when the opportunistic rehash fails", async () => {
+    mocks.isLegacyBcryptHash.mockReturnValue(true);
+    mocks.updateUserPassword.mockRejectedValueOnce(new Error("db unavailable"));
+    const res = await login(makeFormData({ username: "admin", password: "pass1234" }));
+    expect(res.success).toBe(true);
+    expect(mocks.createSession).toHaveBeenCalledOnce();
   });
 });
 
