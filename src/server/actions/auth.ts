@@ -8,6 +8,7 @@ import {
   destroySession,
   hashPassword,
   verifyPassword,
+  isLegacyBcryptHash,
 } from "@/lib/auth";
 import {
   getUserByUsername,
@@ -88,6 +89,20 @@ export async function login(formData: FormData): Promise<ActionResult> {
   const valid = await verifyPassword(password, user.passwordHash);
   if (!valid) {
     return { success: false, error: "Invalid username or password", errorCode: ErrorCode.UNAUTHORIZED };
+  }
+
+  // #76 transparent migration: a legacy bcrypt hash that just verified is
+  // re-hashed with Argon2id in place, so stored hashes upgrade naturally as
+  // users log in. The user is already authenticated, so this must NOT bump
+  // sessionVersion (that would invalidate every other session). Failure is
+  // opportunistic — it must never block a legitimate login.
+  if (isLegacyBcryptHash(user.passwordHash)) {
+    try {
+      const { updateUserPassword } = await import("@/server/queries");
+      await updateUserPassword(user.id, await hashPassword(password));
+    } catch (err) {
+      logError("loginRehash", err, { userId: user.id });
+    }
   }
 
   // #5: 2FA handoff. Credentials are valid, but the session is only minted
