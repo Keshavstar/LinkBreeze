@@ -8,6 +8,7 @@ const mocks = vi.hoisted(() => ({
   updateLink: vi.fn(async () => undefined),
   deleteLink: vi.fn(async () => undefined),
   reorderLinks: vi.fn(async () => undefined),
+  isSlugTaken: vi.fn(async () => false),
   fetchAndCacheFavicon: vi.fn(async (): Promise<string | null> => "/api/uploads/favicon-test.png"),
   extractDomain: vi.fn((url: string): string | null => {
     try { return new URL(url).hostname; } catch { return null; }
@@ -51,6 +52,7 @@ vi.mock("@/server/queries", () => ({
   deleteLink: mocks.deleteLink,
   reorderLinks: mocks.reorderLinks,
   getAllLinks: vi.fn(async () => []),
+  isSlugTaken: mocks.isSlugTaken,
 }));
 
 import { createLink, updateLink, deleteLink, createDivider } from "@/server/actions/links";
@@ -443,5 +445,101 @@ describe("createDivider (#87)", () => {
     }));
     expect(res.success).toBe(false);
     expect(mocks.createLink).not.toHaveBeenCalled();
+  });
+});
+
+describe("redirect slugs (#96)", () => {
+  beforeEach(() => {
+    mocks.isSlugTaken.mockResolvedValue(false);
+  });
+
+  it("creates a link with a normalized slug", async () => {
+    const res = await createLink(makeFormData({
+      title: "My Link", url: "https://example.com", type: "url",
+      isActive: "true", isHighlighted: "false", redirectSlug: "My Consulting",
+    }));
+    expect(res.success).toBe(true);
+    expect(mocks.createLink).toHaveBeenCalledWith(
+      expect.objectContaining({ redirectSlug: "my-consulting" }),
+    );
+  });
+
+  it("stores null when no slug is submitted", async () => {
+    const res = await createLink(makeFormData({
+      title: "My Link", url: "https://example.com", type: "url",
+      isActive: "true", isHighlighted: "false",
+    }));
+    expect(res.success).toBe(true);
+    expect(mocks.createLink).toHaveBeenCalledWith(
+      expect.objectContaining({ redirectSlug: null }),
+    );
+  });
+
+  it("rejects a reserved-word slug", async () => {
+    const res = await createLink(makeFormData({
+      title: "My Link", url: "https://example.com", type: "url",
+      isActive: "true", isHighlighted: "false", redirectSlug: "dashboard",
+    }));
+    expect(res.success).toBe(false);
+    if (!res.success) expect(res.error).toContain("reserved");
+    expect(mocks.createLink).not.toHaveBeenCalled();
+  });
+
+  it("rejects a pure-numeric slug", async () => {
+    const res = await createLink(makeFormData({
+      title: "My Link", url: "https://example.com", type: "url",
+      isActive: "true", isHighlighted: "false", redirectSlug: "123",
+    }));
+    expect(res.success).toBe(false);
+    if (!res.success) expect(res.error).toContain("Numeric");
+    expect(mocks.createLink).not.toHaveBeenCalled();
+  });
+
+  it("rejects a taken slug", async () => {
+    mocks.isSlugTaken.mockResolvedValue(true);
+    const res = await createLink(makeFormData({
+      title: "My Link", url: "https://example.com", type: "url",
+      isActive: "true", isHighlighted: "false", redirectSlug: "busy-slug",
+    }));
+    expect(res.success).toBe(false);
+    if (!res.success) expect(res.error).toContain("already in use");
+    expect(mocks.createLink).not.toHaveBeenCalled();
+  });
+
+  it("update writes the slug when the field is present", async () => {
+    const res = await updateLink(makeFormData({
+      id: "1", title: "Updated", url: "https://new.com", type: "url",
+      isActive: "true", isHighlighted: "false", redirectSlug: "fresh-slug",
+    }));
+    expect(res.success).toBe(true);
+    expect(mocks.updateLink).toHaveBeenCalledWith(1, expect.objectContaining({ redirectSlug: "fresh-slug" }));
+  });
+
+  it("update clears the slug when the field is present but empty (tri-state)", async () => {
+    const res = await updateLink(makeFormData({
+      id: "1", title: "Updated", url: "https://new.com", type: "url",
+      isActive: "true", isHighlighted: "false", redirectSlug: "",
+    }));
+    expect(res.success).toBe(true);
+    expect(mocks.updateLink).toHaveBeenCalledWith(1, expect.objectContaining({ redirectSlug: null }));
+  });
+
+  it("update leaves the slug untouched when the field is absent (tri-state)", async () => {
+    const res = await updateLink(makeFormData({
+      id: "1", title: "Updated", url: "https://new.com", type: "url",
+      isActive: "true", isHighlighted: "false",
+    }));
+    expect(res.success).toBe(true);
+    const call = (mocks.updateLink.mock.calls[0] as unknown[])[1] as Record<string, unknown>;
+    expect("redirectSlug" in call).toBe(false);
+  });
+
+  it("update excludes its own row from the availability check", async () => {
+    const res = await updateLink(makeFormData({
+      id: "5", title: "Updated", url: "https://new.com", type: "url",
+      isActive: "true", isHighlighted: "false", redirectSlug: "same-slug",
+    }));
+    expect(res.success).toBe(true);
+    expect(mocks.isSlugTaken).toHaveBeenCalledWith("same-slug", 5);
   });
 });

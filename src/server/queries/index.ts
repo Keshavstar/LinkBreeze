@@ -308,6 +308,7 @@ export async function createLink(
         | "sectionId"
         | "popupText"
         | "ctaLabel"
+        | "redirectSlug"
       >
     >,
 ): Promise<LinkRow> {
@@ -340,6 +341,7 @@ export async function createLink(
       sectionId: data.sectionId ?? null,
       popupText: data.popupText ?? null,
       ctaLabel: data.ctaLabel ?? null,
+      redirectSlug: data.redirectSlug ?? null,
       orderIndex: nextOrder,
     })
     .returning();
@@ -369,6 +371,7 @@ export async function updateLink(
       | "sectionId"
       | "popupText"
       | "ctaLabel"
+      | "redirectSlug"
     >
   >,
 ): Promise<void> {
@@ -1143,6 +1146,33 @@ export async function getLinkStats(linkId: number, range: AnalyticsRange = "30d"
 export async function getLink(id: number): Promise<LinkRow | null> {
   const rows = await db.select().from(links).where(eq(links.id, id)).limit(1);
   return rows[0] ?? null;
+}
+
+// #96 custom /go/ redirect slugs. A ref is numeric (id form — behavior
+// unchanged) or a slug (case-insensitive; stored lowercase). Pure-number
+// refs NEVER match the slug column, so /go/<ref> has exactly one meaning.
+export async function getLinkByRef(ref: string): Promise<LinkRow | null> {
+  if (/^\d+$/.test(ref)) {
+    return getLink(Number(ref));
+  }
+  const rows = await db
+    .select()
+    .from(links)
+    .where(eq(links.redirectSlug, ref.toLowerCase()))
+    .limit(1);
+  return rows[0] ?? null;
+}
+
+/** True when `slug` is already used (optionally excluding the link being edited). */
+export async function isSlugTaken(
+  slug: string,
+  excludeLinkId?: number,
+): Promise<boolean> {
+  const rows = await db
+    .select({ id: links.id })
+    .from(links)
+    .where(eq(links.redirectSlug, slug));
+  return rows.some((r) => r.id !== excludeLinkId);
 }
 
 // ─── Subscribers (email capture) ──────────────────────────────────────────────

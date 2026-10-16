@@ -37,6 +37,12 @@ import { LucideIcon, isLucideIconName } from "@/components/public/LucideIcon";
 import { ImagePlus, Sparkles } from "lucide-react";
 import { IconPicker } from "./icon-picker";
 import type { IconMode } from "@/lib/link-icons";
+import {
+  normalizeSlug,
+  slugError,
+  MAX_SLUG_LENGTH,
+} from "@/lib/link-slug";
+import { checkSlugAvailability } from "@/server/actions/links";
 import { useSavedAction } from "@/hooks/use-saved-action";
 
 /** Derive the dialog's initial icon mode from an editing row (#91). */
@@ -93,6 +99,87 @@ function SectionSelect({
       </Select>
       {/* "none" → empty string so the server action stores NULL. */}
       <input type="hidden" name="sectionId" value={value === "none" ? "" : value} />
+    </FormField>
+  );
+}
+
+/**
+ * #96 custom /go/ redirect slug — controlled input with a live availability
+ * check (debounced 500ms server round-trip; validation itself is local via
+ * the pure helpers).
+ *
+ * onChange normalizes the WHOLE DOM value with keepTrailingSeparator so a
+ * separator the user just typed survives the controlled re-render: plain
+ * normalization would trim "my-" back to "my" — the SAME string React had —
+ * so it skips the update and the next keystroke swallows the separator
+ * ("myC" instead of "my-c").
+ */
+const SLUG_ERROR_KEYS = {
+  invalid: "slugErrInvalid",
+  reserved: "slugErrReserved",
+  numeric: "slugErrNumeric",
+  length: "slugErrLength",
+} as const;
+
+function SlugField({ editing }: { editing?: LinkRow | null }) {
+  const t = useTranslations("linksPage");
+  const storedSlug = editing?.redirectSlug ?? "";
+  const [value, setValue] = React.useState(storedSlug);
+  // Set ONLY from the async check callback — render derives everything else
+  // (react-hooks/set-state-in-effect forbids sync setState in effects).
+  const [lastCheck, setLastCheck] = React.useState<{ slug: string; available: boolean } | null>(null);
+
+  const display = normalizeSlug(value, { keepTrailingSeparator: true });
+  const settled = normalizeSlug(value);
+  const localReason = settled ? slugError(settled) : null;
+
+  const isOwnStored = !!editing && settled === storedSlug;
+  const status: "idle" | "checking" | "available" | "taken" = localReason
+    ? "idle"
+    : !settled
+      ? "idle"
+      : isOwnStored
+        ? "available"
+        : lastCheck?.slug === settled
+          ? lastCheck.available
+            ? "available"
+            : "taken"
+          : "checking";
+
+  React.useEffect(() => {
+    if (!settled || localReason || isOwnStored) return;
+    const timer = setTimeout(async () => {
+      const res = await checkSlugAvailability(settled, editing?.id);
+      setLastCheck({ slug: settled, available: res.available === true });
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [settled, localReason, isOwnStored, editing]);
+
+  return (
+    <FormField label={t("slugLabel")} hint={t("slugHint")}>
+      <div className="flex items-center gap-2">
+        <span aria-hidden className="shrink-0 text-xs text-muted-foreground">/go/</span>
+        <Input
+          id="redirectSlug"
+          name="redirectSlug"
+          value={display}
+          onChange={(e) => setValue(e.target.value)}
+          maxLength={MAX_SLUG_LENGTH + 1}
+          placeholder="my-consulting"
+          autoComplete="off"
+          spellCheck={false}
+          className="flex-1"
+        />
+      </div>
+      {localReason ? (
+        <p role="alert" className="text-xs text-destructive">{t(SLUG_ERROR_KEYS[localReason])}</p>
+      ) : status === "checking" ? (
+        <p className="text-xs text-muted-foreground">{t("slugChecking")}</p>
+      ) : status === "taken" ? (
+        <p role="alert" className="text-xs text-destructive">{t("slugTaken")}</p>
+      ) : status === "available" ? (
+        <p className="text-xs text-emerald-600">{t("slugAvailable")}</p>
+      ) : null}
     </FormField>
   );
 }
@@ -346,6 +433,13 @@ export function LinkDialog({ open, onOpenChange, editing, pageId, sections = [] 
               />
             </FormField>
           </div>
+          ) : null}
+
+          {/* #96 custom /go/ redirect slug — every non-divider link type can
+              carry one (popups route their CTA through /go/ too). Remounts
+              with the dialog session so state resets. */}
+          {!isDivider ? (
+            <SlugField key={editing?.id ?? "new"} editing={editing} />
           ) : null}
 
           {/* Type + Section share a row — both single-select metadata, natural

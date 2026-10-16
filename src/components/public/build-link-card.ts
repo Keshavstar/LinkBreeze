@@ -121,7 +121,8 @@ function resolveLinkUrl(link: LinkRow): {
   const isExternal =
     rawUrl.startsWith("http://") || rawUrl.startsWith("https://");
 
-  const href = isExternal ? `/go/${link.id}` : esc(rawUrl);
+  // #96: prefer the custom redirect slug — stable across delete-and-recreate.
+  const href = isExternal ? `/go/${link.redirectSlug || link.id}` : esc(rawUrl);
   const targetAttr = isExternal
     ? ` target="_blank" rel="noopener noreferrer nofollow"`
     : "";
