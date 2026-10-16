@@ -970,6 +970,8 @@ const de: Messages = {
     running: "Du nutzt v{version}",
     viewReleaseNotes: "Release Notes ansehen",
     checkAgain: "Erneut prüfen",
+    updateCommand: "docker pull omnirise/linkbreeze:latest && docker restart linkbreeze",
+    orScript: "oder als Einzeiler: curl -fsSL https://linkbreeze.omnirise.dev/update.sh | sh",
     dismiss: "Update-Hinweis ausblenden",
   },
 };

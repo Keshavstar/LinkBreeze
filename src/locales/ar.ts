@@ -924,6 +924,8 @@ const ar: Messages = {
     running: "أنت تستخدم الإصدار v{version}",
     viewReleaseNotes: "عرض ملاحظات الإصدار",
     checkAgain: "تحقق مجددًا",
+    updateCommand: "docker pull omnirise/linkbreeze:latest && docker restart linkbreeze",
+    orScript: "أو بأمر واحد: curl -fsSL https://linkbreeze.omnirise.dev/update.sh | sh",
     dismiss: "إخفاء إشعار التحديث",
   },
 };
