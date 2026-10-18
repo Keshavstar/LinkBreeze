@@ -24,6 +24,7 @@ import {
   slugError,
   SLUG_ERRORS,
 } from "@/lib/link-slug";
+import { safeMediaUrl } from "@/lib/theme-schema";
 import {
   type ActionResult,
   validationError,
@@ -189,7 +190,10 @@ const linkSchema = z
     // Empty allowed for text popups with no CTA (refine below enforces the rest).
     url: z.string().max(2048),
     description: z.string().max(300).optional().nullable(),
-    imageUrl: z.string().max(2048).optional().nullable(),
+    // safeMediaUrl: scheme allowlist (http(s)/site-relative) — the thumbnail
+    // URL is rendered in <img src> on the public page (write-boundary defense,
+    // same choke point as pages/theme media URLs).
+    imageUrl: safeMediaUrl.optional().nullable(),
     type: z.enum(["url", "email", "phone", "whatsapp", "sms", "vcard", "file", "embed", "text", "location", "divider"]).default("url"),
     // #93 popup cards: long body + optional CTA label (target = url column).
     popupText: z.string().max(5000).optional().nullable(),
