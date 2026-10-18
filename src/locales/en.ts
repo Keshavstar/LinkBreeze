@@ -233,7 +233,7 @@ const en = {
     dividerRow: "Divider",
     dividerHint: "A thematic break between links. Its style (line, color, thickness, width) is set per theme under Theme → Links.",
     slugLabel: "Custom redirect slug",
-    slugHint: "Optional. Makes the link shareable at /go/<slug> in addition to its numeric ID.",
+    slugHint: "Optional. Makes the link shareable at /go/your-name in addition to its numeric ID.",
     slugChecking: "Checking availability...",
     slugAvailable: "Available",
     slugTaken: "This slug is already used by another link",
