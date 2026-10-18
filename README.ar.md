@@ -421,7 +421,7 @@ cloudflared tunnel --url http://localhost:3000
 | الإطار | Next.js 16‏ (App Router، Server Components، ISR) |
 | قاعدة البيانات | SQLite عبر better-sqlite3‏ (وضع WAL) |
 | ORM | Drizzle ORM (آمن الأنواع، بلا أي عبء) |
-| المصادقة | جلسات HMAC مبنية على الكوكيز، bcrypt |
+| المصادقة | جلسات HMAC مبنية على الكوكيز، Argon2id (يتم ترقية تجزئات bcrypt القديمة عند تسجيل الدخول) |
 | الواجهة | shadcn/ui + Tailwind CSS 4 |
 | السحب والإفلات | dnd-kit |
 | الرسوم البيانية | Recharts |
