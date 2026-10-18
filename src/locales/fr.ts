@@ -1052,6 +1052,8 @@ const fr: Messages = {
     running: "Vous utilisez la v{version}",
     viewReleaseNotes: "Voir les notes de version",
     checkAgain: "Vérifier à nouveau",
+    updateCommand: "docker pull omnirise/linkbreeze:latest && docker restart linkbreeze",
+    orScript: "ou en une fois : curl -fsSL https://linkbreeze.omnirise.dev/update.sh | sh",
     dismiss: "Ignorer la notification de mise à jour",
   },
 };

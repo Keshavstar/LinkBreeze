@@ -889,6 +889,8 @@ const ptBR: Messages = {
     running: "Você está usando v{version}",
     viewReleaseNotes: "Ver notas da versão",
     checkAgain: "Verificar novamente",
+    updateCommand: "docker pull omnirise/linkbreeze:latest && docker restart linkbreeze",
+    orScript: "ou em um comando: curl -fsSL https://linkbreeze.omnirise.dev/update.sh | sh",
     dismiss: "Dispensar notificação de atualização",
   },
 };

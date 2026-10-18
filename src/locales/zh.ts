@@ -909,6 +909,8 @@ const zh: Messages = {
     running: "你正在使用 v{version}",
     viewReleaseNotes: "查看更新说明",
     checkAgain: "再次检查",
+    updateCommand: "docker pull omnirise/linkbreeze:latest && docker restart linkbreeze",
+    orScript: "或一键脚本：curl -fsSL https://linkbreeze.omnirise.dev/update.sh | sh",
     dismiss: "关闭更新通知",
   },
 };
