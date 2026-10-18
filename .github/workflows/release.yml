@@ -187,7 +187,8 @@ jobs:
         working-directory: /tmp/digests
         run: |
           tags="$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON")"
-          digests="$(printf "${{ env.IMAGE }}@sha256:%s " ghcr-*)"
+          digests=""
+          for f in ghcr-*; do digests="$digests ${{ env.IMAGE }}@sha256:${f#ghcr-}"; done
           # Intentional word splitting: $tags and $digests are multi-word arg lists.
           # shellcheck disable=SC2046,SC2086
           docker buildx imagetools create $tags $digests
@@ -198,7 +199,8 @@ jobs:
         working-directory: /tmp/digests
         run: |
           tags="$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON" | sed "s|${{ env.IMAGE }}|${{ env.HUB_IMAGE }}|g")"
-          digests="$(printf "${{ env.HUB_IMAGE }}@sha256:%s " hub-*)"
+          digests=""
+          for f in hub-*; do digests="$digests ${{ env.HUB_IMAGE }}@sha256:${f#hub-}"; done
           # Intentional word splitting: $tags and $digests are multi-word arg lists.
           # shellcheck disable=SC2046,SC2086
           docker buildx imagetools create $tags $digests
