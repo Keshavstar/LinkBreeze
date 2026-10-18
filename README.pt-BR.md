@@ -7,65 +7,89 @@
 [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [中文](README.zh.md) · [العربية](README.ar.md) · **Português (Brasil)**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
-[![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://github.com/users/Manak-hash/packages/container/package/linkbreeze)
-[![Website](https://img.shields.io/badge/Website-linkbreeze-533fd6?style=for-the-badge&logo=googlechrome&logoColor=white)](https://linkbreeze.omnirise.dev/)
-[![OmniRise](https://img.shields.io/badge/OmniRise-omnirise-06B6D4?style=for-the-badge&logo=rocket&logoColor=white)](https://omnirise.dev)
-[![YouTube](https://img.shields.io/badge/Watch-YouTube-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=_Ipf-_1B4BY)
+[![Docker](https://img.shields.io/badge/omnirise%2Flinkbreeze-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/omnirise/linkbreeze)
+
+[![Website](https://img.shields.io/badge/linkbreeze-533fd6?style=for-the-badge&logo=googlechrome&logoColor=white)](https://linkbreeze.omnirise.dev/)
+[![OmniRise](https://img.shields.io/badge/omnirise-06B6D4?style=for-the-badge&logo=rocket&logoColor=white)](https://omnirise.dev)
+[![YouTube](https://img.shields.io/badge/YouTube-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=_Ipf-_1B4BY)
 
 [![CI](https://img.shields.io/github/actions/workflow/status/Manak-hash/LinkBreeze/ci.yml?style=for-the-badge&logo=githubactions&label=CI&logoColor=white)](https://github.com/Manak-hash/LinkBreeze/actions/workflows/ci.yml)
 [![Latest Release](https://img.shields.io/github/v/release/Manak-hash/LinkBreeze?style=for-the-badge&logo=github&color=blue)](https://github.com/Manak-hash/LinkBreeze/releases/latest)
-[![Last Commit](https://img.shields.io/github/last-commit/Manak-hash/LinkBreeze?style=for-the-badge&logo=git&color=green)](https://github.com/Manak-hash/LinkBreeze/commits)
+[![Discord](https://img.shields.io/discord/1559020936253022209?style=for-the-badge&logo=discord&logoColor=white&label=Discord&color=5865F2)](https://discord.gg/bAJMW3bAJa)
 
 </div>
 
-> [!NOTE]
-> A [versão em inglês](README.md) é a oficial. Esta tradução pode apresentar divergências em relação ao original.
+---
+
+> **Pare de pagar US$ 15/mês pelo Linktree.** O LinkBreeze é um hub de links gratuito e auto-hospedado: rápido, personalizável, com análises integradas. **Instale com um comando.**
+
+<div align="center">
+
+&nbsp;[**🔗 Demo ao vivo**](https://linkbreeze-demo.omnirise.dev/linkbreeze)&nbsp;&nbsp;·&nbsp;&nbsp;
+[**🔐 Painel de demonstração**](https://linkbreeze-demo.omnirise.dev/dashboard)
+
+</div>
 
 ---
 
-> **Pare de pagar R$ 15/mês pelo Linktree.** O LinkBreeze oferece links, estatísticas,
-> códigos QR, temas e um painel de administração completo — grátis, para sempre, em um único comando Docker.
-
-**[🔗 Demonstração ao vivo](https://linkbreeze-demo.omnirise.dev/linkbreeze)** — veja a página pública em ação.
-
-**[🔐 Painel de demonstração](https://linkbreeze-demo.omnirise.dev/dashboard)** — explore o painel com todos os recursos (somente leitura).
-
 ## ✨ Recursos
 
-- **🔗 Gerenciamento de Links** — Adicione, reordene e personalize links ilimitados com arrastar e soltar
-- **🌐 Suporte a Múltiplas Páginas** — Crie páginas ilimitadas, cada uma com seu próprio slug, tema, links, estatísticas, SEO e código QR
-- **🎨 Favicon Automático nos Links** — Os links mostram automaticamente o favicon do site de destino — sem necessidade de upload manual
-- **📥 Assistente de Migração** — Importe links e perfis sociais de Linktree, Bento, Hopp.bio, LittleLink ou de qualquer arquivo HTML/JSON exportado
-- **🖼️ Miniaturas nos Links** — Adicione imagens aos seus links para cartões com pré-visualização visual
-- **🎵 Widgets Incorporados** — Incorpore YouTube, Spotify, SoundCloud, Vimeo ou Bandcamp diretamente na sua página
-- **⏰ Agendamento de Links** — Agende links para aparecerem ou desaparecerem automaticamente com controles de data/hora
-- **🏷️ Slugs de redirecionamento personalizados** — Dê a cada link uma URL `/go/seu-nome` estável e compartilhável que sobrevive a excluir e recriar. Nomes reservados e números puros são bloqueados para que rotas do app nunca sejam sombreadas; um link desativado com slug redireciona visitantes à sua página pública em vez de um 404
-- **📊 Estatísticas com Privacidade** — Visualizações, cliques, origens, tipos de dispositivos. Sem cookies por design. Os IPs dos visitantes são criptografados com salt diário rotativo e nunca armazenados. Dados com mais de 90 dias são removidos automaticamente por padrão (Configurações → Dados; defina 0 para manter tudo).
-- **📈 Estatísticas Externas** — Conecte Plausible, Umami, Matomo ou Google Analytics colando seu script
-- **🔔 Notificações de Atualização** — Banner no painel avisa quando uma nova versão estiver disponível (sem rastreamento de uso, sem atualizações automáticas invasivas)
-- **🎨 Temas** — 11 temas prontos (Aurora, Glassmorphism, Neon Cyberpunk, Editorial Paper, Terminal Mono, Pastel Soft, Brutalist, Retro Sunset, Minimal Light, 8-Bit Retro, Frutiger Aero) + personalizador completo com sistema de tokens CSS (cores, 15 fontes + upload de fontes personalizadas, 8 tipos de fundo, 8 estilos de cartão, controles de layout, efeitos) + duplicação/importação/exportação de temas
-- **🖼️ Imagens de pré-visualização (OG)** — Cartões de compartilhamento gerados automaticamente a partir do tema da sua página, ou envie a sua com controle de ajuste, posição e zoom
-- **✏️ CSS Personalizado** — Ajuste fino na sua página com injeção direta de CSS
-- **📧 Captura de E-mails** — Colete e-mails de inscritos na sua página pública e exporte para CSV
-- **📱 Foco no Mobile (Mobile-First)** — Visual impecável em qualquer tela. Carrega em menos de 300 ms. Sem pacotes JS pesados no cliente.
-- **🎯 Códigos QR** — Gerados automaticamente para sua página. Baixe em SVG ou PNG. Personalize cores, incorpore seu avatar ou favicon no centro e exporte em até 1024 px para impressão.
-- **🔒 Auto-Hospedado (Self-Hosted)** — Seus dados, seu servidor. Sem rastreadores de terceiros. Sem anúncios. Sem assinatura.
-- **🐳 Instalação com Um Comando** — Docker compose e sua página estará no ar
+<div align="center">
+<table>
+  <tr>
+    <td width="50%" valign="top">🔗 <strong>Suporte a Múltiplas Páginas</strong><br/>Páginas ilimitadas, cada uma com seu próprio slug, tema, links e análises</td>
+    <td valign="top">🎨 <strong>Temas + Personalizador</strong><br/>11 predefinições além de um personalizador completo baseado em tokens com importação/exportação</td>
+  </tr>
+  <tr>
+    <td valign="top">📊 <strong>Análises com Privacidade em Primeiro Lugar</strong><br/>Visualizações, cliques, origens, dispositivos. Sem cookies, IPs com hash, limpeza automática</td>
+    <td valign="top">🧭 <strong>Assistente de Migração</strong><br/>Importe do Linktree, Bento, Hopp.bio, LittleLink ou de qualquer exportação HTML/JSON</td>
+  </tr>
+  <tr>
+    <td valign="top">🔒 <strong>Auto-Hospedado</strong><br/>Seus dados, seu servidor. Sem rastreadores, sem anúncios, sem assinatura</td>
+    <td valign="top">🐳 <strong>Instalação com Um Comando</strong><br/>Um comando curl. Detecta Docker ou Podman automaticamente e você já está no ar</td>
+  </tr>
+  <tr>
+    <td valign="top">📱 <strong>Widgets Incorporados</strong><br/>YouTube, Spotify, SoundCloud, Vimeo e Bandcamp na sua página</td>
+    <td valign="top">🎯 <strong>Códigos QR</strong><br/>Gerados automaticamente, cores personalizáveis, avatar ou favicon no centro, SVG/PNG até 1024px</td>
+  </tr>
+</table>
+
+
+⚡ **Zero JavaScript no cliente. Carrega em menos de 300ms. HTML puro renderizado no servidor.**
+
+</div>
+
+<details>
+<summary>✨ &nbsp;Todos os recursos</summary>
+
+- **🔗 Gerenciamento de Links** - Adicione, reordene e personalize links ilimitados com arrastar e soltar
+- **🌐 Links com Favicon Automático** - Os links mostram automaticamente o favicon do site de destino, sem necessidade de upload de ícones
+- **🖼️ Miniaturas nos Links** - Adicione imagens aos seus links para cartões com pré-visualização visual
+- **⏰ Agendamento de Links** - Agende links para aparecerem ou desaparecerem automaticamente com controles de data/hora
+- **🏷️ Slugs de Redirecionamento Personalizados** - Links curtos `/go/seu-nome` estáveis e compartilháveis que sobrevivem a excluir e recriar
+- **📈 Análises Externas** - Injete Plausible, Umami, Matomo ou Google Analytics com um simples colar
+- **🖼️ Imagens de Pré-visualização Social (OG)** - Cartões de compartilhamento gerados automaticamente a partir do tema da sua página, ou envie a sua com controle de ajuste, posição e zoom
+- **✏️ CSS Personalizado** - Ajuste fino da sua página com injeção de CSS puro
+- **📧 Captura de E-mails** - Colete e-mails de inscritos na sua página pública, exporte para CSV
+- **🔔 Notificações de Atualização** - Banner no painel quando uma nova versão estiver disponível. Sem phone-home, sem atualização automática
+- **🔑 Painel Admin Rápido** - Tudo acima a partir de um painel limpo e instantâneo
+
+</details>
 
 ## 🚀 Início Rápido
 
-**Um comando — configuração zero — no ar em 30 segundos:**
+**Um comando. Zero configuração. No ar em 30 segundos:**
 
 ```bash
 curl -fsSL https://linkbreeze.omnirise.dev/install.sh | bash
 ```
 
-O script detecta Docker ou Podman, baixa a imagem, inicia o container e, opcionalmente, cria um serviço systemd para inicialização automática no boot do sistema. Quer inicialização automática no boot? Execute com `sudo bash` e responda **y** quando solicitado.
+O script detecta Docker ou Podman, baixa a imagem e inicia o container. Execute com `sudo bash` e responda **y** para também ativar a inicialização automática no boot.
+
+Depois abra **http://localhost:3000** - o assistente de configuração leva menos de 30 segundos.
 
 <details>
-<summary>Prefere não redirecionar para o bash?</summary>
+<summary>🔍 &nbsp;Quer inspecionar o script antes de executá-lo?</summary>
 
 ```bash
 curl -fsSL https://linkbreeze.omnirise.dev/install.sh -o install.sh
@@ -75,22 +99,20 @@ bash install.sh
 
 </details>
 
-Depois, abra http://localhost:3000 — o assistente de configuração leva menos de 30 segundos.
-
-**Prefere outro método?** Expanda uma das opções abaixo:
+**Prefere outro método?** Expanda uma das opções abaixo.
 
 <details>
 <summary>🐳 &nbsp;Docker</summary>
 
-Sem Node.js, sem npm, sem necessidade de arquivos de configuração. Imagens multi-arquitetura: `linux/amd64` e `linux/arm64` (Raspberry Pi 3/4/5, Apple Silicon, VPS ARM).
+Sem Node.js, sem npm, sem arquivos de configuração. Imagens multi-arquitetura: `linux/amd64` e `linux/arm64` (Raspberry Pi 3/4/5, Apple Silicon, VPS ARM).
 
-**Linux / macOS / Prompt de Comando do Windows (CMD):**
+**Linux / macOS / CMD do Windows:**
 
 ```bash
 docker run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data docker.io/omnirise/linkbreeze:latest
 ```
 
-**Windows PowerShell** — use crases para quebra de linha:
+**Windows PowerShell** - use crases para quebra de linha:
 
 ```powershell
 docker run -d `
@@ -101,17 +123,12 @@ docker run -d `
   docker.io/omnirise/linkbreeze:latest
 ```
 
-> **As migrações de banco de dados rodam automaticamente** na inicialização do container — não é necessário executar
-> `drizzle-kit migrate` manualmente em implantações com Docker.
+> As migrações do banco de dados rodam automaticamente na inicialização do container.
 
 </details>
 
 <details>
 <summary>🧩 &nbsp;Docker Compose</summary>
-
-Ideal se você deseja personalizar portas, usar proxy reverso ou gerenciar atualizações facilmente.
-
-**Opção A — Usar a imagem pronta:**
 
 Crie um `docker-compose.yml`:
 
@@ -133,107 +150,54 @@ volumes:
 docker compose up -d
 ```
 
-**Opção B — Compilar a partir do código-fonte:**
+Atualização: `docker compose pull && docker compose up -d` · Logs: `docker compose logs -f linkbreeze`
 
-```bash
-git clone https://github.com/Manak-hash/LinkBreeze.git
-cd LinkBreeze
-docker compose up -d --build
-```
-
-Atualize quando quiser: `docker compose pull && docker compose up -d`
-
-Logs: `docker compose logs -f linkbreeze`
+Prefere compilar a partir do código-fonte? `git clone https://github.com/Manak-hash/LinkBreeze.git && cd LinkBreeze && docker compose up -d --build`
 
 </details>
 
 <details>
 <summary>☁️ &nbsp;Coolify</summary>
 
-Executa o [Coolify](https://coolify.io/) em sua VPS?
-
 1. **+ New Resource** → **Docker Compose Empty**
-2. Cole o conteúdo:
-
-```yaml
-services:
-  linkbreeze:
-    image: docker.io/omnirise/linkbreeze:latest
-    ports:
-      - "3000:3000"
-    volumes:
-      - linkbreeze-data:/app/data
-    restart: unless-stopped
-
-volumes:
-  linkbreeze-data:
-```
-
-3. Configure um domínio (ex: `links.seudominio.com`) para obter SSL automático
-4. Clique em **Deploy** — o Coolify gerencia o Let's Encrypt automaticamente
+2. Cole o arquivo compose da seção acima
+3. Configure um domínio (ex: `links.seudominio.com`) - o Coolify cuida do Let's Encrypt automaticamente
+4. Clique em **Deploy**
 
 </details>
 
 <details>
 <summary>📦 &nbsp;Synology NAS</summary>
 
-Executando o [Synology DiskStation](https://www.synology.com/) com Container Manager (DSM 7.2+)?
+Container Manager (DSM 7.2+):
 
-1. Abra o **Container Manager** → **Container** → **Create**
-2. **Imagem:** `docker.io/omnirise/linkbreeze:latest` (baixe antes em **Image** → **Add** se não encontrar)
-3. Configurações do container:
-   - **Nome:** `linkbreeze`
-   - **Porta:** Local `3000` → Container `3000`
-   - **Volume:** Crie `/docker/linkbreeze/data` e aponte para `/app/data`
-   - **Política de reinício:** `Unless stopped`
-4. Clique em **Done** — acesse em `http://<ip-do-nas>:3000`
+1. Baixe a imagem `docker.io/omnirise/linkbreeze:latest` (**Image** → **Add**, se não encontrar)
+2. **Create** um container: nome `linkbreeze`, porta `3000 → 3000`, volume `/docker/linkbreeze/data → /app/data`, política de reinício `Unless stopped`
+3. Clique em **Done** - no ar em `http://<nas-ip>:3000`
 
-> **Atualizações futuras:** baixe a imagem mais recente, pare e recrie o container. Os dados permanecem preservados no volume.
+Os dados persistem no volume entre atualizações de imagem.
 
 </details>
 
 <details>
 <summary>🔧 &nbsp;Podman</summary>
 
-Usa [Podman](https://podman.io/) em vez do Docker (RHEL, Fedora, CentOS)? Substitua `docker` por `podman`:
-
 ```bash
 podman run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data docker.io/omnirise/linkbreeze:latest
 ```
 
-Se ocorrer erro de permissão no volume, crie-o antes: `podman volume create linkbreeze-data`
-
-Para integração com systemd no modo rootless Podman: execute `podman generate systemd` após iniciar o container.
-
-O instalador de uma linha no início desta seção detecta o Podman automaticamente.
+Erros de permissão no volume? Execute `podman volume create linkbreeze-data` antes. O script de instalação no topo detecta o Podman automaticamente.
 
 </details>
 
 <details>
 <summary>🖥️ &nbsp;Portainer</summary>
 
-Usa o [Portainer](https://www.portainer.io/) para gerenciar containers? Implante como Stack.
-
-1. Acesse seu ambiente → **Stacks** → **Add stack**
-2. Nomeie como `linkbreeze` e cole:
-
-```yaml
-services:
-  linkbreeze:
-    image: docker.io/omnirise/linkbreeze:latest
-    ports:
-      - "3000:3000"
-    volumes:
-      - linkbreeze-data:/app/data
-    restart: unless-stopped
-
-volumes:
-  linkbreeze-data:
-```
-
+1. **Stacks** → **Add stack**, nomeie como `linkbreeze`
+2. Cole o arquivo compose da seção Docker Compose acima
 3. Clique em **Deploy the stack**
 
-> **Atualização:** **Stacks** → `linkbreeze` → **Editor** → clique em **Pull and redeploy**.
+Atualizações: **Stacks** → `linkbreeze` → **Editor** → **Pull and redeploy**.
 
 </details>
 
@@ -245,75 +209,50 @@ Requer Node.js 18+.
 ```bash
 git clone https://github.com/Manak-hash/LinkBreeze.git
 cd LinkBreeze
-
 npm install
-
 cp .env.example .env
-# Edite o .env para configurar SECRET_KEY e DATABASE_PATH se necessário
-
+# Edit .env to set your SECRET_KEY and DATABASE_PATH if needed
 npm run db:migrate
 npm run dev
 ```
 
-> Para produção: `npm run build && npm start`
+Para produção: `npm run build && npm start`
 
 </details>
 
-## 🌐 Publicando Sua Página
-
-O LinkBreeze roda no seu servidor. Uma vez implantado, sua página fica acessível para qualquer pessoa
-em `https://seu-dominio.com/seu-slug`. Veja como colocar online:
-
-### Início rápido: Aponte seu domínio
-
-1. Aponte o registro tipo A do seu domínio para o IP do seu servidor
-2. Exponha a porta 3000 ou configure um proxy reverso
-3. Pronto — sua página estará no ar em `https://seu-dominio.com/seu-slug`
-
-### Cenários avançados de implantação
-
-Para ambientes de produção — proxies reversos com TLS automático, túneis zero-trust,
-Kubernetes, backups agendados — consulte o diretório **[`examples/`](examples/)**.
-Cada exemplo é um arquivo independente com comentários explicativos.
-
 <details>
-<summary>Referência rápida: qual exemplo usar para cada cenário?</summary>
+<summary>🌍 &nbsp;Coloque no ar no seu domínio</summary>
 
-| O que você precisa | Use este arquivo |
-|--------------------|------------------|
-| TLS automático sem configuração manual | `docker-compose.caddy.yml` ou `docker-compose.https-portal.yml` |
-| TLS automático com painel de controle (Traefik) | `docker-compose.traefik.yml` |
-| Expor sem abrir portas no firewall (Zero Trust) | `docker-compose.cloudflare-tunnel.yml` |
-| Já utiliza Nginx + Certbot | `docker-compose.nginx.yml` |
+Depois de implantado, sua página fica em `https://your-domain.com/your-slug`.
+
+1. Aponte o registro A do seu domínio para o IP do seu servidor
+2. Exponha a porta 3000 ou coloque um proxy reverso na frente
+3. Pronto
+
+**Arquivos compose prontos** ficam em [`examples/`](examples/) - um arquivo independente por cenário:
+
+| O que você quer | Use este arquivo |
+|---------------|-----------------|
+| TLS automático, sem configuração manual | `docker-compose.caddy.yml` ou `docker-compose.https-portal.yml` |
+| TLS automático com painel (Traefik) | `docker-compose.traefik.yml` |
+| Sem portas abertas (zero-trust) | `docker-compose.cloudflare-tunnel.yml` |
+| Você já usa Nginx + Certbot | `docker-compose.nginx.yml` |
 | Backups agendados do SQLite | `docker-compose.with-backup.yml` |
-| Executando em cluster Kubernetes | `kubernetes.yaml` |
+| Rodando no Kubernetes | `kubernetes.yaml` |
 
-</details>
-
-### Opção 1: Proxy Reverso com seu Domínio
-
-Aponte o registro A do seu domínio para o IP do servidor e utilize um proxy reverso com
-HTTPS automático:
-
-<details>
-<summary>Caddy (recomendado — HTTPS automático)</summary>
+**Caddy** (recomendado - HTTPS automático):
 
 ```
-links.exemplo.com {
+links.example.com {
     reverse_proxy localhost:3000
 }
 ```
 
-Para uma configuração completa com Docker Compose e Caddy, veja [`examples/docker-compose.caddy.yml`](examples/docker-compose.caddy.yml).
-
-</details>
-
-<details>
-<summary>Nginx</summary>
+**Nginx:**
 
 ```nginx
 server {
-    server_name links.exemplo.com;
+    server_name links.example.com;
     location / {
         proxy_pass http://localhost:3000;
         proxy_set_header Host $host;
@@ -324,19 +263,13 @@ server {
 }
 ```
 
-Para uma configuração completa com Docker Compose e Nginx, veja [`examples/docker-compose.nginx.yml`](examples/docker-compose.nginx.yml).
-
-</details>
-
-### Opção 2: Cloudflare Tunnel (sem abrir portas)
-
-Não requer compra de IP fixo nem encaminhamento de portas:
+**Cloudflare Tunnel** (sem portas abertas, sem precisar comprar domínio):
 
 ```bash
 cloudflared tunnel --url http://localhost:3000
 ```
 
-Para uma configuração completa com Docker Compose e Cloudflare Tunnel, veja [`examples/docker-compose.cloudflare-tunnel.yml`](examples/docker-compose.cloudflare-tunnel.yml).
+</details>
 
 ## 📸 Capturas de Tela
 
@@ -351,7 +284,7 @@ Para uma configuração completa com Docker Compose e Cloudflare Tunnel, veja [`
     </tr>
     <tr>
     <td><img src="public/screenshots/Public-Page(Aurora).jpeg" alt="Página Pública [Tema Aurora]" /></td>
-    <td><img src="public/screenshots/Admin-Dashboard.jpeg" alt="Painel Admin" /></td>
+    <td><img src="public/screenshots/Admin-Dashboard.jpeg" alt="Painel de Administração" /></td>
     </tr>
     <tr>
     <td>Links</td>
@@ -367,22 +300,22 @@ Para uma configuração completa com Docker Compose e Cloudflare Tunnel, veja [`
     </tr>
     <tr>
     <td><img src="public/screenshots/Theme.jpeg" alt="Página de Temas" /></td>
-    <td><img src="public/screenshots/Preview.jpeg" alt="Painel de Pré-visualização" /></td>
+    <td><img src="public/screenshots/Preview.jpeg" alt="Painel de Prévia ao Vivo" /></td>
     </tr>
     <tr>
     <td>Configurações [Geral]</td>
     <td>Configurações [Aparência]</td>
     </tr>
     <tr>
-    <td><img src="public/screenshots/Settings(General).jpeg" alt="Configurações [Aba Geral]" /></td>
-    <td><img src="public/screenshots/Settings(Appearance).jpeg" alt="Configurações [Aba Aparência]" /></td>
+    <td><img src="public/screenshots/Settings(General).jpeg" alt="Página de Configurações [Aba Geral]" /></td>
+    <td><img src="public/screenshots/Settings(Appearance).jpeg" alt="Página de Configurações [Aba Aparência]" />
     <tr>
     <td>Configurações [Segurança]</td>
     <td>Configurações [Dados]</td>
     </tr>
     <tr>
-    <td><img src="public/screenshots/Settings(Security).jpeg" alt="Configurações [Aba Segurança]" /></td>
-    <td><img src="public/screenshots/Settings(Data).jpeg" alt="Configurações [Aba Dados]" /></td>
+    <td><img src="public/screenshots/Settings(Security).jpeg" alt="Página de Configurações [Aba Segurança]" /></td>
+    <td><img src="public/screenshots/Settings(Data).jpeg" alt="Página de Configurações [Aba Dados]" /></td>
     </tr>
 </table>
 
@@ -390,115 +323,103 @@ Para uma configuração completa com Docker Compose e Cloudflare Tunnel, veja [`
 
 ## 🆚 Comparativo
 
+<div align="center">
+
 | Recurso | Linktree | LinkStack | LittleLink | Shako | **LinkBreeze** |
 |---------|----------|-----------|------------|-------|----------------|
-| **Preço** | R$15/mês | Grátis | Grátis | Grátis | **Grátis** |
-| **Painel Admin** | ✅ | Lento | ❌ | ❌ | **✅ Rápido** |
-| **Múltiplas Páginas** | ✅ (pago) | ❌ | ❌ | ❌ | **✅** |
-| **Favicon Automático** | ❌ | ❌ | ❌ | ❌ | **✅** |
+| **Preço** | Grátis - US$ 35/mês | Grátis | Grátis | Grátis | **Grátis** |
+| **Painel Admin** | ✅ | ✅ | ❌ | ❌ | **✅ Rápido** |
+| **Múltiplas Páginas** | ❌ | ❌ | ❌ | ❌ | **✅ Ilimitadas** |
+| **Favicon Automático nos Links** | ❌ | ❌ | ❌ | ❌ | **✅** |
 | **Assistente de Migração** | ❌ | ❌ | ❌ | ❌ | **✅** |
-| **Banco de Dados** | Próprio deles | MySQL | Nenhum | Nenhum | **SQLite** |
-| **Estatísticas Nativas** | Pago | Básico | ❌ | ❌ | **✅ Completo** |
-| **Estatísticas Externas** | ✅ | ✅ | ❌ | ❌ | **✅** |
+| **Análises Integradas** | Básico, completo é pago | Básico | ❌ | ❌ | **✅ Completo e privado** |
 | **Captura de E-mails** | Pago | ❌ | ❌ | ❌ | **✅** |
-| **Widgets Incorporados** | Pago | ❌ | ❌ | ❌ | **✅** |
-| **Miniaturas de Links** | ✅ | ❌ | ❌ | ❌ | **✅** |
-| **Códigos QR** | ✅ | ✅ | ❌ | ❌ | **✅** |
+| **Widgets Incorporados** | Parcial | ❌ | ❌ | ❌ | **✅** |
 | **Agendamento de Links** | Pago | ❌ | ❌ | ❌ | **✅** |
-| **Temas** | Pago | Limitado | Apenas CSS | Config | **✅ Sistema de Tokens + Import/Export** |
-| **CSS Personalizado** | ❌ | ❌ | ✅ | ❌ | **✅** |
+| **Temas** | Pago | Limitado | Apenas CSS | Arquivo de config | **✅ Sistema completo de tokens** |
+| **Códigos QR** | ✅ | ✅ | ❌ | ❌ | **✅ Personalizáveis** |
 | **Auto-Hospedado** | ❌ | ✅ | ✅ | ✅ | **✅** |
-| **Linguagem** | Fechado | PHP | HTML | Astro | **TypeScript** |
-| **Implantação Docker** | N/A | Complexo | Simples | Simples | **Um comando** |
-| **Carregamento de Página**| ~2-3s | ~1-2s | Rápido | Rápido | **<300ms** |
-| **Licença** | Proprietária | AGPL | MIT | GPL | **MIT** |
+| **Carregamento da Página** | Hospedado | App PHP | Rápido (estático) | Rápido (estático) | **<300ms, zero JS** |
 
-## 🛠️ Tecnologias Utilizadas
+</div>
 
-| Camada | Tecnologia |
-|--------|-----------|
-| Framework | Next.js 16 (App Router, Server Components, ISR) |
-| Banco de Dados | SQLite via better-sqlite3 (modo WAL) |
-| ORM | Drizzle ORM (type-safe, overhead zero) |
-| Autenticação | Sessões HMAC baseadas em cookies, Argon2id (hashes bcrypt legados são atualizados no login) |
-| Interface | shadcn/ui + Tailwind CSS 4 |
-| Arrastar e Soltar | dnd-kit |
-| Gráficos | Recharts |
-| Códigos QR | qrcode (SVG/PNG gerados no servidor) |
-| Validação | Zod |
-| Ícones | Lucide + SVGs sociais personalizados |
+## 💬 Comunidade
 
-## 📖 Documentação
+<div align="center">
 
-- [Guia de Contribuição](CONTRIBUTING.md)
-- [Política de Segurança](SECURITY.md)
-- [Histórico de Alterações](CHANGELOG.md)
-- [Solução de Problemas](TROUBLESHOOTING.md)
-- [Decisões de Arquitetura](docs/adr/)
-- [Referência de Configuração](#configuração)
+**Obtenha ajuda, mostre sua página, vote no que vem a seguir.**
+
+[![Discord](https://img.shields.io/discord/1559020936253022209?style=for-the-badge&logo=discord&logoColor=white&label=Junte-se%20ao%20nosso%20Discord&color=5865F2)](https://discord.gg/bAJMW3bAJa)
+
+</div>
 
 ## ⚙️ Configuração
 
-Todas as configurações são feitas por variáveis de ambiente (`.env`). **O `.env.example` é a referência canônica** — copie-o (`cp .env.example .env`): ele documenta cada variável, incluindo os blocos de credenciais de carteira com seus avisos:
+Toda a configuração é feita via variáveis de ambiente. **[`.env.example`](.env.example) é a referência canônica** - copie-o e cada variável está documentada inline, incluindo os blocos de carteira.
 
 | Variável | Padrão | Descrição |
 |----------|--------|-----------|
 | `PORT` | `3000` | Porta do servidor |
 | `DATABASE_PATH` | `./data/linkbreeze.db` | Caminho do arquivo de banco SQLite |
 | `SECRET_KEY` | Gerado automaticamente | Chave de assinatura HMAC para sessões |
-| `EXTRA_SCRIPT_SRC` | _(vazio)_ | Domínios de estatísticas separados por espaço para o CSP (ex: `plausible.io umami.is`) |
-| `GOOGLE_WALLET_ISSUER_ID` | _(vazio)_ | Ativa os botões "Adicionar ao Google Wallet" nas páginas públicas. ID numérico do emissor do Google Pay & Wallet Console. |
-| `GOOGLE_WALLET_SERVICE_ACCOUNT_JSON` | _(vazio)_ | JSON completo da conta de serviço (`client_email` + `private_key`) autorizada para a Wallet API. |
-| `APPLE_WALLET_CERT_PEM` | _(vazio)_ | Ativa os botões "Adicionar ao Apple Wallet". Certificado de assinatura do Pass Type ID (PEM). |
-| `APPLE_WALLET_KEY_PEM` | _(vazio)_ | Chave privada correspondente ao certificado de assinatura (PEM). |
-| `APPLE_WALLET_KEY_PASSPHRASE` | _(vazio)_ | Senha da chave de assinatura, se criptografada. |
-| `APPLE_WALLET_WWDR_PEM` | _(vazio)_ | Certificado intermediário WWDR da Apple (PEM). |
-| `APPLE_WALLET_TEAM_ID` | _(vazio)_ | Seu Team ID da Apple de 10 caracteres. |
-| `APPLE_WALLET_PASS_TYPE_ID` | _(vazio)_ | Seu Pass Type ID (deve começar com `pass.`). |
+| `EXTRA_SCRIPT_SRC` | _(vazio)_ | Domínios de análises separados por espaço para o CSP (ex: `plausible.io umami.is`) |
 
-**Passes de carteira e exportação de contato:** cada página pública renderiza um bloco de compartilhamento com um botão "Salvar contato" (vCard universal, sempre ativo). Quando as credenciais acima estão configuradas, os botões "Adicionar ao Google Wallet" (conta de emissor gratuita; os passes só podem ser salvos por usuários de teste até o Google aprovar o acesso de produção) e "Adicionar ao Apple Wallet" (requer uma conta paga de desenvolvedor Apple; os passes só podem ser instalados pelo Safari) são ativados automaticamente. Os passes são snapshots estáticos — o QR code do pass sempre abre a página ao vivo. A aba Integração nas Configurações mostra o status das credenciais por carteira e avisa quando o certificado de assinatura da Apple está prestes a expirar.
+<details>
+<summary>💳 &nbsp;Variáveis de carteira (Google Wallet / Apple Wallet)</summary>
 
-**Usando estatísticas externas (Plausible, Umami, Matomo, Google Analytics):**
+| Variável | Descrição |
+|----------|-----------|
+| `GOOGLE_WALLET_ISSUER_ID` | ID numérico do emissor do Google Pay & Wallet Console. Ativa os botões "Adicionar ao Google Wallet" |
+| `GOOGLE_WALLET_SERVICE_ACCOUNT_JSON` | JSON da conta de serviço (`client_email` + `private_key`) autorizada para a Wallet API |
+| `APPLE_WALLET_CERT_PEM` | Certificado de assinatura do Pass Type ID (PEM). Ativa os botões "Adicionar ao Apple Wallet" |
+| `APPLE_WALLET_KEY_PEM` | Chave privada correspondente ao certificado de assinatura (PEM) |
+| `APPLE_WALLET_KEY_PASSPHRASE` | Senha da chave de assinatura, se criptografada |
+| `APPLE_WALLET_WWDR_PEM` | Certificado intermediário WWDR da Apple (PEM) |
+| `APPLE_WALLET_TEAM_ID` | Seu Team ID da Apple de 10 caracteres |
+| `APPLE_WALLET_PASS_TYPE_ID` | Seu Pass Type ID (deve começar com `pass.`) |
 
-As estatísticas integradas cobrem visualizações, cliques, referências e tipos de dispositivo sem necessidade de configuração adicional. Caso deseje incluir um provedor externo, cole seu snippet `<script>` em Configurações -> Integração -> Script de estatísticas, e adicione o domínio do provedor em `EXTRA_SCRIPT_SRC` para autorização do CSP:
+Toda página pública renderiza um bloco de compartilhamento com um botão "Salvar contato" (vCard universal, sempre ativo). Os botões de carteira são ativados automaticamente quando as credenciais acima estão configuradas. Google Wallet: conta de emissor gratuita, mas os passes só podem ser salvos por usuários de teste na lista de permissões até o Google liberar o acesso de produção. Apple Wallet: requer uma conta paga de desenvolvedor Apple e instalação apenas pelo Safari. Os passes são snapshots estáticos - o QR do pass sempre abre a página ao vivo. Configurações → Integração mostra o status das credenciais por carteira e avisa quando o certificado de assinatura da Apple está prestes a expirar.
 
-```bash
-EXTRA_SCRIPT_SRC=plausible.io umami.is
-```
+</details>
 
-Recompile a aplicação após alterar esta variável (o CSP é gerado no processo de build).
+**Usa análises externas?** Cole o snippet do provedor em Configurações → Integração → Script de análises e adicione o domínio do provedor em `EXTRA_SCRIPT_SRC` para que o CSP o permita (ex: `EXTRA_SCRIPT_SRC=plausible.io umami.is`). Recompile após alterar - o CSP é gerado no processo de build.
 
-As configurações de tempo de execução (slug da página, título, SEO, tema) são gerenciadas diretamente no painel administrativo
-e salvas no banco de dados — sem necessidade de alterações no código.
+As configurações de tempo de execução (slug da página, título, SEO, tema) são gerenciadas pelo painel admin e armazenadas no banco de dados - sem necessidade de alterar código.
 
 ## 🎨 Sistema de Temas
 
-11 temas pré-configurados estão disponíveis: **Aurora** (tema animado principal), **Glassmorphism**, **Neon Cyberpunk**, **Editorial Paper**, **Terminal Mono**, **Pastel Soft**, **Brutalist**, **Retro Sunset**, **Minimal Light**, **8-Bit Retro** e **Frutiger Aero** (visual aquático e vítreo dos anos 2000 — botões em bolha de gel, cartões em vidro fosco, fundo de vídeo de bolhas com gradiente aqua alternativo e fonte Nunito).
+11 predefinições estão incluídas de fábrica: **Aurora** (carro-chefe animado), **Glassmorphism**, **Neon Cyberpunk**, **Editorial Paper**, **Terminal Mono**, **Pastel Soft**, **Brutalist**, **Retro Sunset**, **Minimal Light**, **8-Bit Retro** e **Frutiger Aero**.
 
-O motor de temas utiliza propriedades personalizadas CSS (`--lb-*`) — cada cor, raio, sombra e fonte é um token consumido pelos componentes da página pública. O editor oferece controle total sobre:
+<details>
+<summary>🎛️ &nbsp;O que o personalizador controla</summary>
 
-- **Plano de Fundo** — 8 tipos (sólido, gradiente, radial, malha/mesh, aurora, gradiente animado, imagem, padrão) com ajustes de ângulo, sobreposição e opacidade
-- **Cores** — destaque, secundária, texto, texto secundário, fundo do cartão, borda do cartão (hex ou rgba)
-- **Tipografia** — 15 fontes selecionadas do Google Fonts (Inter, Poppins, Playfair Display, JetBrains Mono, Space Grotesk, DM Sans, Lora, Bebas Neue, Sora, Outfit, Nunito, Montserrat, Caveat, Pacifico, Abril Fatface), escala de fonte, peso, espaçamento de letras — e fontes próprias: envie qualquer arquivo woff2/woff (máx. 2 MB) na aba Tipografia e use-a como fonte nativa. Fontes enviadas são servidas na mesma origem, incorporadas nas exportações de temas e incluídas nos backups.
-- **Estilo dos Cartões** — 7 estilos de links (pílula, arredondado, reto, vidro, contorno, neon, pixel), efeitos de hover, tamanho do botão, raio dos cantos, largura da borda, intensidade da sombra
-- **Layout** — largura do contêiner, alinhamento (esquerda/centro/direita), densidade (compacto/normal/espaçado)
-- **Efeitos** — brilho com cor personalizada, desfoque de vidro, textura de ruído, animação de entrada
-- **Duplicação** — clone qualquer tema (predefinido ou personalizado) para uma nova cópia editável
+O motor de temas é um sistema de tokens baseado em propriedades personalizadas CSS (`--lb-*`) - cada cor, raio, sombra e fonte da página pública é um token.
 
-Todas as alterações são aplicadas com zero bundles JS no cliente — a página pública não envia runtime do React e é renderizada como HTML puro no servidor. (Links de e-mail/telefone/redes sociais usam um beacon leve inline `onclick` para contagem aproximada de cliques; links comuns http/https utilizam o redirecionador `/go/:id` sem necessidade de JS, com slug personalizado opcional — `/go/seu-nome`.)
+- **Fundo** - 8 tipos (sólido, gradiente, radial, mesh, aurora, gradiente animado, imagem, padrão) com controles de ângulo, sobreposição e opacidade
+- **Cores** - destaque, secundária, texto, texto atenuado, fundo do cartão, borda do cartão (hex ou rgba)
+- **Tipografia** - 15 Google Fonts selecionadas, escala de fonte, peso, espaçamento entre letras - ou envie seu próprio woff2/woff (máx. 2 MB). Fontes enviadas são servidas na mesma origem, incorporadas nas exportações de tema e incluídas nos backups
+- **Estilo dos Cartões** - 7 estilos de link (pílula, arredondado, reto, vidro, contorno, neon, pixel), efeitos de hover, tamanho do botão, raio dos cantos, largura da borda, intensidade da sombra
+- **Layout** - largura do contêiner, alinhamento (esquerda/centro/direita), densidade (compacto/normal/espaçado)
+- **Efeitos** - brilho com cor personalizada, desfoque de vidro, textura de ruído, animação de revelação
+- **Duplicar / importar / exportar** - clone qualquer tema como uma cópia editável e compartilhe como JSON
 
-## 💬 Comunidade
+</details>
 
-- **[Compartilhe seu tema do LinkBreeze](https://github.com/Manak-hash/LinkBreeze/discussions/51)** — Exporte o JSON do seu tema personalizado e mostre sua página. Os melhores são incluídos em futuras versões.
-- **[Quem está usando o LinkBreeze? Deixe seu link](https://github.com/Manak-hash/LinkBreeze/discussions/54)** — Conte o que você construiu, qual o propósito da página e o que pode ser melhorado.
+## 📖 Docs & Links
+
+[Contribuição](CONTRIBUTING.md) · [Política de Segurança](SECURITY.md) · [Histórico de Alterações](CHANGELOG.md) · [Solução de Problemas](TROUBLESHOOTING.md) · [Decisões de Arquitetura](docs/adr/) · [Referência de configuração](.env.example)
+
+Fonte: [GitLab](https://gitlab.com/omnirise00/linkbreeze) (espelho público canônico, sincronizado automaticamente) · [GitHub](https://github.com/Manak-hash/LinkBreeze) · Imagem: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
+
+Issues e PRs são bem-vindos em qualquer uma das plataformas.
 
 ## 🤝 Contribuição
 
-Contribuições são muito bem-vindas! Consulte [CONTRIBUTING.md](CONTRIBUTING.md) para diretrizes.
+Contribuições são bem-vindas! Consulte [CONTRIBUTING.md](CONTRIBUTING.md) para as diretrizes.
 
 ## 📜 Licença
 
-MIT — faça o que quiser. Veja [LICENSE](LICENSE).
+MIT - faça o que quiser. Veja [LICENSE](LICENSE).
 
 ## 🏢 Sobre
 

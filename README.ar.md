@@ -7,66 +7,89 @@
 [English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [中文](README.zh.md) · **العربية** · [Português (Brasil)](README.pt-BR.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
-[![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://github.com/users/Manak-hash/packages/container/package/linkbreeze)
-[![Website](https://img.shields.io/badge/Website-linkbreeze-533fd6?style=for-the-badge&logo=googlechrome&logoColor=white)](https://linkbreeze.omnirise.dev/)
-[![OmniRise](https://img.shields.io/badge/OmniRise-omnirise-06B6D4?style=for-the-badge&logo=rocket&logoColor=white)](https://omnirise.dev)
-[![YouTube](https://img.shields.io/badge/Watch-YouTube-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=_Ipf-_1B4BY)
+[![Docker](https://img.shields.io/badge/omnirise%2Flinkbreeze-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/omnirise/linkbreeze)
+
+[![Website](https://img.shields.io/badge/linkbreeze-533fd6?style=for-the-badge&logo=googlechrome&logoColor=white)](https://linkbreeze.omnirise.dev/)
+[![OmniRise](https://img.shields.io/badge/omnirise-06B6D4?style=for-the-badge&logo=rocket&logoColor=white)](https://omnirise.dev)
+[![YouTube](https://img.shields.io/badge/YouTube-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=_Ipf-_1B4BY)
 
 [![CI](https://img.shields.io/github/actions/workflow/status/Manak-hash/LinkBreeze/ci.yml?style=for-the-badge&logo=githubactions&label=CI&logoColor=white)](https://github.com/Manak-hash/LinkBreeze/actions/workflows/ci.yml)
 [![Latest Release](https://img.shields.io/github/v/release/Manak-hash/LinkBreeze?style=for-the-badge&logo=github&color=blue)](https://github.com/Manak-hash/LinkBreeze/releases/latest)
-[![Last Commit](https://img.shields.io/github/last-commit/Manak-hash/LinkBreeze?style=for-the-badge&logo=git&color=green)](https://github.com/Manak-hash/LinkBreeze/commits)
+[![Discord](https://img.shields.io/discord/1559020936253022209?style=for-the-badge&logo=discord&logoColor=white&label=Discord&color=5865F2)](https://discord.gg/bAJMW3bAJa)
 
 </div>
 
 ---
 
-> [!NOTE]
-> [النسخة الإنجليزية](README.md) هي المرجع. قد تتأخر هذه الترجمة عن الأصل.
+> **توقف عن دفع 15 دولارًا شهريًا لـ Linktree.**  LinkBreeze مركز روابط مجاني ومستضاف ذاتيًا: سريع، قابل للتخصيص، مع إحصائيات مدمجة. **ثبّته بأمر واحد.**
+
+<div align="center">
+
+&nbsp;[**🔗 عرض مباشر**](https://linkbreeze-demo.omnirise.dev/linkbreeze)&nbsp;&nbsp;·&nbsp;&nbsp;
+[**🔐 لوحة تحكم العرض**](https://linkbreeze-demo.omnirise.dev/dashboard)
+
+</div>
 
 ---
 
-> **توقف عن دفع 15 دولارًا شهريًا لـ Linktree.** يمنحك LinkBreeze روابط،
-> وإحصائيات، ورموز QR، وثيمات، ولوحة تحكم حقيقية — مجانًا، للأبد، بأمر Docker واحد.
-
-**[🔗 عرض مباشر](https://linkbreeze-demo.omnirise.dev/linkbreeze)** — شاهد الصفحة العامة أثناء العمل.
-
-**[🔐 لوحة تحكم العرض](https://linkbreeze-demo.omnirise.dev/dashboard)** — لوحة التحكم بكل الميزات (قراءة فقط).
-
 ## ✨ الميزات
 
-- **🔗 إدارة الروابط** — أضف ورتّب وخصّص عددًا غير محدود من الروابط بالسحب والإفلات
-- **🌐 دعم الصفحات المتعددة** — أنشئ عددًا غير محدود من الصفحات، لكل منها اسمها المختصر (slug) وثيمها وروابطها وإحصائياتها و SEO ورمز QR الخاص بها
-- **🎨 أيقونات المواقع التلقائية** — تعرض الروابط تلقائيًا أيقونة الموقع الهدف — لا حاجة لرفع الأيقونات يدويًا
-- **📥 معالج الترحيل** — استورد روابطك وملفاتك الاجتماعية الحالية من Linktree أو Bento أو Hopp.bio أو LittleLink أو أي تصدير HTML/JSON
-- **🖼️ صور مصغّرة للروابط** — أضف صورًا إلى روابطك للحصول على بطاقات معاينة بصرية
-- **🎵 أدوات مدمجة** — ادمج YouTube أو Spotify أو SoundCloud أو Vimeo أو Bandcamp مباشرة في صفحتك
-- **⏰ جدولة الروابط** — جدوِل ظهور الروابط واختفاءها تلقائيًا مع تحكم بالتاريخ والوقت
-- **🏷️ أسماء مخصصة لإعادة التوجيه** — امنح أي رابط عنوان `/go/اسمك` ثابتًا وقابلًا للمشاركة يبقى صالحًا بعد الحذف وإعادة الإنشاء. الأسماء المحجوزة والأرقام الخالصة محظورة حتى لا تُطغى أسماء على مسارات التطبيق أبدًا؛ الرابط الموقوف الذي يحمل اسمًا يعيد توجيه الزوار إلى صفحتك العامة بدل خطأ 404
-- **📊 إحصائيات تحترم الخصوصية** — المشاهدات، النقرات، المصادر، نوع الجهاز. بلا ملفات تعريف (cookies) بالتصميم. تُهشَّر عناوين IP للزوار بملح يتجدد يوميًا ولا تُخزَّن أبدًا. تُحذف البيانات الأقدم من 90 يومًا تلقائيًا افتراضيًا (الإعدادات → البيانات؛ ضع 0 للاحتفاظ بكل شيء).
-- **📈 إحصائيات خارجية** — أضف Plausible أو Umami أو Matomo أو Google Analytics بلصقة واحدة
-- **🔔 إشعارات التحديث** — ينبّهك شريط في لوحة التحكم عند توفر نسخة جديدة (لا اتصال خارجي، لا تحديث تلقائي)
-- **🎨 الثيمات** — 11 إعدادًا مسبقًا (Aurora، Glassmorphism، Neon Cyberpunk، Editorial Paper، Terminal Mono، Pastel Soft، Brutalist، Retro Sunset، Minimal Light، 8-Bit Retro، Frutiger Aero) + مخصص كامل بنظام رموز CSS (ألوان، 15 خطًا + رفع خطوط مخصصة، 8 أنواع خلفيات، 8 أنماط بطاقات، تحكم بالتخطيط، مؤثرات) + تكرار/استيراد/تصدير الثيمات
-- **✏️ CSS مخصص** — اضبط صفحتك بدقة عبر حقن CSS خام
-- **📧 جمع البريد الإلكتروني** — اجمع بريد المشتركين في صفحتك العامة وصدّره إلى CSV
-- **📱 الجوال أولًا** — رائع على كل الشاشات. يحمّل في أقل من 300 مللي ثانية. صفر حزم JS على المتصفح.
-- **🎯 رموز QR** — تُولَّد تلقائيًا لصفحتك. نزّلها بصيغة SVG أو PNG. خصّص الألوان، ادمج صورتك الرمزية أو أيقونة موقعك في المنتصف، صدّر حتى 1024 بكسل للطباعة.
-- **🔒 استضافة ذاتية** — بياناتك، خادمك. لا متتبعات خارجية. لا إعلانات. لا اشتراكات.
-- **🐳 نشر بأمر واحد** — Docker compose وتصبح على الخط
+<div align="center">
+<table>
+  <tr>
+    <td width="50%" valign="top">🔗 <strong>دعم الصفحات المتعددة</strong><br/>صفحات غير محدودة، لكل منها اسم مختصر (slug) وثيم وروابط وإحصائيات خاصة بها</td>
+    <td valign="top">🎨 <strong>الثيمات + المخصّص</strong><br/>11 إعدادًا مسبقًا إضافة إلى مخصّص كامل قائم على الرموز مع استيراد/تصدير</td>
+  </tr>
+  <tr>
+    <td valign="top">📊 <strong>إحصائيات تحترم الخصوصية أولًا</strong><br/>مشاهدات، نقرات، مصادر، أجهزة. بلا كوكيز، عناوين IP مُهشَّرة، حذف تلقائي للبيانات القديمة</td>
+    <td valign="top">🧭 <strong>معالج الترحيل</strong><br/>استورد من Linktree أو Bento أو Hopp.bio أو LittleLink أو أي تصدير HTML/JSON</td>
+  </tr>
+  <tr>
+    <td valign="top">🔒 <strong>استضافة ذاتية</strong><br/>بياناتك، خادمك. لا متتبعات، لا إعلانات، لا اشتراكات</td>
+    <td valign="top">🐳 <strong>تثبيت بأمر واحد</strong><br/>أمر curl واحد. يكتشف Docker أو Podman تلقائيًا وتصبح على الخط</td>
+  </tr>
+  <tr>
+    <td valign="top">📱 <strong>أدوات مدمجة</strong><br/>YouTube وSpotify وSoundCloud وVimeo وBandcamp في صفحتك</td>
+    <td valign="top">🎯 <strong>رموز QR</strong><br/>تُولَّد تلقائيًا، ألوان مخصصة، صورة رمزية أو أيقونة الموقع في المنتصف، SVG/PNG حتى 1024 بكسل</td>
+  </tr>
+</table>
+
+
+⚡ **صفر JavaScript من جانب العميل. يُحمَّل في أقل من 300 مللي ثانية. HTML مصيَّر على الخادم بالكامل.**
+
+</div>
+
+<details>
+<summary>✨ &nbsp;كل الميزات</summary>
+
+- **🔗 إدارة الروابط** - أضف ورتّب وخصّص عددًا غير محدود من الروابط بالسحب والإفلات
+- **🌐 روابط بأيقونات تلقائية** - تعرض الروابط تلقائيًا أيقونة الموقع الهدف، دون حاجة لرفع أيقونات
+- **🖼️ صور مصغّرة للروابط** - أضف صورًا إلى روابطك للحصول على بطاقات معاينة بصرية
+- **⏰ جدولة الروابط** - جدوِل ظهور الروابط أو اختفائها تلقائيًا مع تحكم بالتاريخ والوقت
+- **🏷️ أسماء مخصصة لإعادة التوجيه** - روابط قصيرة ثابتة وقابلة للمشاركة بصيغة `/go/اسمك` تبقى صالحة بعد الحذف وإعادة الإنشاء
+- **📈 إحصائيات خارجية** - أضف Plausible أو Umami أو Matomo أو Google Analytics بلصقة واحدة
+- **🖼️ صور المعاينة الاجتماعية (OG)** - بطاقات مشاركة تُصيَّر تلقائيًا من ثيم صفحتك، أو ارفع صورتك الخاصة مع التحكم في الملاءمة والموضع والتكبير
+- **✏️ CSS مخصص** - اضبط صفحتك بدقة عبر حقن CSS خام
+- **📧 جمع البريد الإلكتروني** - اجمع بريد المشتركين في صفحتك العامة وصدّره إلى CSV
+- **🔔 إشعارات التحديث** - شريط في لوحة التحكم عند توفر نسخة جديدة. لا اتصال خارجي، لا تحديث تلقائي
+- **🔑 لوحة تحكم سريعة** - كل ما سبق من لوحة واحدة نظيفة وفورية
+
+</details>
 
 ## 🚀 البدء السريع
 
-**أمر واحد — صفر إعداد — على الخط في 30 ثانية:**
+**أمر واحد. صفر إعداد. على الخط في 30 ثانية:**
 
 ```bash
 curl -fsSL https://linkbreeze.omnirise.dev/install.sh | bash
 ```
 
-يكتشف السكربت Docker أو Podman، يجلب الصورة، يشغّل الحاوية، ويهيّئ اختياريًا خدمة systemd للتشغيل التلقائي عند الإقلاع. تريد التشغيل التلقائي؟ شغّله بـ `sudo bash` وأجب **y** عند السؤال.
+يكتشف السكربت Docker أو Podman، يجلب الصورة ويشغّل الحاوية. شغّله بـ `sudo bash` وأجب **y** لتفعيل التشغيل التلقائي عند الإقلاع أيضًا.
+
+ثم افتح **http://localhost:3000** - معالج الإعداد يستغرق أقل من 30 ثانية.
 
 <details>
-<summary>لا تحب التمرير إلى bash؟</summary>
+<summary>🔍 &nbsp;تريد فحص السكربت قبل تشغيله؟</summary>
 
 ```bash
 curl -fsSL https://linkbreeze.omnirise.dev/install.sh -o install.sh
@@ -76,14 +99,12 @@ bash install.sh
 
 </details>
 
-ثم افتح http://localhost:3000 — معالج الإعداد يستغرق أقل من 30 ثانية.
-
-**تفضّل طريقة أخرى؟** افتح إحدى هذه:
+**تفضّل طريقة أخرى؟** افتح إحدى الطرق أدناه.
 
 <details>
 <summary>🐳 &nbsp;Docker</summary>
 
-لا حاجة إلى Node.js أو npm أو ملفات إعداد. صور متعددة المعماريات: `linux/amd64` و `linux/arm64`‏ (Raspberry Pi 3/4/5، Apple Silicon، VPS بمعمارية ARM).
+لا Node.js ولا npm ولا ملفات إعداد. صور متعددة المعماريات: `linux/amd64` و `linux/arm64` (Raspberry Pi 3/4/5، Apple Silicon، VPS بمعمارية ARM).
 
 **Linux / macOS / Windows CMD:**
 
@@ -91,7 +112,7 @@ bash install.sh
 docker run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data docker.io/omnirise/linkbreeze:latest
 ```
 
-**Windows PowerShell** — استخدم backticks لكسر الأسطر:
+**Windows PowerShell** - استخدم backticks لكسر الأسطر:
 
 ```powershell
 docker run -d `
@@ -102,17 +123,12 @@ docker run -d `
   docker.io/omnirise/linkbreeze:latest
 ```
 
-> **تهجرات قاعدة البيانات تعمل تلقائيًا** عند تشغيل الحاوية — لا حاجة
-> لتنفيذ `drizzle-kit migrate` يدويًا في عمليات نشر Docker.
+> تُنفَّذ تهجرات قاعدة البيانات تلقائيًا عند تشغيل الحاوية.
 
 </details>
 
 <details>
 <summary>🧩 &nbsp;Docker Compose</summary>
-
-الخيار الأفضل إذا أردت تخصيص المنافذ أو إضافة وكيل عكسي أو إدارة التحديثات بسهولة.
-
-**الخيار أ — جلب الصورة الجاهزة:**
 
 أنشئ ملف `docker-compose.yml`:
 
@@ -134,107 +150,54 @@ volumes:
 docker compose up -d
 ```
 
-**الخيار ب — البناء من المصدر:**
+الترقية: `docker compose pull && docker compose up -d` · السجلات: `docker compose logs -f linkbreeze`
 
-```bash
-git clone https://github.com/Manak-hash/LinkBreeze.git
-cd LinkBreeze
-docker compose up -d --build
-```
-
-الترقية في أي وقت: `docker compose pull && docker compose up -d`
-
-السجلات: `docker compose logs -f linkbreeze`
+تفضّل البناء من المصدر؟ `git clone https://github.com/Manak-hash/LinkBreeze.git && cd LinkBreeze && docker compose up -d --build`
 
 </details>
 
 <details>
 <summary>☁️ &nbsp;Coolify</summary>
 
-تشغّل [Coolify](https://coolify.io/) على خادمك الافتراضي؟
-
 1. **+ New Resource** → **Docker Compose Empty**
-2. الصق:
-
-```yaml
-services:
-  linkbreeze:
-    image: docker.io/omnirise/linkbreeze:latest
-    ports:
-      - "3000:3000"
-    volumes:
-      - linkbreeze-data:/app/data
-    restart: unless-stopped
-
-volumes:
-  linkbreeze-data:
-```
-
-3. عيّن نطاقًا (مثل `links.yourdomain.com`) للحصول على SSL تلقائي
-4. انقر **Deploy** — يتولى Coolify Let's Encrypt تلقائيًا
+2. الصق ملف compose من القسم أعلاه
+3. عيّن نطاقًا (مثل `links.yourdomain.com`) - يتولى Coolify Let's Encrypt تلقائيًا
+4. انقر **Deploy**
 
 </details>
 
 <details>
 <summary>📦 &nbsp;Synology NAS</summary>
 
-تشغّل [Synology DiskStation](https://www.synology.com/) مع Container Manager‏ (DSM 7.2+)؟
+Container Manager (DSM 7.2+):
 
-1. افتح **Container Manager** → **Container** → **Create**
-2. **الصورة:** `docker.io/omnirise/linkbreeze:latest` (اجلبها أولًا عبر **Image** → **Add** إن لم توجد)
-3. إعدادات الحاوية:
-   - **الاسم:** `linkbreeze`
-   - **المنفذ:** المحلي `3000` → الحاوية `3000`
-   - **الوحدة التخزينية:** أنشئ `/docker/linkbreeze/data` واربطها بـ `/app/data`
-   - **سياسة إعادة التشغيل:** `Unless stopped`
-4. انقر **Done** — على الخط عبر `http://<nas-ip>:3000`
+1. اجلب الصورة `docker.io/omnirise/linkbreeze:latest` (**Image** → **Add**، إن لم توجد)
+2. **أنشئ** حاوية: الاسم `linkbreeze`، المنفذ `3000 → 3000`، الوحدة التخزينية `/docker/linkbreeze/data → /app/data`، سياسة إعادة التشغيل `Unless stopped`
+3. انقر **Done** - على الخط عبر `http://<nas-ip>:3000`
 
-> **التحديث لاحقًا:** اجلب أحدث صورة، أوقف الحاوية وأنشئها من جديد. تبقى البيانات في الوحدة التخزينية.
+تبقى البيانات في الوحدة التخزينية عبر تحديثات الصورة.
 
 </details>
 
 <details>
 <summary>🔧 &nbsp;Podman</summary>
 
-تستخدم [Podman](https://podman.io/) بدل Docker‏ (RHEL، Fedora، CentOS)؟ استبدل `docker` بـ `podman`:
-
 ```bash
 podman run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbreeze-data:/app/data docker.io/omnirise/linkbreeze:latest
 ```
 
-إن ظهرت أخطاء صلاحيات على الوحدة التخزينية، أنشئها أولًا: `podman volume create linkbreeze-data`
-
-لتكامل systemd مع Podman بلا جذر: `podman generate systemd` بعد تشغيل الحاوية.
-
-سكربت التثبيت ذو السطر الواحد أعلى هذا القسم يكتشف Podman تلقائيًا.
+أخطاء صلاحيات على الوحدة التخزينية؟ نفّذ `podman volume create linkbreeze-data` أولًا. سكربت التثبيت في الأعلى يكتشف Podman تلقائيًا.
 
 </details>
 
 <details>
 <summary>🖥️ &nbsp;Portainer</summary>
 
-تدير حاوياتك عبر [Portainer](https://www.portainer.io/)؟ انشرها كـ Stack.
-
-1. اذهب إلى بيئتك → **Stacks** → **Add stack**
-2. سمّها `linkbreeze` والصق:
-
-```yaml
-services:
-  linkbreeze:
-    image: docker.io/omnirise/linkbreeze:latest
-    ports:
-      - "3000:3000"
-    volumes:
-      - linkbreeze-data:/app/data
-    restart: unless-stopped
-
-volumes:
-  linkbreeze-data:
-```
-
+1. **Stacks** → **Add stack**، سمّها `linkbreeze`
+2. الصق ملف compose من قسم Docker Compose أعلاه
 3. انقر **Deploy the stack**
 
-> **التحديث:** **Stacks** → `linkbreeze` → **Editor** → انقر **Pull and redeploy**.
+التحديثات: **Stacks** → `linkbreeze` → **Editor** → **Pull and redeploy**.
 
 </details>
 
@@ -246,58 +209,38 @@ volumes:
 ```bash
 git clone https://github.com/Manak-hash/LinkBreeze.git
 cd LinkBreeze
-
 npm install
-
 cp .env.example .env
-# عدّل .env لضبط SECRET_KEY و DATABASE_PATH عند الحاجة
-
+# Edit .env to set your SECRET_KEY and DATABASE_PATH if needed
 npm run db:migrate
 npm run dev
 ```
 
-> للإنتاج: `npm run build && npm start`
+للإنتاج: `npm run build && npm start`
 
 </details>
 
-## 🌐 إتاحة صفحتك للعامة
+<details>
+<summary>🌍 &nbsp;انشر صفحتك على نطاقك</summary>
 
-يعمل LinkBreeze على خادمك. بعد النشر، تصبح صفحتك متاحة للجميع عبر
-`https://your-domain.com/your-slug`. إليك كيف تنشرها:
-
-### البدء السريع: وجّه نطاقك
+بعد النشر، تصبح صفحتك متاحة على `https://your-domain.com/your-slug`.
 
 1. وجّه سجل A لنطاقك إلى عنوان IP لخادمك
-2. اكشف المنفذ 3000 أو أضف وكيلًا عكسيًا
-3. انتهى — صفحتك على الخط عبر `https://your-domain.com/your-slug`
+2. اكشف المنفذ 3000 أو ضع وكيلًا عكسيًا أمامه
+3. انتهى
 
-### سيناريوهات نشر متقدمة
-
-لإعدادات الإنتاج — وكلاء عكسيون مع TLS تلقائي، أنفاق zero-trust،
-Kubernetes، نسخ احتياطي مجدول — طالع مجلد **[`examples/`](examples/)**.
-كل مثال ملف واحد مستقل بذاته مع تعليق في الرأس يشرح متى تستخدمه.
-
-<details>
-<summary>مرجع سريع: أي مثال لأي سيناريو؟</summary>
+**ملفات compose جاهزة** موجودة في [`examples/`](examples/) - ملف واحد مستقل بذاته لكل سيناريو:
 
 | ما تريده | استخدم هذا الملف |
-|-----------|-------------------|
+|---------------|---------------|
 | TLS تلقائي دون إعداد يدوي | `docker-compose.caddy.yml` أو `docker-compose.https-portal.yml` |
 | TLS تلقائي مع لوحة تحكم (Traefik) | `docker-compose.traefik.yml` |
-| الإتاحة دون فتح منافذ (zero-trust) | `docker-compose.cloudflare-tunnel.yml` |
+| دون فتح منافذ (zero-trust) | `docker-compose.cloudflare-tunnel.yml` |
 | تستخدم Nginx + Certbot أصلًا | `docker-compose.nginx.yml` |
 | نسخ احتياطي مجدول لـ SQLite | `docker-compose.with-backup.yml` |
-| التشغيل على عنقود Kubernetes | `kubernetes.yaml` |
+| التشغيل على Kubernetes | `kubernetes.yaml` |
 
-</details>
-
-### الخيار 1: وكيل عكسي مع نطاقك الخاص
-
-وجّه سجل A لنطاقك إلى عنوان IP لخادمك، ثم استخدم وكيلًا عكسيًا مع
-HTTPS تلقائي:
-
-<details>
-<summary>Caddy (موصى به — HTTPS تلقائي)</summary>
+**Caddy** (موصى به - HTTPS تلقائي):
 
 ```
 links.example.com {
@@ -305,12 +248,7 @@ links.example.com {
 }
 ```
 
-لإعداد Docker Compose كامل مع Caddy، طالع [`examples/docker-compose.caddy.yml`](examples/docker-compose.caddy.yml).
-
-</details>
-
-<details>
-<summary>nginx</summary>
+**Nginx:**
 
 ```nginx
 server {
@@ -325,19 +263,13 @@ server {
 }
 ```
 
-لإعداد Docker Compose كامل مع Nginx، طالع [`examples/docker-compose.nginx.yml`](examples/docker-compose.nginx.yml).
-
-</details>
-
-### الخيار 2: ‏Cloudflare Tunnel (دون فتح منافذ)
-
-لا حاجة لشراء نطاق أو تمييز منافذ:
+**Cloudflare Tunnel** (دون فتح منافذ، دون شراء نطاق):
 
 ```bash
 cloudflared tunnel --url http://localhost:3000
 ```
 
-لإعداد Docker Compose كامل مع Cloudflare Tunnel، طالع [`examples/docker-compose.cloudflare-tunnel.yml`](examples/docker-compose.cloudflare-tunnel.yml).
+</details>
 
 ## 📸 لقطات الشاشة
 
@@ -377,7 +309,6 @@ cloudflared tunnel --url http://localhost:3000
     <tr>
     <td><img src="public/screenshots/Settings(General).jpeg" alt="صفحة الإعدادات [تبويب عام]" /></td>
     <td><img src="public/screenshots/Settings(Appearance).jpeg" alt="صفحة الإعدادات [تبويب المظهر]" /></td>
-    </tr>
     <tr>
     <td>الإعدادات [الأمان]</td>
     <td>الإعدادات [البيانات]</td>
@@ -392,126 +323,103 @@ cloudflared tunnel --url http://localhost:3000
 
 ## 🆚 المقارنة
 
+<div align="center">
+
 | الميزة | Linktree | LinkStack | LittleLink | Shako | **LinkBreeze** |
-|--------|----------|-----------|------------|-------|----------------|
-| **السعر** | 15$/شهر | مجاني | مجاني | مجاني | **مجاني** |
-| **لوحة التحكم** | ✅ | بطيئة | ❌ | ❌ | **✅ سريعة** |
-| **صفحات متعددة** | ✅ (مدفوعة) | ❌ | ❌ | ❌ | **✅** |
-| **أيقونات تلقائية** | ❌ | ❌ | ❌ | ❌ | **✅** |
+|---------|----------|-----------|------------|-------|----------------|
+| **السعر** | مجاني - 35 دولارًا/شهر | مجاني | مجاني | مجاني | **مجاني** |
+| **لوحة التحكم** | ✅ | ✅ | ❌ | ❌ | **✅ سريعة** |
+| **صفحات متعددة** | ❌ | ❌ | ❌ | ❌ | **✅ غير محدودة** |
+| **روابط بأيقونات تلقائية** | ❌ | ❌ | ❌ | ❌ | **✅** |
 | **معالج الترحيل** | ❌ | ❌ | ❌ | ❌ | **✅** |
-| **قاعدة البيانات** | عندهم | MySQL | بلا | بلا | **SQLite** |
-| **إحصائيات مدمجة** | مدفوعة | أساسية | ❌ | ❌ | **✅ كاملة** |
-| **إحصائيات خارجية** | ✅ | ✅ | ❌ | ❌ | **✅** |
-| **جمع البريد** | مدفوع | ❌ | ❌ | ❌ | **✅** |
-| **أدوات مدمجة** | مدفوعة | ❌ | ❌ | ❌ | **✅** |
-| **صور مصغّرة** | ✅ | ❌ | ❌ | ❌ | **✅** |
-| **رموز QR** | ✅ | ✅ | ❌ | ❌ | **✅** |
+| **إحصائيات مدمجة** | أساسية، الكاملة مدفوعة | أساسية | ❌ | ❌ | **✅ كاملة وخاصة** |
+| **جمع البريد الإلكتروني** | مدفوع | ❌ | ❌ | ❌ | **✅** |
+| **أدوات مدمجة** | جزئية | ❌ | ❌ | ❌ | **✅** |
 | **جدولة الروابط** | مدفوعة | ❌ | ❌ | ❌ | **✅** |
-| **الثيمات** | مدفوعة | محدودة | CSS فقط | ملف إعداد | **✅ نظام رموز كامل + استيراد/تصدير** |
-| **CSS مخصص** | ❌ | ❌ | ✅ | ❌ | **✅** |
+| **الثيمات** | مدفوعة | محدودة | CSS فقط | ملف إعداد | **✅ نظام رموز كامل** |
+| **رموز QR** | ✅ | ✅ | ❌ | ❌ | **✅ قابلة للتخصيص** |
 | **استضافة ذاتية** | ❌ | ✅ | ✅ | ✅ | **✅** |
-| **اللغة** | مغلقة | PHP | HTML | Astro | **TypeScript** |
-| **نشر Docker** | لا ينطبق | معقد | بسيط | بسيط | **أمر واحد** |
-| **تحميل الصفحة** | ~2-3 ث | ~1-2 ث | سريع | سريع | **<300 مللي ثانية** |
-| **الترخيص** | مغلق | AGPL | MIT | GPL | **MIT** |
+| **تحميل الصفحة** | مستضاف | تطبيق PHP | سريع (ثابت) | سريع (ثابت) | **<300 مللي ثانية، صفر JS** |
 
-## 🛠️ الحزمة التقنية
-
-| الطبقة | التقنية |
-|--------|---------|
-| الإطار | Next.js 16‏ (App Router، Server Components، ISR) |
-| قاعدة البيانات | SQLite عبر better-sqlite3‏ (وضع WAL) |
-| ORM | Drizzle ORM (آمن الأنواع، بلا أي عبء) |
-| المصادقة | جلسات HMAC مبنية على الكوكيز، Argon2id (يتم ترقية تجزئات bcrypt القديمة عند تسجيل الدخول) |
-| الواجهة | shadcn/ui + Tailwind CSS 4 |
-| السحب والإفلات | dnd-kit |
-| الرسوم البيانية | Recharts |
-| رموز QR | qrcode (‏SVG/PNG على الخادم) |
-| التحقق | Zod |
-| الأيقونات | Lucide + SVG اجتماعية مخصصة |
-
-## 📖 الوثائق
-
-- [دليل المساهمة](CONTRIBUTING.md)
-- [سياسة الأمان](SECURITY.md)
-- [سجل التغييرات](CHANGELOG.md)
-- [حل المشكلات](TROUBLESHOOTING.md)
-- [قرارات المعمارية](docs/adr/)
-- [مرجع الإعدادات](#️-الإعدادات)
-
-## ⚙️ الإعدادات
-
-كل الإعدادات تتم عبر متغيرات البيئة (`‎.env`). **الملف `‎.env.example` هو المرجع الأساسي** — انسخه (`cp .env.example .env`) وهو يوثّق كل متغير، بما في ذلك كتل بيانات اعتماد المحفظة مع تنبيهاتها:
-
-| المتغير | الافتراضي | الوصف |
-|---------|-----------|-------|
-| `PORT` | `3000` | منفذ الخادم |
-| `DATABASE_PATH` | `./data/linkbreeze.db` | مسار ملف قاعدة بيانات SQLite |
-| `SECRET_KEY` | يولَّد تلقائيًا | مفتاح توقيع HMAC للجلسات |
-| `EXTRA_SCRIPT_SRC` | _(فارغ)_ | نطاقات الإحصائيات مفصولة بمسافات من أجل CSP‏ (مثل `plausible.io umami.is`) |
-| `GOOGLE_WALLET_ISSUER_ID` | _(فارغ)_ | يفعّل أزرار "إضافة إلى Google Wallet" في الصفحات العامة. معرّف المُصدر الرقمي من Google Pay & Wallet Console. |
-| `GOOGLE_WALLET_SERVICE_ACCOUNT_JSON` | _(فارغ)_ | ملف JSON الكامل لحساب الخدمة (`client_email` + `private_key`) المُصرّح له بواجهة Wallet API. |
-| `APPLE_WALLET_CERT_PEM` | _(فارغ)_ | يفعّل أزرار "إضافة إلى Apple Wallet". شهادة توقيع Pass Type ID بصيغة PEM. |
-| `APPLE_WALLET_KEY_PEM` | _(فارغ)_ | المفتاح الخاص المطابق لشهادة التوقيع (PEM). |
-| `APPLE_WALLET_KEY_PASSPHRASE` | _(فارغ)_ | عبارة مرور مفتاح التوقيع، إن كان مشفّرًا. |
-| `APPLE_WALLET_WWDR_PEM` | _(فارغ)_ | شهادة Apple WWDR الوسيطة (PEM). |
-| `APPLE_WALLET_TEAM_ID` | _(فارغ)_ | معرّف فريق Apple الخاص بك المكوّن من 10 أحرف. |
-| `APPLE_WALLET_PASS_TYPE_ID` | _(فارغ)_ | معرّف Pass Type ID الخاص بك (يجب أن يبدأ بـ `pass.`). |
-
-**تذاكر المحفظة وتصدير جهات الاتصال:** كل صفحة عامة تعرض كتلة مشاركة تحتوي على زر "حفظ جهة الاتصال" (vCard عالمي، مفعّل دائمًا). عند تكوين بيانات الاعتماد أعلاه، تُفعَّل أزرار "إضافة إلى Google Wallet" (حساب المُصدر مجاني؛ لا يمكن حفظ التذاكر إلا لمستخدمي الاختبار المدرجين في القائمة حتى توافق Google على الوصول للإنتاج) و"إضافة إلى Apple Wallet" (يتطلب حساب مطوّر Apple مدفوعًا؛ تُثبَّت التذاكر من Safari فقط) تلقائيًا. التذاكر لقطات ثابتة — رمز QR في التذكرة يفتح الصفحة الحية دائمًا. تعرض لغة التكامل في الإعدادات حالة بيانات الاعتماد لكل محفظة وتحذّر عندما تقترب شهادة توقيع Apple من انتهاء الصلاحية.
-
-**استخدام إحصائيات خارجية (‏Plausible، Umami، Matomo، Google Analytics):**
-
-تغطي الإحصائيات المدمجة المشاهدات والنقرات والمصادر ونوع الجهاز دون أي إعداد. إن أردت إضافة مزوّد إحصائيات خارجي، الصق مقطع `‎<script>` في الإعدادات ← التكامل ← سكربت الإحصائيات، ثم أضف نطاق المزوّد إلى `EXTRA_SCRIPT_SRC` كي تسمح CSP بتحميله:
-
-```bash
-EXTRA_SCRIPT_SRC=plausible.io umami.is
-```
-
-أعد البناء بعد تغيير هذا المتغير (تُدمَج CSP في البناء).
-
-أما إعدادات التشغيل (اسم الصفحة المختصر، العنوان، SEO، الثيم) فتُدار من
-لوحة التحكم وتُخزَّن في قاعدة البيانات — دون أي تعديل على الكود.
-
-## 🎨 نظام الثيمات
-
-11 إعدادًا مسبقًا مضمّنة: **Aurora** (الواجهة المتحركة الرئيسية)،
-**Glassmorphism**، **Neon Cyberpunk**، **Editorial Paper**،
-**Terminal Mono**، **Pastel Soft**، **Brutalist**، **Retro Sunset**،
-**Minimal Light**، **8-Bit Retro** و **Frutiger Aero** (مظهر الماء والهواء
-اللامع من منتصف العقد الأول من الألفية — أزرار فقاعية جليلة، بطاقات زجاج
-ضبابي، خلفية فيديو فقاعات مع بديل تدرّج مائي، وخط Nunito).
-
-يستند محرك الثيمات إلى نظام رموز عبر خصائص CSS المخصصة (`--lb-*`) — كل
-لون ونصف قطر وظل وخط هو رمز تستهلكه مكونات الصفحة العامة. يمنحك المخصص
-تحكمًا كاملًا في:
-
-- **الخلفية** — 8 أنواع (لون صامت، تدرّج، شعاعي، mesh، شفق، تدرّج متحرك، صورة، نقش) مع تحكم بالزاوية والطبقة العازلة والعتامة
-- **الألوان** — اللون المميز، الثانوي، النص، النص الخافت، خلفية البطاقة، حدود البطاقة (hex أو rgba)
-- **الطباعة** — 15 خط Google منتقاة (Inter، Poppins، Playfair Display، JetBrains Mono، Space Grotesk، DM Sans، Lora، Bebas Neue، Sora، Outfit، Nunito، Montserrat، Caveat، Pacifico، Abril Fatface)، مقياس الخط، الوزن، تباعد الحروف — وخطوطك الخاصة: ارفع أي woff2/woff‏ (حد أقصى 2 ميغابايت) في تبويب الطباعة واختره كأي خط مضمّن. تُخدَم الخطوط المرفوعة من نفس المصدر، وتُدمَج في ملفات تصدير الثيمات، وتُنقَل مع النسخ الاحتياطية. حذف خط يعيد الثيمات التي تستخدمه إلى Inter‏ (مع تأكيد يسرد الثيمات المتأثرة).
-- **نمط البطاقة** — 7 أنماط روابط (حبة، مستدير، حاد، زجاجي، محدد، نيون، بكسل)، مؤثرات التحويم، حجم الزر، انحناء الزوايا، سماكة الحدود، قوة الظل
-- **التخطيط** — عرض الحاوية، المحاذاة (يمين/وسط/يسار)، الكثافة (مضغوط/عادي/مريح)
-- **المؤثرات** — توهج بلون مخصص، ضباب زجاجي، نسيج ضوضاء، حركة ظهور
-- **التكرار** — استنسخ أي ثيم (مسبق أو مخصص) كنسخة جديدة قابلة للتحرير
-
-تُطبَّق كل التغييرات مع صفر حزم JS على المتصفح — لا تتضمن الصفحة العامة
-أي React runtime وتُصيَّر HTML خالصًا على الخادم.
-(تستخدم روابط mailto/tel/الشبكات الاجتماعية شارة `onclick` سطرية صغيرة
-لتتبع النقرات قدر الإمكان؛ أما روابط http/https فتمر عبر تحويل
-`/go/:id` الخالي من JS، مع اسم مخصص اختياري — `/go/اسمك`.)
+</div>
 
 ## 💬 المجتمع
 
-- **[شارك ثيم LinkBreeze الخاص بك](https://github.com/Manak-hash/LinkBreeze/discussions/51)** — صدّر JSON ثيمك المخصص وأظهر صفحتك. أفضلها ستُبرَز في الإصدارات القادمة.
-- **[من يستخدم LinkBreeze؟ اترك رابطك](https://github.com/Manak-hash/LinkBreeze/discussions/54)** — أخبرنا ماذا بنيت، لماذا صفحتك، وما الذي ينقص. لا مجاملة.
+<div align="center">
+
+**احصل على المساعدة، أبرز صفحتك، وصوّت على ما يُطلَق تاليًا.**
+
+[![Discord](https://img.shields.io/discord/1559020936253022209?style=for-the-badge&logo=discord&logoColor=white&label=%D8%A7%D9%86%D8%B6%D9%85%20%D8%A5%D9%84%D9%89%20Discord&color=5865F2)](https://discord.gg/bAJMW3bAJa)
+
+</div>
+
+## ⚙️ الإعدادات
+
+كل الإعدادات تتم عبر متغيرات البيئة. **[`.env.example`](.env.example) هو المرجع الأساسي** - انسخه وستجد كل متغير موثَّقًا داخليًا، بما في ذلك كتل المحفظة.
+
+| المتغير | الافتراضي | الوصف |
+|----------|---------|-------------|
+| `PORT` | `3000` | منفذ الخادم |
+| `DATABASE_PATH` | `./data/linkbreeze.db` | مسار ملف قاعدة بيانات SQLite |
+| `SECRET_KEY` | يُولَّد تلقائيًا | مفتاح توقيع HMAC للجلسات |
+| `EXTRA_SCRIPT_SRC` | _(فارغ)_ | نطاقات الإحصائيات مفصولة بمسافات من أجل CSP (مثل `plausible.io umami.is`) |
+
+<details>
+<summary>💳 &nbsp;متغيرات تذاكر المحفظة (Google Wallet / Apple Wallet)</summary>
+
+| المتغير | الوصف |
+|----------|-------------|
+| `GOOGLE_WALLET_ISSUER_ID` | معرّف المُصدر الرقمي من Google Pay & Wallet Console. يفعّل أزرار "إضافة إلى Google Wallet" |
+| `GOOGLE_WALLET_SERVICE_ACCOUNT_JSON` | ملف JSON لحساب الخدمة (`client_email` + `private_key`) مُصرَّح له بواجهة Wallet API |
+| `APPLE_WALLET_CERT_PEM` | شهادة توقيع Pass Type ID (PEM). يفعّل أزرار "إضافة إلى Apple Wallet" |
+| `APPLE_WALLET_KEY_PEM` | المفتاح الخاص المطابق لشهادة التوقيع (PEM) |
+| `APPLE_WALLET_KEY_PASSPHRASE` | عبارة مرور مفتاح التوقيع، إن كان مشفّرًا |
+| `APPLE_WALLET_WWDR_PEM` | شهادة Apple WWDR الوسيطة (PEM) |
+| `APPLE_WALLET_TEAM_ID` | معرّف فريق Apple الخاص بك المكوّن من 10 أحرف |
+| `APPLE_WALLET_PASS_TYPE_ID` | معرّف Pass Type ID الخاص بك (يجب أن يبدأ بـ `pass.`) |
+
+|كل صفحة عامة تعرض كتلة مشاركة تحتوي زر "حفظ جهة الاتصال" (vCard عالمي، مفعّل دائمًا). تُفعَّل أزرار المحافظ تلقائيًا عند تكوين بيانات الاعتماد أعلاه. Google Wallet: حساب مُصدر مجاني، لكن لا يمكن حفظ التذاكر إلا لمستخدمي الاختبار المدرجين في القائمة البيضاء حتى تمنح Google الوصول إلى الإنتاج. Apple Wallet: يتطلب حساب مطوّر Apple مدفوعًا والتثبيت من Safari فقط. التذاكر لقطات ثابتة - رمز QR في التذكرة يفتح الصفحة الحية دائمًا. تعرض الإعدادات ← التكامل حالة بيانات الاعتماد لكل محفظة وتحذّر عندما تقترب شهادة توقيع Apple من انتهاء الصلاحية.
+
+</details>
+
+**تستخدم إحصائيات خارجية؟** الصق مقطع المزوّد في الإعدادات ← التكامل ← سكربت الإحصائيات، ثم أضف نطاق المزوّد إلى `EXTRA_SCRIPT_SRC` كي تسمح CSP به (مثل `EXTRA_SCRIPT_SRC=plausible.io umami.is`). أعد البناء بعد تغييره - تُدمَج CSP في البناء.
+
+إعدادات التشغيل (اسم الصفحة المختصر، العنوان، SEO، الثيم) تُدار عبر لوحة التحكم وتُخزَّن في قاعدة البيانات - دون أي تعديل على الكود.
+
+## 🎨 نظام الثيمات
+
+11 إعدادًا مسبقًا مضمَّنة افتراضيًا: **Aurora** (الواجهة المتحركة الرئيسية)، **Glassmorphism**، **Neon Cyberpunk**، **Editorial Paper**، **Terminal Mono**، **Pastel Soft**، **Brutalist**، **Retro Sunset**، **Minimal Light**، **8-Bit Retro** و **Frutiger Aero**.
+
+<details>
+<summary>🎛️ &nbsp;ماذا يتحكم فيه المخصّص</summary>
+
+|محرك الثيمات نظام رموز قائم على خصائص CSS المخصصة (`--lb-*`) - كل لون ونصف قطر وظل وخط في الصفحة العامة هو رمز.
+
+- **الخلفية** - 8 أنواع (لون صامت، تدرّج، شعاعي، mesh، شفق قطبي، تدرّج متحرك، صورة، نقش) مع تحكم بالزاوية والطبقة العازلة والعتامة
+- **الألوان** - اللون المميز، الثانوي، النص، النص الخافت، خلفية البطاقة، حدود البطاقة (hex أو rgba)
+- **الطباعة** - 15 خط Google منتقاة، مقياس الخط، الوزن، تباعد الحروف - أو ارفع خطوطك الخاصة بصيغة woff2/woff (بحد أقصى 2 ميغابايت). تُخدَم الخطوط المرفوعة من نفس المصدر، وتُدمَج في تصديرات الثيمات، وتُنقَل مع النسخ الاحتياطية
+- **نمط البطاقة** - 7 أنماط روابط (حبة، مستدير، حاد، زجاجي، محدد، نيون، بكسل)، مؤثرات التحويم، حجم الزر، انحناء الزوايا، سماكة الحدود، قوة الظل
+- **التخطيط** - عرض الحاوية، المحاذاة (يسار/وسط/يمين)، الكثافة (مضغوط/عادي/مريح)
+- **المؤثرات** - توهج بلون مخصص، ضباب زجاجي، نسيج ضوضاء، حركة ظهور
+- **التكرار / الاستيراد / التصدير** - استنسخ أي ثيم كنسخة قابلة للتحرير وشاركه بصيغة JSON
+
+</details>
+
+## 📖 الوثائق والروابط
+
+[دليل المساهمة](CONTRIBUTING.md) · [سياسة الأمان](SECURITY.md) · [سجل التغييرات](CHANGELOG.md) · [حل المشكلات](TROUBLESHOOTING.md) · [قرارات المعمارية](docs/adr/) · [مرجع الإعدادات](.env.example)
+
+المصدر: [GitLab](https://gitlab.com/omnirise00/linkbreeze) (النسخة العامة المرجعية، تُزامَن تلقائيًا) · [GitHub](https://github.com/Manak-hash/LinkBreeze) · الصورة: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
+
+المشكلات وطلبات السحب مرحّب بها على أيٍّ من المنصتين.
 
 ## 🤝 المساهمة
 
-المساهمات مرحب بها! طالع [CONTRIBUTING.md](CONTRIBUTING.md) للإرشادات.
+المساهمات مرحّب بها! طالع [CONTRIBUTING.md](CONTRIBUTING.md) للإرشادات.
 
 ## 📜 الترخيص
 
-MIT — افعل ما تشاء. طالع [LICENSE](LICENSE).
+MIT - افعل ما تشاء. طالع [LICENSE](LICENSE).
 
 ## 🏢 حول
 
