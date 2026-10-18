@@ -237,7 +237,8 @@ npm run dev
 | 自动 TLS 并带有控制面板（Traefik） | `docker-compose.traefik.yml` |
 | 不开放端口（零信任） | `docker-compose.cloudflare-tunnel.yml` |
 | 已在用 Nginx + Certbot | `docker-compose.nginx.yml` |
-| 定时 SQLite 备份 | `docker-compose.with-backup.yml` |
+| 从界面进行定时备份（无需 sidecar） | 内置 - 在设置的数据页开启 |
+| 定时 SQLite 备份（原始转储 sidecar，S3 异地存储） | `docker-compose.with-backup.yml` |
 | 在 Kubernetes 上运行 | `kubernetes.yaml` |
 
 **Caddy**（推荐 - 自动 HTTPS）：

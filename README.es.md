@@ -237,7 +237,8 @@ Una vez desplegada, tu página estará en `https://tu-dominio.com/tu-slug`.
 | TLS automático con un panel (Traefik) | `docker-compose.traefik.yml` |
 | Sin puertos abiertos (zero-trust) | `docker-compose.cloudflare-tunnel.yml` |
 | Ya usas Nginx + Certbot | `docker-compose.nginx.yml` |
-| Copias de seguridad programadas de SQLite | `docker-compose.with-backup.yml` |
+| Copias de seguridad programadas desde la interfaz (sin sidecar) | Integrado - actívalas en Ajustes y luego Datos |
+| Copias de seguridad programadas de SQLite (sidecar de volcado bruto, externo a S3) | `docker-compose.with-backup.yml` |
 | En Kubernetes | `kubernetes.yaml` |
 
 **Caddy** (recomendado - HTTPS automático):

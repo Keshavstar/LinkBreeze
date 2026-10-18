@@ -237,7 +237,8 @@ Once deployed, your page is at `https://your-domain.com/your-slug`.
 | Automatic TLS with a dashboard (Traefik) | `docker-compose.traefik.yml` |
 | No open ports (zero-trust) | `docker-compose.cloudflare-tunnel.yml` |
 | You already use Nginx + Certbot | `docker-compose.nginx.yml` |
-| Scheduled SQLite backups | `docker-compose.with-backup.yml` |
+| Scheduled backups from the UI (no sidecar) | Built in - enable in Settings -> Data |
+| Scheduled SQLite backups (raw dump sidecar, S3 offsite) | `docker-compose.with-backup.yml` |
 | Running on Kubernetes | `kubernetes.yaml` |
 
 **Caddy** (recommended - auto HTTPS):

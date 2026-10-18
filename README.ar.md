@@ -237,7 +237,8 @@ npm run dev
 | TLS تلقائي مع لوحة تحكم (Traefik) | `docker-compose.traefik.yml` |
 | دون فتح منافذ (zero-trust) | `docker-compose.cloudflare-tunnel.yml` |
 | تستخدم Nginx + Certbot أصلًا | `docker-compose.nginx.yml` |
-| نسخ احتياطي مجدول لـ SQLite | `docker-compose.with-backup.yml` |
+| نسخ احتياطية مجدولة من الواجهة (بدون حاوية مساعدة) | مدمجة - فعّلها من الإعدادات ثم البيانات |
+| نسخ احتياطي مجدول لـ SQLite (حاوية مساعدة، تفريغ خام، تخزين خارجي S3) | `docker-compose.with-backup.yml` |
 | التشغيل على Kubernetes | `kubernetes.yaml` |
 
 **Caddy** (موصى به - HTTPS تلقائي):

@@ -237,7 +237,8 @@ Nach dem Deployment ist deine Seite unter `https://your-domain.com/your-slug` er
 | Automatisches TLS mit Dashboard (Traefik) | `docker-compose.traefik.yml` |
 | Keine offenen Ports (Zero-Trust) | `docker-compose.cloudflare-tunnel.yml` |
 | Du nutzt schon Nginx + Certbot | `docker-compose.nginx.yml` |
-| Geplante SQLite-Backups | `docker-compose.with-backup.yml` |
+| Geplante Backups aus der Oberfläche (kein Sidecar) | Eingebaut - aktivieren unter Einstellungen -> Daten |
+| Geplante SQLite-Backups (Raw-Dump-Sidecar, S3-Offsite) | `docker-compose.with-backup.yml` |
 | Betrieb unter Kubernetes | `kubernetes.yaml` |
 
 **Caddy** (empfohlen - automatisches HTTPS):

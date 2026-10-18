@@ -191,8 +191,10 @@ GDPR Article 33 (72 hours to the supervisory authority).
 3. **Terminate TLS** — Use a reverse proxy (Caddy, Nginx, Cloudflare Tunnel)
    for HTTPS. Without TLS, session cookies and admin credentials transit in
    plaintext.
-4. **Regular database backups** — Use the backup/restore feature in Settings ->
-   Data. Store backups off-server.
+4. **Regular database backups** — Enable automatic backups in Settings ->
+   Data (stored locally under `./data/backups`). In-app backups do not leave
+   the machine — for offsite copies, add the
+   `docker-compose.with-backup.yml` sidecar and follow the 3-2-1 rule.
 5. **Restrict network access** — Do not expose the SQLite port. Only expose the
    LinkBreeze HTTP port through a reverse proxy.
 

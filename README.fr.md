@@ -237,7 +237,8 @@ Des **fichiers compose prêts à l'emploi** se trouvent dans [`examples/`](examp
 | TLS automatique avec un dashboard (Traefik) | `docker-compose.traefik.yml` |
 | Sans ports ouverts (zero-trust) | `docker-compose.cloudflare-tunnel.yml` |
 | Vous utilisez déjà Nginx + Certbot | `docker-compose.nginx.yml` |
-| Sauvegardes SQLite planifiées | `docker-compose.with-backup.yml` |
+| Sauvegardes planifiées depuis l'interface (sans sidecar) | Intégré - à activer dans Réglages puis Données |
+| Sauvegardes SQLite planifiées (sidecar de dump brut, hors site S3) | `docker-compose.with-backup.yml` |
 | Déploiement sur Kubernetes | `kubernetes.yaml` |
 
 **Caddy** (recommandé - HTTPS automatique) :
