@@ -43,6 +43,7 @@
 - **🖼️ Miniatures de liens** — Ajoutez des images à vos liens pour des cartes d'aperçu visuelles
 - **🎵 Widgets intégrés** — Intégrez YouTube, Spotify, SoundCloud, Vimeo ou Bandcamp directement sur votre page
 - **⏰ Programmation des liens** — Programmez l'apparition/disparition automatique des liens avec des contrôles de date et d'heure
+- **🏷️ Slugs de redirection personnalisés** — Donnez à chaque lien une URL `/go/votre-nom` stable et partageable, qui survit à une suppression/recréation. Les noms réservés et les nombres purs sont bloqués pour que les routes de l'application ne soient jamais masquées ; un lien désactivé qui a un slug redirige les visiteurs vers votre page publique au lieu d'un 404
 - **📊 Statistiques respectueuses de la vie privée** — Vues, clics, référents, type d'appareil. Sans cookies par conception. Les IP des visiteurs sont hachées avec un sel rotatif quotidien, jamais stockées. Les données de plus de 90 jours sont purgées automatiquement par défaut (Paramètres → Données ; mettez 0 pour tout conserver).
 - **📈 Statistiques externes** — Injectez Plausible, Umami, Matomo ou Google Analytics d'un simple copier-coller
 - **🔔 Notifications de mise à jour** — Un bandeau du tableau de bord vous prévient quand une nouvelle version est disponible (pas de phone-home, pas de mise à jour automatique)
@@ -506,7 +507,8 @@ Tous les changements s'appliquent avec zéro bundle JS côté client — la page
 publique n'embarque aucun runtime React et se rend en HTML pur côté serveur.
 (Les liens mailto/tel/réseaux sociaux utilisent une mini-balise `onclick`
 inline pour un suivi des clics au mieux ; les liens http/https passent par la
-redirection `/go/:id`, sans JS.)
+redirection `/go/:id`, sans JS, avec un slug personnalisé en option —
+`/go/votre-nom`.)
 
 ## 💬 Communauté
 

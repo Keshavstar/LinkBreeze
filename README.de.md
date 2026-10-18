@@ -44,6 +44,7 @@
 - **🖼️ Link-Miniaturansichten** — Füge Bilder zu deinen Links hinzu für visuelle Vorschaukarten
 - **🎵 Eingebettete Widgets** — Bette YouTube, Spotify, SoundCloud, Vimeo oder Bandcamp direkt auf deiner Seite ein
 - **⏰ Link-Planung** — Plane das automatische Erscheinen und Verschwinden von Links mit Datum- und Uhrzeit-Steuerung
+- **🏷️ Eigene Weiterleitungs-Slugs** — Gib jedem Link eine stabile, teilbare `/go/dein-name`-URL, die Löschen-und-Neu-Anlegen übersteht. Reservierte Namen und reine Zahlen sind blockiert, damit App-Routen nie überschattet werden; ein deaktivierter Link mit Slug leitet Besucher auf deine öffentliche Seite statt auf einen 404
 - **📊 Privatsphäre-freundliche Statistiken** — Aufrufe, Klicks, Referrer, Gerätetyp. Von Grund auf ohne Cookies. Besucher-IPs werden mit einem täglich rotierenden Salt gehasht und niemals gespeichert. Daten, die älter als 90 Tage sind, werden standardmäßig automatisch gelöscht (Einstellungen → Daten; setze 0, um alles zu behalten).
 - **📈 Externe Analysen** — Füge Plausible, Umami, Matomo oder Google Analytics mit einem einzigen Einfügen hinzu
 - **🔔 Update-Benachrichtigungen** — Ein Banner im Dashboard benachrichtigt dich, wenn eine neue Version verfügbar ist (kein Phone-Home, kein Auto-Update)
@@ -500,7 +501,7 @@ Alle Änderungen greifen mit null clientseitigen JS-Bundles — die öffentliche
 Seite liefert kein React-Runtime aus und rendert als reines serverseitiges HTML.
 (mailto/tel/Social-Links nutzen ein winziges Inline-`onclick`-Beacon für
 Best-Effort-Klicktracking; http/https-Links laufen über das JS-freie
-`/go/:id`-Redirect.)
+`/go/:id`-Redirect, optional mit eigenem Slug — `/go/dein-name`.)
 
 ## 💬 Community
 
