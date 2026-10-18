@@ -57,12 +57,14 @@ export function ImagePositionPicker({
   const frame = SURFACE_FRAME[surface];
   const ref = React.useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = React.useState(false);
-  // Scheme allowlist guard at the render boundary: the picker previews
-  // admin-entered URLs (live-typed into input fields), so re-validate before
-  // the value reaches <img src>/<video src>. Anything that is not an http(s)
-  // URL or a site-relative path renders as nothing. This regex guard is also
-  // the CodeQL-recognized sanitizer for js/xss-through-dom on this sink.
-  const safeSrc = /^(https:\/\/|http:\/\/|\/[^/])/i.test(src) ? src : "";
+  // Render-boundary defense for admin-typed URLs (live-typed into input
+  // fields, so the value is client-controlled at this point):
+  // 1. scheme allowlist — only http(s) URLs or site-relative paths are shown;
+  //    anything else renders as nothing.
+  // 2. encodeURI escapes the HTML meta-characters (", <, >, spaces) while
+  //    preserving URL structure, so the attribute value can never break out.
+  const allowlisted = /^(https:\/\/|http:\/\/|\/[^/])/i.test(src);
+  const safeSrc = allowlisted ? encodeURI(src).replace(/'/g, "%27") : "";
 
   const { fit, posX, posY, zoom } = value;
   const allowZoom = !isVideo;
