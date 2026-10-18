@@ -57,6 +57,12 @@ export function ImagePositionPicker({
   const frame = SURFACE_FRAME[surface];
   const ref = React.useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = React.useState(false);
+  // Scheme allowlist guard at the render boundary: the picker previews
+  // admin-entered URLs (live-typed into input fields), so re-validate before
+  // the value reaches <img src>/<video src>. Anything that is not an http(s)
+  // URL or a site-relative path renders as nothing. This regex guard is also
+  // the CodeQL-recognized sanitizer for js/xss-through-dom on this sink.
+  const safeSrc = /^(https:\/\/|http:\/\/|\/[^/])/i.test(src) ? src : "";
 
   const { fit, posX, posY, zoom } = value;
   const allowZoom = !isVideo;
@@ -143,7 +149,7 @@ export function ImagePositionPicker({
         {isVideo ? (
           <video
             aria-hidden
-            src={src}
+            src={safeSrc}
             autoPlay
             muted
             loop
@@ -156,7 +162,7 @@ export function ImagePositionPicker({
           // eslint-disable-next-line @next/next/no-img-element -- live adjustment preview of an arbitrary upload/URL
           <img
             aria-hidden
-            src={src}
+            src={safeSrc}
             alt=""
             draggable={false}
             className="pointer-events-none absolute inset-0 h-full w-full"
