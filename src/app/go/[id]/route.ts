@@ -4,7 +4,7 @@ import { getVisitorHash, stripReferrer } from "@/lib/visitor";
 import { rateLimit } from "@/lib/rate-limit";
 import { isBot } from "@/lib/bot-detect";
 import { getSession } from "@/lib/auth";
-import { getLink, recordClick } from "@/server/queries";
+import { getLinkByRef, getPageById, recordClick } from "@/server/queries";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,26 +12,43 @@ export const dynamic = "force-dynamic";
 /**
  * JS-free click tracking redirect.
  *
- * Records a click for the given link ID, then 302-redirects to the link's URL.
+ * The ref is the link's numeric id (behavior unchanged) or its custom
+ * redirect slug (#96) — case-insensitive, resolved via getLinkByRef.
+ * Records a click for the given link, then 302-redirects to the link's URL.
  * Works without client-side JS (crawlers, in-app browsers that block
- * sendBeacon, JS-disabled browsers). The public page uses /go/:id as the href
- * for http(s) links so clicks are always counted.
+ * sendBeacon, JS-disabled browsers). The public page uses /go/:ref as the
+ * href for http(s) links so clicks are always counted.
+ *
+ * A DEACTIVATED link that has a custom slug redirects to its public page
+ * instead of a bare 404: the slug is a shareable printed/embedded URL and
+ * should degrade to the page, never die silently. Links without a slug
+ * keep the plain 404.
  */
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id: rawId } = await params;
-  const linkId = Number(rawId);
+  const { id: rawRef } = await params;
+  const link = await getLinkByRef(rawRef);
 
-  if (Number.isNaN(linkId)) {
-    return NextResponse.json({ error: "Invalid link ID" }, { status: 400 });
-  }
-
-  const link = await getLink(linkId);
-  if (!link || !link.isActive) {
+  if (!link) {
     return NextResponse.json({ error: "Link not found" }, { status: 404 });
   }
+
+  if (!link.isActive) {
+    if (link.redirectSlug) {
+      const page = await getPageById(link.pageId);
+      if (page) {
+        return NextResponse.redirect(new URL(`/${page.slug}`, request.url), {
+          status: 302,
+          headers: { "Cache-Control": "no-store" },
+        });
+      }
+    }
+    return NextResponse.json({ error: "Link not found" }, { status: 404 });
+  }
+
+  const linkId = link.id;
 
   // Defense-in-depth: only redirect to http(s) URLs. The create/update
   // validators already block javascript:/data: schemes, but a stale or

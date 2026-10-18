@@ -41,6 +41,7 @@
 - **🖼️ Miniaturas nos Links** — Adicione imagens aos seus links para cartões com pré-visualização visual
 - **🎵 Widgets Incorporados** — Incorpore YouTube, Spotify, SoundCloud, Vimeo ou Bandcamp diretamente na sua página
 - **⏰ Agendamento de Links** — Agende links para aparecerem ou desaparecerem automaticamente com controles de data/hora
+- **🏷️ Slugs de redirecionamento personalizados** — Dê a cada link uma URL `/go/seu-nome` estável e compartilhável que sobrevive a excluir e recriar. Nomes reservados e números puros são bloqueados para que rotas do app nunca sejam sombreadas; um link desativado com slug redireciona visitantes à sua página pública em vez de um 404
 - **📊 Estatísticas com Privacidade** — Visualizações, cliques, origens, tipos de dispositivos. Sem cookies por design. Os IPs dos visitantes são criptografados com salt diário rotativo e nunca armazenados. Dados com mais de 90 dias são removidos automaticamente por padrão (Configurações → Dados; defina 0 para manter tudo).
 - **📈 Estatísticas Externas** — Conecte Plausible, Umami, Matomo ou Google Analytics colando seu script
 - **🔔 Notificações de Atualização** — Banner no painel avisa quando uma nova versão estiver disponível (sem rastreamento de uso, sem atualizações automáticas invasivas)
@@ -483,7 +484,7 @@ O motor de temas utiliza propriedades personalizadas CSS (`--lb-*`) — cada cor
 - **Efeitos** — brilho com cor personalizada, desfoque de vidro, textura de ruído, animação de entrada
 - **Duplicação** — clone qualquer tema (predefinido ou personalizado) para uma nova cópia editável
 
-Todas as alterações são aplicadas com zero bundles JS no cliente — a página pública não envia runtime do React e é renderizada como HTML puro no servidor. (Links de e-mail/telefone/redes sociais usam um beacon leve inline `onclick` para contagem aproximada de cliques; links comuns http/https utilizam o redirecionador `/go/:id` sem necessidade de JS.)
+Todas as alterações são aplicadas com zero bundles JS no cliente — a página pública não envia runtime do React e é renderizada como HTML puro no servidor. (Links de e-mail/telefone/redes sociais usam um beacon leve inline `onclick` para contagem aproximada de cliques; links comuns http/https utilizam o redirecionador `/go/:id` sem necessidade de JS, com slug personalizado opcional — `/go/seu-nome`.)
 
 ## 💬 Comunidade
 

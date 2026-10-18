@@ -124,6 +124,10 @@ export const links = sqliteTable("links", {
   // Google Maps directions URL), so it rides /go/:id untouched.
   popupText: text("popup_text"),
   ctaLabel: text("cta_label"),
+  // #96 custom /go/ redirect slug: optional, unique, [a-z0-9-], max 64
+  // (validation in src/lib/link-slug.ts). NULL = numeric-id form only.
+  // Pure numbers are rejected so /go/<ref> never has two meanings.
+  redirectSlug: text("redirect_slug").unique(),
   createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
 });
 

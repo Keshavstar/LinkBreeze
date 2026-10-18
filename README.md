@@ -38,6 +38,7 @@
 - **🖼️ Link Thumbnails** — Add images to your links for visual preview cards
 - **🎵 Embed Widgets** — Embed YouTube, Spotify, SoundCloud, Vimeo, or Bandcamp directly on your page
 - **⏰ Link Scheduling** — Schedule links to appear/disappear automatically with date/time controls
+- **🏷️ Custom Redirect Slugs** — Give any link a stable, shareable `/go/your-name` URL that survives delete-and-recreate. Reserved names and pure numbers are blocked so app routes can never be shadowed; a deactivated link with a slug redirects visitors to your public page instead of a 404
 - **📊 Privacy-Respecting Analytics** — Views, clicks, referrers, device type. Cookieless by design. Visitor IPs are hashed with a daily-rotating salt, never stored. Data older than 90 days is pruned automatically by default (Settings → Data; set 0 to keep everything).
 - **📈 External Analytics** — Inject Plausible, Umami, Matomo, or Google Analytics with one paste
 - **🔔 Update Notifications** — Dashboard banner notifies you when a new version is available (no phone-home, no auto-update)
@@ -498,7 +499,7 @@ The theme engine uses a CSS custom property (`--lb-*`) token system — every co
 - **Effects** — glow with custom color, glass blur, noise texture, reveal animation
 - **Duplicate** — clone any theme (preset or custom) as a new editable copy
 
-All changes apply with zero client-side JS bundles — the public page ships no React runtime and renders as pure server-side HTML. (mailto/tel/social links use a tiny inline `onclick` beacon for best-effort click tracking; http/https links use the JS-free `/go/:id` redirect.)
+All changes apply with zero client-side JS bundles — the public page ships no React runtime and renders as pure server-side HTML. (mailto/tel/social links use a tiny inline `onclick` beacon for best-effort click tracking; http/https links use the JS-free `/go/:id` redirect, with an optional custom slug — `/go/your-name`.)
 
 ## 💬 Community
 

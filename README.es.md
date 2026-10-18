@@ -43,6 +43,7 @@
 - **🖼️ Miniaturas de enlaces** — Añade imágenes a tus enlaces para crear tarjetas de vista previa visuales.
 - **🎵 Widgets integrados** — Inserta YouTube, Spotify, SoundCloud, Vimeo o Bandcamp directamente en tu página.
 - **⏰ Programación de enlaces** — Programa cuándo deben aparecer o desaparecer automáticamente los enlaces mediante controles de fecha y hora.
+- **🏷️ Slugs de redirección personalizados** — Da a cada enlace una URL `/go/tu-nombre` estable y compartible que sobrevive a borrar y recrear. Los nombres reservados y los números puros están bloqueados para que las rutas de la app nunca queden ocultas; un enlace desactivado con slug redirige a los visitantes a tu página pública en lugar de un 404
 - **📊 Estadísticas respetuosas con la privacidad** — Visualizaciones, clics, referentes y tipo de dispositivo. Sin cookies por diseño. Las IP de los visitantes se cifran mediante hash con una sal que cambia diariamente y nunca se almacenan. Los datos de más de 90 días se eliminan automáticamente de forma predeterminada (Configuración → Datos; establece 0 para conservarlo todo).
 - **📈 Estadísticas externas** — Integra Plausible, Umami, Matomo o Google Analytics con un simple copiar y pegar.
 - **🔔 Notificaciones de actualización** — Un banner en el panel te avisa cuando hay una nueva versión disponible (sin conexiones automáticas al servidor ni actualizaciones automáticas).
@@ -501,7 +502,8 @@ Todos los cambios se aplican sin ningún bundle de JavaScript en el cliente: la 
 pública no incluye ningún runtime de React y se renderiza como HTML puro en el servidor.
 (Los enlaces mailto/tel/redes sociales utilizan una pequeña etiqueta `onclick`
 en línea para realizar el seguimiento de clics cuando es posible; los enlaces
-http/https pasan por la redirección `/go/:id`, sin JavaScript).
+http/https pasan por la redirección `/go/:id`, sin JavaScript, con un slug
+personalizado opcional — `/go/tu-nombre`).
 
 ## 💬 Comunidad
 

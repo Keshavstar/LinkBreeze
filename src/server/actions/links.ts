@@ -17,7 +17,13 @@ import {
   deleteLink as deleteLinkQuery,
   getAllLinks,
   reorderLinks as reorderLinksQuery,
+  isSlugTaken,
 } from "@/server/queries";
+import {
+  normalizeSlug,
+  slugError,
+  SLUG_ERRORS,
+} from "@/lib/link-slug";
 import {
   type ActionResult,
   validationError,
@@ -214,6 +220,10 @@ const linkSchema = z
       (v) => (v === "" || v === null || v === undefined ? null : v),
       z.coerce.number().nullable().optional()
     ),
+    // #96 custom /go/ slug — raw input here; normalization + validation +
+    // availability run in resolveRedirectSlug after parse (the update path
+    // needs the link id to exclude itself from the uniqueness check).
+    redirectSlug: z.string().max(200).optional(),
   })
   // #93 popup cards: every non-text type needs a URL (text may leave it
   // empty when there is no CTA button). Runs before the scheme check so an
@@ -242,6 +252,24 @@ const linkSchema = z
     message: "CTA URL is required when a CTA label is set",
   });
 
+/**
+ * #96 — normalize + validate a submitted slug and check availability.
+ * Empty input resolves to null (no slug — the column is optional).
+ */
+async function resolveRedirectSlug(
+  raw: string | undefined,
+  excludeLinkId?: number,
+): Promise<{ ok: true; slug: string | null } | { ok: false; error: string }> {
+  const normalized = normalizeSlug(raw ?? "");
+  if (!normalized) return { ok: true, slug: null };
+  const reason = slugError(normalized);
+  if (reason) return { ok: false, error: SLUG_ERRORS[reason] };
+  if (await isSlugTaken(normalized, excludeLinkId)) {
+    return { ok: false, error: "This slug is already in use" };
+  }
+  return { ok: true, slug: normalized };
+}
+
 export async function createLink(formData: FormData): Promise<ActionResult> {
   const blocked = demoGuard();
   if (blocked) return blocked;
@@ -264,6 +292,7 @@ export async function createLink(formData: FormData): Promise<ActionResult> {
     icon: formData.get("icon") || undefined,
     popupText: formData.get("popupText") || undefined,
     ctaLabel: formData.get("ctaLabel") || undefined,
+    redirectSlug: formData.has("redirectSlug") ? String(formData.get("redirectSlug")) : undefined,
     sectionId: formData.get("sectionId") !== null ? formData.get("sectionId") : undefined,
   });
   if (!parsed.success) {
@@ -271,6 +300,10 @@ export async function createLink(formData: FormData): Promise<ActionResult> {
   }
 
   const d = parsed.data;
+
+  // #96 custom /go/ slug: validate + availability before any write.
+  const slug = await resolveRedirectSlug(d.redirectSlug);
+  if (!slug.ok) return validationError(slug.error);
 
   try {
     // Resolve the icon fields (favicon fetch / lucide pick / upload).
@@ -311,6 +344,7 @@ export async function createLink(formData: FormData): Promise<ActionResult> {
       // #93 popup fields (null for classic link types).
       popupText: d.type === "text" || d.type === "location" ? (d.popupText || null) : null,
       ctaLabel: popup.ctaLabel,
+      redirectSlug: slug.slug,
     });
 
     revalidatePath("/links");
@@ -348,6 +382,9 @@ export async function updateLink(formData: FormData): Promise<ActionResult> {
     icon: formData.get("icon") || undefined,
     popupText: formData.get("popupText") || undefined,
     ctaLabel: formData.get("ctaLabel") || undefined,
+    // #96 TRI-STATE: field present = write the slug (empty string clears it —
+    // a deleted slug is a legitimate save); absent from the form = unchanged.
+    redirectSlug: formData.has("redirectSlug") ? String(formData.get("redirectSlug")) : undefined,
     sectionId: formData.get("sectionId") !== null ? formData.get("sectionId") : undefined,
   });
   if (!parsed.success) {
@@ -358,6 +395,15 @@ export async function updateLink(formData: FormData): Promise<ActionResult> {
   }
 
   const d = parsed.data;
+
+  // #96 custom /go/ slug: validate + availability (excluding this link's own
+  // row) when the field was submitted.
+  let redirectSlug: string | null | undefined;
+  if (formData.has("redirectSlug")) {
+    const slug = await resolveRedirectSlug(d.redirectSlug, Number(d.id));
+    if (!slug.ok) return validationError(slug.error);
+    redirectSlug = slug.slug;
+  }
 
   try {
     // Resolve the icon fields (favicon fetch / lucide pick / upload).
@@ -397,6 +443,8 @@ export async function updateLink(formData: FormData): Promise<ActionResult> {
       // #93 popup fields (null for classic link types).
       popupText: d.type === "text" || d.type === "location" ? (d.popupText || null) : null,
       ctaLabel: popup.ctaLabel,
+      // #96: only included when the form carried the field (tri-state).
+      ...(redirectSlug !== undefined ? { redirectSlug } : {}),
     });
 
     revalidatePath("/links");
@@ -517,4 +565,27 @@ export async function createDivider(pageId?: number): Promise<ActionResult> {
       errorCode: ErrorCode.INTERNAL,
     };
   }
+}
+
+/**
+ * #96 — live slug availability check for the link dialog (debounced
+ * client-side). Read-only: no demoGuard (nothing is mutated), but auth is
+ * required so the endpoint can't be used to enumerate slugs anonymously.
+ */
+export async function checkSlugAvailability(
+  raw: string,
+  excludeLinkId?: number,
+): Promise<{ success: boolean; error?: string; available?: boolean }> {
+  if (!(await requireAuth())) return unauthorizedError();
+
+  const normalized = normalizeSlug(raw);
+  if (!normalized) return { success: true, available: false };
+  const reason = slugError(normalized);
+  if (reason) {
+    return { success: true, available: false, error: SLUG_ERRORS[reason] };
+  }
+  const taken = await isSlugTaken(normalized, excludeLinkId);
+  return taken
+    ? { success: true, available: false, error: "This slug is already in use" }
+    : { success: true, available: true };
 }

@@ -19,6 +19,7 @@ import {
 } from "@/db/schema";
 import { getSession } from "@/lib/auth";
 import { demoGuard } from "@/lib/demo-guard";
+import { normalizeSlug, slugError } from "@/lib/link-slug";
 import {
   type ActionResult,
   validationError,
@@ -65,6 +66,10 @@ const linkRowSchema = z.object({
   scheduleEnd: z.string().nullable().optional(),
   clicksCount: z.number().optional(),
   sectionId: z.number().nullable().optional(),
+  // #96: optional so pre-slug backups restore cleanly. Sanitized below —
+  // invalid entries become null and duplicates collapse first-wins, because
+  // the column's UNIQUE index would otherwise reject the whole restore.
+  redirectSlug: z.string().nullable().optional(),
   createdAt: z.string().optional(),
 });
 
@@ -357,6 +362,24 @@ export async function restoreBackup(formData: FormData): Promise<ActionResult> {
   parsed.links = parsed.links.filter(
     (link) => link.type && link.url && isAllowedLinkUrl(link.type, link.url),
   );
+
+  // #96 redirect slugs: never reject the restore over a bad/duplicate slug —
+  // numeric /go/:id keeps working without one. Normalize; invalid → null;
+  // duplicates collapse first-wins (the column is UNIQUE in SQLite).
+  {
+    const seenSlugs = new Set<string>();
+    parsed.links = parsed.links.map((link) => {
+      const normalized = normalizeSlug(link.redirectSlug ?? "");
+      if (!normalized || slugError(normalized)) {
+        return { ...link, redirectSlug: null };
+      }
+      if (seenSlugs.has(normalized)) {
+        return { ...link, redirectSlug: null };
+      }
+      seenSlugs.add(normalized);
+      return link;
+    });
+  }
 
   // Custom fonts (#82): optional array (older backups have none). Rows only —
   // the files live in the uploads volume. A malformed array rejects the

@@ -90,7 +90,7 @@ export function buildPopupDialogHtml(link: LinkRow, theme?: ThemeInput): string 
   const hasUrl = !!link.url.trim();
   const ctaHtml =
     ctaLabel && hasUrl
-      ? `<a class="lb-popup-cta lb-gel-btn lb-pixel-clip lb-pixel-shadow" href="/go/${link.id}" target="_blank" rel="noopener noreferrer nofollow" style="background:var(--lb-accent);color:var(--lb-btn-text, #ffffff);border:var(--lb-border-width) solid var(--lb-card-border);border-radius:var(--lb-card-radius)">${esc(ctaLabel)}</a>`
+      ? `<a class="lb-popup-cta lb-gel-btn lb-pixel-clip lb-pixel-shadow" href="/go/${link.redirectSlug || link.id}" target="_blank" rel="noopener noreferrer nofollow" style="background:var(--lb-accent);color:var(--lb-btn-text, #ffffff);border:var(--lb-border-width) solid var(--lb-card-border);border-radius:var(--lb-card-radius)">${esc(ctaLabel)}</a>`
       : "";
 
   // Location map: full-bleed at the top, src attached lazily on open so no

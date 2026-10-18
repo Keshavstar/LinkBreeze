@@ -183,6 +183,13 @@
       "when": 1966777700500,
       "tag": "0025_image_adjustments",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "6",
+      "when": 1966777700600,
+      "tag": "0026_link_redirect_slug",
+      "breakpoints": true
     }
   ]
 }
