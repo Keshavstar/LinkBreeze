@@ -1,5 +1,4 @@
 import "server-only";
-import * as bcrypt from "bcryptjs";
 import { cookies, headers } from "next/headers";
 import {
   createToken,
@@ -111,18 +110,13 @@ export async function destroySession(): Promise<void> {
 }
 
 /**
- * Hash a password with bcrypt (12 rounds).
+ * Hash a password with Argon2id (#76) and verify against either Argon2id or
+ * legacy bcrypt hashes. The primitives live in `@/lib/password` (pure, no
+ * server-only import) so tests can exercise them directly; re-exported here
+ * because every action imports them from this module.
  */
-export async function hashPassword(password: string): Promise<string> {
-  return bcrypt.hash(password, 12);
-}
-
-/**
- * Verify a plaintext password against a bcrypt hash.
- */
-export async function verifyPassword(
-  password: string,
-  hash: string,
-): Promise<boolean> {
-  return bcrypt.compare(password, hash);
-}
+export {
+  hashPassword,
+  verifyPassword,
+  isLegacyBcryptHash,
+} from "@/lib/password";

@@ -63,13 +63,18 @@ folder works too. Replace `<container>` in the commands below with that name.
 # Replace "newpassword" with your desired password
 docker exec -it <container> node -e "
   const Database = require('better-sqlite3');
-  const bcrypt = require('bcryptjs');
+  const { hash } = require('@node-rs/argon2');
   const db = new Database('/app/data/linkbreeze.db');
-  const hash = bcrypt.hashSync('newpassword', 12);
-  db.prepare('UPDATE users SET password_hash = ?').run(hash);
-  console.log('Password updated successfully');
+  hash('newpassword', { memoryCost: 19456, timeCost: 2, parallelism: 1 }).then((h) => {
+    db.prepare('UPDATE users SET password_hash = ?').run(h);
+    console.log('Password updated successfully');
+  });
 "
 ```
+
+Note: passwords are hashed with Argon2id. If you plant an old-style bcrypt
+hash (e.g. from a pre-upgrade backup), it still verifies and is automatically
+upgraded to Argon2id on the next successful login.
 
 If you also forgot the username, list it first:
 

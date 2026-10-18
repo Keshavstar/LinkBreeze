@@ -34,7 +34,7 @@ We will not pursue legal action against researchers who:
 
 LinkBreeze implements the following security practices:
 
-- **Auth**: bcrypt password hashing (12 rounds), HMAC-signed session cookies
+- **Auth**: Argon2id password hashing (OWASP parameters: m=19456 KiB, t=2, p=1) with transparent legacy-bcrypt upgrade on login, HMAC-signed session cookies
 - **Sessions**: httpOnly, SameSite cookies, 30-day expiry, **session invalidation on password change** (stolen cookies become invalid when you change your password)
 - **Two-factor authentication (#5)**: Optional TOTP (RFC 6238, 6 digits / 30s, SHA-1, ±1 window for clock drift) via any authenticator app. The TOTP secret is stored **encrypted at rest** (AES-256-GCM, key HKDF-derived from `SECRET_KEY` — never a key in the same database). Recovery codes are bcrypt-hashed, single-use (consumed on success), rejection-sampled to avoid modulo bias, and use a lookalike-free alphabet. "Trust this device" tokens bind user + secret + User-Agent (re-enrolling invalidates every trust by construction). Code entry reuses the login rate limiter (5/min per IP, 15/min global). Backup files **exclude** all 2FA state (the exporter never reads the `users` table) — restoring a backup de-facto disables 2FA rather than leaking the encrypted secret. `SECRET_KEY` dependency: rotating it without disabling/re-enabling 2FA makes the stored secret undecryptable and login requires a recovery code — see [Troubleshooting](#known-limitations-v127).
 - **Input validation**: Zod schemas on every server action and API route
@@ -68,8 +68,6 @@ issue or contribute:
   and recovery codes are only shown once at setup — if you lose both your
   authenticator and your recovery codes, use the password-hash reset in the
   Troubleshooting guide and then re-enroll.
-- **Argon2id password hashing** (#76): Currently uses bcrypt (12 rounds). Argon2id
-  migration with transparent re-hash on login is planned.
 - **Email capture consent** (#75): The subscriber form has no consent checkbox or
   privacy notice. Operators collecting emails from EU visitors should add their
   own consent mechanism until this is built in.
@@ -111,7 +109,7 @@ not stored individually. Referrers are stripped to origin only.
 
 | Data point | Storage | Encryption |
 |---|---|---|
-| Admin password | SQLite DB | bcrypt hash (12 rounds) |
+| Admin password | SQLite DB | Argon2id hash (m=19456, t=2, p=1); legacy bcrypt hashes are re-hashed on the next successful login |
 | Admin email | SQLite DB | Plaintext (for notifications) |
 | Page content (title, bio, links) | SQLite DB | N/A |
 | Subscriber emails (if email capture enabled) | SQLite DB | Plaintext |

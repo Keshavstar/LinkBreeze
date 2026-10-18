@@ -111,9 +111,10 @@ const nextConfig: NextConfig = {
           .replace(/\/$/, ""),
       ) ?? [],
 
-  // better-sqlite3 is a native module — exclude it from the server bundling
-  // so the standalone server loads it from node_modules at runtime.
-  serverExternalPackages: ["better-sqlite3"],
+  // better-sqlite3 and @node-rs/argon2 are native modules — exclude them from
+  // the server bundling so the standalone server loads them from node_modules
+  // at runtime.
+  serverExternalPackages: ["better-sqlite3", "@node-rs/argon2"],
 
   // Tree-shake large barrel-export packages to reduce client bundle size.
   experimental: {

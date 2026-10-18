@@ -420,7 +420,7 @@ cloudflared tunnel --url http://localhost:3000
 | 框架 | Next.js 16（App Router、Server Components、ISR） |
 | 数据库 | SQLite（better-sqlite3，WAL 模式） |
 | ORM | Drizzle ORM（类型安全、零开销） |
-| 认证 | 基于 Cookie 的 HMAC 会话、bcrypt |
+| 认证 | 基于 Cookie 的 HMAC 会话、Argon2id(旧 bcrypt 哈希在登录时自动升级) |
 | UI | shadcn/ui + Tailwind CSS 4 |
 | 拖拽 | dnd-kit |
 | 图表 | Recharts |

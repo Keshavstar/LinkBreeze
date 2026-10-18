@@ -422,7 +422,7 @@ Para obtener una configuración completa de Docker Compose con Cloudflare Tunnel
 | Framework | Next.js 16 (App Router, Server Components, ISR) |
 | Base de datos | SQLite mediante better-sqlite3 (modo WAL) |
 | ORM | Drizzle ORM (type-safe, sin sobrecoste) |
-| Autenticación | Sesiones mediante cookies HMAC, bcrypt |
+| Autenticación | Sesiones mediante cookies HMAC, Argon2id (los hashes bcrypt antiguos se actualizan al iniciar sesión) |
 | UI | shadcn/ui + Tailwind CSS 4 |
 | Arrastrar y soltar | dnd-kit |
 | Gráficos | Recharts |

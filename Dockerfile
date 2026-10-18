@@ -7,7 +7,10 @@ RUN apk add --no-cache python3 make g++
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+# Generous npm fetch timeouts/retries: under QEMU emulation (local arm64
+# verification) tarball downloads are slow enough to trip npm's 30s default
+# fetch timeout, aborting the whole install on a random package.
+RUN npm install --fetch-timeout=600000 --fetch-retries=5 --fetch-retry-maxtimeout=120000
 
 COPY . .
 

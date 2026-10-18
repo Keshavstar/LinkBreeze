@@ -40,6 +40,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **All documentation and examples reference the official registries** — Every README translation (7 languages), TROUBLESHOOTING, docker-compose.yml, the demo compose file, all seven example compose files, and kubernetes.yaml now use `docker.io/omnirise/linkbreeze:latest`. The README gains a "Repositories & Registry" section (GitLab mirror, GitHub, Docker Hub) with the Docker badge linking to the Hub page, and the Quick Start adds the direct `docker run` alternative alongside the install script. README translation hashes re-synced (`docs:check` green).
 - **Source mirrored to GitLab (`gitlab.com/omnirise00/linkbreeze`)** — A public pull mirror (8h interval) of the canonical GitHub repository, giving LinkBreeze a second independent forge home. README's new registry section links it as the canonical public mirror.
 
+### Security
+
+- **Argon2id password hashing (#76)** — Admin passwords are now hashed with Argon2id (OWASP parameters: m=19456 KiB, t=2, p=1) instead of bcrypt (12 rounds). Existing bcrypt hashes keep verifying and are transparently re-hashed with Argon2id on the next successful login or password change. This also removes bcrypt's silent 72-byte input truncation, which dropped meaningful content from multi-byte passwords. New dependency: `@node-rs/argon2`, shipped in the multi-arch image for both amd64 and arm64.
+
 ## [1.4.1] - 2026-09-23
 
 ### Added
