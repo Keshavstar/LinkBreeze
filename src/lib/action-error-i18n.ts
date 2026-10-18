@@ -42,6 +42,17 @@ const MESSAGE_KEYS: Record<string, string> = {
   // rate limit
   // "Too many requests. Try again in Xs." is templated — handled below.
 
+  // scheduled backups (#83)
+  "Backup file not found": "backupNotFound",
+  "Invalid backup filename": "invalidBackupFilename",
+  "A backup or restore is already in progress": "backupInProgress",
+  "Not enough free disk space to write a backup": "backupDiskFull",
+  "Backup failed — see server logs": "backupFailed",
+  "Choose a valid backup frequency": "backupFrequencyInvalid",
+  "Enter a valid time of day": "backupTimeInvalid",
+  "Backup retention must be between 1 and 52": "backupRetentionInvalid",
+  "Backup retention must be a whole number": "backupRetentionInt",
+
   // demo
   "This is a read-only demo. Deploy your own instance to make changes.": "demoReadOnly",
 

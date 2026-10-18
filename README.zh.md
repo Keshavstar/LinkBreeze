@@ -361,6 +361,8 @@ cloudflared tunnel --url http://localhost:3000
 |----------|---------|-------------|
 | `PORT` | `3000` | 服务器端口 |
 | `DATABASE_PATH` | `./data/linkbreeze.db` | SQLite 数据库文件路径 |
+| `BACKUP_DIR` | `./data/backups` | 定时备份的存储目录（保留在持久化的 `./data` 卷内） |
+| `BACKUP_MIN_FREE_MB` | `50` | 剩余空间低于该值时跳过写入备份 |
 | `SECRET_KEY` | 自动生成 | 用于会话的 HMAC 签名密钥 |
 | `EXTRA_SCRIPT_SRC` | _(空)_ | CSP 允许的统计域名，空格分隔（如 `plausible.io umami.is`） |
 

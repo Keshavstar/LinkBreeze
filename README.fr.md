@@ -361,6 +361,8 @@ Toute la configuration passe par des variables d'environnement. **[`.env.example
 |----------|---------|-------------|
 | `PORT` | `3000` | Port du serveur |
 | `DATABASE_PATH` | `./data/linkbreeze.db` | Chemin du fichier de base de données SQLite |
+| `BACKUP_DIR` | `./data/backups` | Répertoire de stockage des sauvegardes planifiées (à garder dans le volume persistant `./data`) |
+| `BACKUP_MIN_FREE_MB` | `50` | Ne pas écrire de sauvegarde quand l'espace libre passe sous cette valeur |
 | `SECRET_KEY` | Générée automatiquement | Clé de signature HMAC des sessions |
 | `EXTRA_SCRIPT_SRC` | _(vide)_ | Domaines d'analytique séparés par des espaces pour la CSP (ex. `plausible.io umami.is`) |
 

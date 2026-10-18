@@ -361,6 +361,8 @@ cloudflared tunnel --url http://localhost:3000
 |----------|---------|-------------|
 | `PORT` | `3000` | منفذ الخادم |
 | `DATABASE_PATH` | `./data/linkbreeze.db` | مسار ملف قاعدة بيانات SQLite |
+| `BACKUP_DIR` | `./data/backups` | دليل تخزين النسخ الاحتياطية المجدولة (أبقِه داخل وحدة `./data` الدائمة) |
+| `BACKUP_MIN_FREE_MB` | `50` | تجاوز كتابة النسخ الاحتياطية عندما تنخفض المساحة الحرة عن هذا الحد |
 | `SECRET_KEY` | يُولَّد تلقائيًا | مفتاح توقيع HMAC للجلسات |
 | `EXTRA_SCRIPT_SRC` | _(فارغ)_ | نطاقات الإحصائيات مفصولة بمسافات من أجل CSP (مثل `plausible.io umami.is`) |
 

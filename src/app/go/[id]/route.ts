@@ -5,6 +5,7 @@ import { rateLimit } from "@/lib/rate-limit";
 import { isBot } from "@/lib/bot-detect";
 import { getSession } from "@/lib/auth";
 import { getLinkByRef, getPageById, recordClick } from "@/server/queries";
+import { maybeRunScheduledBackup } from "@/server/backup-scheduler";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -90,6 +91,9 @@ export async function GET(
           (h.get("referer") || h.get("referrer") || "").toString(),
         );
         await recordClick(linkId, visitorHash, referrer);
+        // #83: opportunistic scheduled-backup trigger (throttled inside the
+        // scheduler; must never delay the redirect — fire-and-forget).
+        maybeRunScheduledBackup();
       }
     }
     // If rate-limited, we still redirect the user to their destination —

@@ -33,6 +33,8 @@ import {
   type BreakdownEntry,
 } from "@/server/queries";
 import { checkForUpdates } from "@/lib/update-check";
+import { maybeRunScheduledBackup, getBackupStatus } from "@/server/backup-scheduler";
+import { BackupFailureNotice } from "./backup-failure-notice";
 import { getCachedFaviconUrl } from "@/lib/favicon";
 import { UpdateChecker } from "@/components/admin/UpdateChecker";
 import { OnboardingChecklist } from "@/components/admin/OnboardingChecklist";
@@ -353,9 +355,23 @@ export default async function DashboardPage({
   const t = await getTranslations("dashboard");
   const locale = await getLocale();
 
+  // #83: opportunistic scheduled-backup trigger on admin loads (quiet
+  // instances whose owners log in but get no public traffic still back up),
+  // then surface a dismissible notice while backups are failing.
+  maybeRunScheduledBackup();
+  const backupStatus = await getBackupStatus();
+  const showBackupNotice =
+    backupStatus.enabled &&
+    backupStatus.lastErrorAt !== null &&
+    (backupStatus.noticeDismissedAt === null ||
+      backupStatus.lastErrorAt > backupStatus.noticeDismissedAt);
+
   return (
     <div className="flex flex-col gap-4 lg:h-[calc(100dvh-3rem)]">
       <UpdateChecker initialResult={updateResult} />
+
+      {/* Scheduled backups failing (#83) — dismissible, re-arms on next failure */}
+      {showBackupNotice ? <BackupFailureNotice /> : null}
 
       {/* Onboarding checklist — auto-hides when all done or dismissed */}
       <OnboardingChecklist

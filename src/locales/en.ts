@@ -114,6 +114,12 @@ const en = {
 
   dashboard: {
 
+    backupNotice: {
+      title: "Automatic backups are failing",
+      body: "The last scheduled backup did not complete. Check Settings, then Data, for details and stored backups.",
+      dismiss: "Dismiss",
+    },
+
     new: "New",
 
     topLinks: "Top links",
@@ -846,6 +852,48 @@ const en = {
       colConsent: "Consent",
     },
 
+    backups: {
+      title: "Scheduled backups",
+      description: "Automatic backups of your content, stored on your own server.",
+      enable: "Automatic backups",
+      enableHint: "Off by default - nothing changes until you switch it on.",
+      frequency: "Frequency",
+      daily: "Daily",
+      weekly: "Weekly",
+      monthly: "Monthly",
+      timeLabel: "Preferred time",
+      timeHint: "Runs at the first activity on or after this time. Backups are internal to the app - no cron required.",
+      retentionLabel: "Backups to keep",
+      runNow: "Back up now",
+      running: "Backing up…",
+      runDone: "Backup created.",
+      lastRun: "Last backup: {time}",
+      never: "Last backup: never",
+      result_ok: "Success",
+      result_disk_full: "Failed: not enough free disk space",
+      result_write_failed: "Failed: could not write the backup file",
+      result_serialize_failed: "Failed: could not read the database",
+      result_busy: "Skipped: another backup or restore was running",
+      storageLabel: "Stored in",
+      freeSpace: "{mb} MB free",
+      lowDisk: "Low disk space - automatic backups pause until at least {mb} MB is free.",
+      storedBackups: "Stored backups",
+      noBackups: "No backups yet.",
+      restore: "Restore",
+      delete: "Delete backup",
+      restoreTitle: "Restore this backup?",
+      restoreWarning: "Your current links, profile, settings and themes will be replaced by this backup. This cannot be undone.",
+      restoreConfirm: "Restore",
+      deleteTitle: "Delete this backup?",
+      deleteWarning: "The backup file will be permanently removed from your server.",
+      deleteConfirm: "Delete",
+      cancel: "Cancel",
+      backupRestored: "Backup restored.",
+      backupDeleted: "Backup deleted.",
+      restoreFailed: "Restore failed.",
+      deleteFailed: "Delete failed.",
+    },
+
     qr: {
       saving: "Saving…",
 
@@ -994,6 +1042,17 @@ const en = {
     },
     somethingWentWrong: "Something went wrong. Please try again.",
     uploadFailed: "Upload failed. Please try again.",
+
+    // scheduled backups (#83)
+    backupNotFound: "Backup file not found",
+    invalidBackupFilename: "Invalid backup filename",
+    backupInProgress: "A backup or restore is already in progress",
+    backupDiskFull: "Not enough free disk space to write a backup",
+    backupFailed: "Backup failed. Check the server logs.",
+    backupFrequencyInvalid: "Choose a valid backup frequency",
+    backupTimeInvalid: "Enter a valid time of day",
+    backupRetentionInvalid: "Backup retention must be between 1 and 52",
+    backupRetentionInt: "Backup retention must be a whole number",
     invalidCredentials: "Invalid username or password.",
     unauthorized: "Unauthorized",
     invalidInput: "Invalid input",

@@ -10,6 +10,8 @@ import {
   getAllSubscribers,
 } from "@/server/queries";
 import { isUpdateCheckEnabled } from "@/lib/update-check";
+import { maybeRunScheduledBackup, getBackupOverview } from "@/server/backup-scheduler";
+import { formatTimeOfDay } from "@/lib/backup-schedule";
 import { parseQrStyle } from "@/lib/qr-style";
 import { getSession } from "@/lib/auth";
 import { getUserById } from "@/server/queries";
@@ -19,6 +21,7 @@ import { OgImageCard } from "./og-image-card";
 import { ChangePasswordForm } from "./change-password-form";
 import { TwoFactorCard } from "./two-factor-card";
 import { DataManager } from "./data-manager";
+import { BackupsCard } from "./backups-card";
 import { SubscribersCard } from "./subscribers-card";
 import { MigrationWizard } from "@/components/admin/MigrationWizard";
 import { SettingsTabs } from "./settings-tabs";
@@ -70,6 +73,11 @@ export default async function SettingsPage({
 
   const slug = activePage?.slug || "u";
   const t = await getTranslations("settings");
+
+  // #83: opportunistic scheduled-backup trigger on admin loads (quiet
+  // instances whose owners log in but get no public traffic still back up).
+  maybeRunScheduledBackup();
+  const backupOverview = await getBackupOverview();
 
   // Cache-buster for the OG preview: a hash of every page input the rendered
   // card consumes (theme, display name/title, bio, avatar). ANY change to any
@@ -204,6 +212,19 @@ export default async function SettingsPage({
               <DataManager
                 retentionDays={String(retentionDays)}
                 updateCheckEnabled={updateCheckEnabled}
+              />
+              {/* Scheduled backups (#83) — config + stored-backup list */}
+              <BackupsCard
+                enabled={backupOverview.config.enabled}
+                frequency={backupOverview.config.frequency}
+                timeOfDay={formatTimeOfDay(backupOverview.config.timeOfDayMinutes)}
+                retention={backupOverview.config.retention}
+                backups={backupOverview.backups}
+                lastRunAt={backupOverview.lastRunAt}
+                lastResult={backupOverview.lastResult}
+                backupDir={backupOverview.backupDir}
+                freeMb={backupOverview.freeMb}
+                minFreeMb={backupOverview.minFreeMb}
               />
             </div>
           ),

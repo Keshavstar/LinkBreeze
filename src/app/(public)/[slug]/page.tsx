@@ -17,6 +17,7 @@ import { rateLimit } from "@/lib/rate-limit";
 import { getCountry } from "@/lib/geo";
 import { isBot } from "@/lib/bot-detect";
 import { getSession } from "@/lib/auth";
+import { maybeRunScheduledBackup } from "@/server/backup-scheduler";
 import { ProfileHeader } from "@/components/public/ProfileHeader";
 import { LinkCard } from "@/components/public/LinkCard";
 import { DividerElement } from "@/components/public/DividerElement";
@@ -180,6 +181,9 @@ export default async function PublicPage({ params }: PageProps) {
       const viewRl = rateLimit(`view:${ip}`, 1, 30_000);
       if (viewRl.ok) {
         await recordPageview(visitorHash, referrer, deviceType, country, page.id);
+        // #83: opportunistic scheduled-backup trigger (fire-and-forget,
+        // throttled to one settings-read per minute inside the scheduler).
+        maybeRunScheduledBackup();
       }
     }
   } catch {

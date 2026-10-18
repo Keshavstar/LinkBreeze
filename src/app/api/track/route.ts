@@ -5,6 +5,7 @@ import { rateLimit } from "@/lib/rate-limit";
 import { isBot } from "@/lib/bot-detect";
 import { getSession } from "@/lib/auth";
 import { recordClick } from "@/server/queries";
+import { maybeRunScheduledBackup } from "@/server/backup-scheduler";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -85,6 +86,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: false, error: "Missing linkId" }, { status: 400 });
     }
     await recordClick(body.linkId, visitorHash, referrer, type === "open" ? "open" : "click");
+    // #83: opportunistic scheduled-backup trigger (throttled inside the
+    // scheduler; fire-and-forget so the beacon response stays instant).
+    maybeRunScheduledBackup();
 
     return NextResponse.json({ ok: true });
   } catch (err) {
