@@ -115,10 +115,13 @@ jobs:
         if: needs.setup.outputs.mode != 'dryrun'
         run: |
           mkdir -p /tmp/digests
-          # Both registries serve the same content-addressed digests for the
-          # same build, so one digest file covers the Hub merge too.
-          digest="${{ steps.build.outputs.digest }}"
-          touch "/tmp/digests/${digest#sha256:}"
+          # buildx provenance attestations make each push a distinct index, so
+          # the two registries do NOT share digests. Export one file per
+          # registry; each merge step consumes only its own prefix.
+          ghcr_digest="${{ steps.build.outputs.digest }}"
+          touch "/tmp/digests/ghcr-${ghcr_digest#sha256:}"
+          hub_digest="${{ steps.build-hub.outputs.digest }}"
+          touch "/tmp/digests/hub-${hub_digest#sha256:}"
 
       - name: Upload digest
         if: needs.setup.outputs.mode != 'dryrun'
@@ -184,7 +187,7 @@ jobs:
         working-directory: /tmp/digests
         run: |
           tags="$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON")"
-          digests="$(printf "${{ env.IMAGE }}@sha256:%s " *)"
+          digests="$(printf "${{ env.IMAGE }}@sha256:%s " ghcr-*)"
           # Intentional word splitting: $tags and $digests are multi-word arg lists.
           # shellcheck disable=SC2046,SC2086
           docker buildx imagetools create $tags $digests
@@ -195,7 +198,7 @@ jobs:
         working-directory: /tmp/digests
         run: |
           tags="$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON" | sed "s|${{ env.IMAGE }}|${{ env.HUB_IMAGE }}|g")"
-          digests="$(printf "${{ env.HUB_IMAGE }}@sha256:%s " *)"
+          digests="$(printf "${{ env.HUB_IMAGE }}@sha256:%s " hub-*)"
           # Intentional word splitting: $tags and $digests are multi-word arg lists.
           # shellcheck disable=SC2046,SC2086
           docker buildx imagetools create $tags $digests
