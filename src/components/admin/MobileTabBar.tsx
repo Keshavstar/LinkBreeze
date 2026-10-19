@@ -8,6 +8,7 @@ import {
   User,
   Palette,
   Settings,
+  Globe,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -24,6 +25,7 @@ const TABS: {
   { href: "/links", label: "links", icon: LinkIcon },
   { href: "/profile", label: "profile", icon: User },
   { href: "/theme", label: "theme", icon: Palette },
+  { href: "/domains", label: "domains", icon: Globe },
   { href: "/settings", label: "settings", icon: Settings },
 ];
 

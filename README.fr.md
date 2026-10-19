@@ -52,6 +52,10 @@
     <td valign="top">📱 <strong>Widgets intégrés</strong><br/>YouTube, Spotify, SoundCloud, Vimeo et Bandcamp directement sur votre page</td>
     <td valign="top">🎯 <strong>QR codes</strong><br/>Générés automatiquement, couleurs personnalisables, avatar ou favicon au centre, SVG/PNG jusqu'à 1024 px</td>
   </tr>
+  <tr>
+    <td width="50%" valign="top">🌐 <strong>Domaines personnalisés</strong><br/>Associez vos propres domaines à vos pages — les visiteurs arrivent sur jane.com, sans /slug</td>
+    <td valign="top">⏰ <strong>Sauvegardes programmées</strong><br/>Sauvegardes internes quotidiennes/hebdomadaires/mensuelles avec restauration en un clic, sans cron</td>
+  </tr>
 </table>
 
 
@@ -74,6 +78,8 @@
 - **🔔 Notifications de mise à jour** - Un bandeau du tableau de bord quand une nouvelle version est disponible. Pas de phone-home, pas de mise à jour automatique
 - **🔑 Panneau d'administration rapide** - Tout ce qui précède depuis un tableau de bord propre et instantané
 
+- **🌐 Domaines personnalisés** - Associez vos propres domaines à vos pages ; portée exclusive ou hub, redirections canoniques automatiques, verrou admin strict par hôte
+- **⏰ Sauvegardes programmées** - Sauvegardes internes quotidiennes/hebdomadaires/mensuelles avec rétention et restauration en un clic, sans cron
 </details>
 
 ## 🚀 Démarrage rapide
@@ -366,6 +372,7 @@ Toute la configuration passe par des variables d'environnement. **[`.env.example
 | `BACKUP_MIN_FREE_MB` | `50` | Ne pas écrire de sauvegarde quand l'espace libre passe sous cette valeur |
 | `SECRET_KEY` | Générée automatiquement | Clé de signature HMAC des sessions |
 | `EXTRA_SCRIPT_SRC` | _(vide)_ | Domaines d'analytique séparés par des espaces pour la CSP (ex. `plausible.io umami.is`) |
+| `LINKBREEZE_PRIMARY_HOST` | _(vide)_ | Hôte principal où vit votre admin ; le verrou admin des domaines personnalisés renvoie 404 sur tous les autres hôtes (l'env a priorité sur le réglage admin) |
 
 <details>
 <summary>💳 &nbsp;Variables de passes wallet (Google Wallet / Apple Wallet)</summary>
@@ -389,6 +396,12 @@ Chaque page publique affiche un bloc de partage avec un bouton « Enregistrer le
 
 Les réglages à l'exécution (slug de la page, titre, SEO, thème) se gèrent depuis le tableau de bord admin et se stockent en base de données - aucune modification de code nécessaire.
 
+## 🌐 Domaines personnalisés
+
+Pointez vos propres domaines vers vos pages — une instance, plusieurs identités. Les visiteurs arrivent sur `https://jane.com/` et voient directement la page de Jane, avec redirections canoniques automatiques, sitemaps optimisés SEO et verrou admin strict par hôte. Les liaisons s'activent lors de leur première vraie visite (DNS auto-vérifié), et la portée par page décide si un domaine EST la page (exclusive) ou un hub pour tous les slugs.
+
+Configuration complète — DNS, TLS wildcard et configs reverse-proxy prêtes à coller pour Caddy, nginx et Traefik — dans **[docs/custom-domains.md](docs/custom-domains.md)**.
+
 ## 🎨 Système de thèmes
 
 11 préréglages sont inclus d'office : **Aurora** (la vitrine animée), **Glassmorphism**, **Neon Cyberpunk**, **Editorial Paper**, **Terminal Mono**, **Pastel Soft**, **Brutalist**, **Retro Sunset**, **Minimal Light**, **8-Bit Retro** et **Frutiger Aero**.
@@ -410,7 +423,7 @@ Le moteur de thèmes est un système de tokens basé sur des propriétés CSS pe
 
 ## 📖 Docs & liens
 
-[Guide de contribution](CONTRIBUTING.md) · [Politique de sécurité](SECURITY.md) · [Journal des modifications](CHANGELOG.md) · [Dépannage](TROUBLESHOOTING.md) · [Décisions d'architecture](docs/adr/) · [Référence de configuration](.env.example)
+[Guide de contribution](CONTRIBUTING.md) · [Politique de sécurité](SECURITY.md) · [Journal des modifications](CHANGELOG.md) · [Dépannage](TROUBLESHOOTING.md) · [Custom Domains](docs/custom-domains.md) · [Décisions d'architecture](docs/adr/) · [Référence de configuration](.env.example)
 
 Source : [GitHub](https://github.com/Manak-hash/LinkBreeze) (canonique) · [GitLab](https://gitlab.com/omnirise00/linkbreeze) (miroir public de tirage, synchronisé automatiquement) · Image : [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 

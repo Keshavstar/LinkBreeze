@@ -59,6 +59,12 @@ const MESSAGE_KEYS: Record<string, string> = {
   // pages
   "A page with this slug already exists": "slugExists",
   "The default page cannot be deleted": "defaultPageProtected",
+
+  // custom domains (#85)
+  "Enter a valid domain name, e.g. jane.com": "invalidDomain",
+  "This domain is already bound": "domainExists",
+  "This page already has a primary domain": "primaryDomainExists",
+  "Domain not found": "domainNotFound",
   "Page not found": "pageNotFound",
   "Invalid page id": "invalidPageId",
   "Missing page id": "missingPageId",

@@ -52,6 +52,10 @@
     <td valign="top">📱 <strong>Eingebettete Widgets</strong><br/>YouTube, Spotify, SoundCloud, Vimeo und Bandcamp auf deiner Seite</td>
     <td valign="top">🎯 <strong>QR-Codes</strong><br/>Automatisch generiert, eigene Farben, Avatar oder Favicon in der Mitte, SVG/PNG bis 1024 px</td>
   </tr>
+  <tr>
+    <td width="50%" valign="top">🌐 <strong>Eigene Domains</strong><br/>Verlinke eigene Domains auf Seiten — Besucher landen auf jane.com, ohne /slug</td>
+    <td valign="top">⏰ <strong>Geplante Backups</strong><br/>Interne tägliche/wöchentliche/monatliche Backups mit Ein-Klick-Wiederherstellung, ohne Cron</td>
+  </tr>
 </table>
 
 
@@ -74,6 +78,8 @@
 - **🔔 Update-Benachrichtigungen** - Dashboard-Banner, wenn eine neue Version verfügbar ist. Kein Phone-Home, kein Auto-Update
 - **🔑 Schnelles Admin-Panel** - Alles oben Genannte aus einem übersichtlichen, blitzschnellen Dashboard
 
+- **🌐 Eigene Domains** - Eigene Domains auf Seiten binden; exklusiver oder Hub-Scope, automatische Canonical-Weiterleitungen, strikte Admin-Host-Sperre
+- **⏰ Geplante Backups** - Interne tägliche/wöchentliche/monatliche Backups mit Aufbewahrung und Ein-Klick-Wiederherstellung, ohne Cron
 </details>
 
 ## 🚀 Schnellstart
@@ -366,6 +372,7 @@ Die gesamte Konfiguration erfolgt über Umgebungsvariablen. **[`.env.example`](.
 | `BACKUP_MIN_FREE_MB` | `50` | Keine Backups schreiben, wenn der freie Speicherplatz darunter fällt |
 | `SECRET_KEY` | Automatisch generiert | HMAC-Signaturschlüssel für Sessions |
 | `EXTRA_SCRIPT_SRC` | _(leer)_ | Durch Leerzeichen getrennte Analyse-Domains für die CSP (z. B. `plausible.io umami.is`) |
+| `LINKBREEZE_PRIMARY_HOST` | _(leer)_ | Primärer Host der Verwaltung; die Admin-Host-Sperre eigener Domains liefert 404 auf allen anderen Hosts (Umgebungsvariable schlägt die Admin-Einstellung) |
 
 <details>
 <summary>💳 &nbsp;Wallet-Pass-Variablen (Google Wallet / Apple Wallet)</summary>
@@ -389,6 +396,12 @@ Jede öffentliche Seite rendert einen Teilen-Block mit einem „Kontakt speicher
 
 Laufzeiteinstellungen (Seiten-Slug, Titel, SEO, Theme) werden über das Admin-Dashboard verwaltet und in der Datenbank gespeichert - keine Codeänderungen nötig.
 
+## 🌐 Eigene Domains
+
+Leite eigene Domains auf Seiten weiter — eine Instanz, viele Identitäten. Besucher landen auf `https://jane.com/` und sehen Janes Seite direkt, mit automatischen Canonical-Weiterleitungen, SEO-tauglichen Sitemaps und strikter Admin-Host-Sperre. Bindungen werden beim ersten echten Besuch aktiv (selbstverifizierendes DNS), und der Seiten-Scope legt fest, ob eine Domain die Seite IST (exklusiv) oder ein Hub für alle Slugs.
+
+Komplette Einrichtung — DNS, Wildcard-TLS und Copy-Paste-Reverse-Proxy-Konfigurationen für Caddy, nginx und Traefik — in **[docs/custom-domains.md](docs/custom-domains.md)**.
+
 ## 🎨 Theme-System
 
 11 Presets sind ab Werk dabei: **Aurora** (animiertes Flaggschiff), **Glassmorphism**, **Neon Cyberpunk**, **Editorial Paper**, **Terminal Mono**, **Pastel Soft**, **Brutalist**, **Retro Sunset**, **Minimal Light**, **8-Bit Retro** und **Frutiger Aero**.
@@ -410,7 +423,7 @@ Die Theme-Engine ist ein Token-System auf Basis von CSS-Custom-Properties (`--lb
 
 ## 📖 Dokumentation & Links
 
-[Mitmachen](CONTRIBUTING.md) · [Sicherheitsrichtlinie](SECURITY.md) · [Changelog](CHANGELOG.md) · [Fehlerbehebung](TROUBLESHOOTING.md) · [Architekturentscheidungen](docs/adr/) · [Konfigurationsreferenz](.env.example)
+[Mitmachen](CONTRIBUTING.md) · [Sicherheitsrichtlinie](SECURITY.md) · [Changelog](CHANGELOG.md) · [Fehlerbehebung](TROUBLESHOOTING.md) · [Custom Domains](docs/custom-domains.md) · [Architekturentscheidungen](docs/adr/) · [Konfigurationsreferenz](.env.example)
 
 Quelle: [GitHub](https://github.com/Manak-hash/LinkBreeze) (kanonisch) · [GitLab](https://gitlab.com/omnirise00/linkbreeze) (öffentlicher Pull-Mirror, automatisch synchronisiert) · Image: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 

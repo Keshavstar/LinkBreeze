@@ -52,6 +52,10 @@
     <td valign="top">📱 <strong>内嵌小组件</strong><br/>在页面上嵌入 YouTube、Spotify、SoundCloud、Vimeo 和 Bandcamp</td>
     <td valign="top">🎯 <strong>QR 码</strong><br/>自动生成，自定义颜色，中心嵌入头像或 favicon，SVG/PNG 最高 1024px</td>
   </tr>
+  <tr>
+    <td width="50%" valign="top">🌐 <strong>自定义域名</strong><br/>将自有域名绑定到页面——访客直接访问 jane.com，无需 /slug</td>
+    <td valign="top">⏰ <strong>定时备份</strong><br/>应用内每日/每周/每月备份，一键恢复，无需 cron</td>
+  </tr>
 </table>
 
 
@@ -74,6 +78,8 @@
 - **🔔 更新通知** - 有新版本时仪表盘横幅会提醒你。不回传数据，不自动更新
 - **🔑 快速管理面板** - 以上所有功能，尽在一个简洁、即时的仪表盘
 
+- **🌐 自定义域名** - 将自有域名绑定到页面；独占或中心范围，自动 canonical 重定向，严格的管理后台主机锁定
+- **⏰ 定时备份** - 应用内每日/每周/每月备份，带保留策略和一键恢复，无需 cron
 </details>
 
 ## 🚀 快速开始
@@ -366,6 +372,7 @@ cloudflared tunnel --url http://localhost:3000
 | `BACKUP_MIN_FREE_MB` | `50` | 剩余空间低于该值时跳过写入备份 |
 | `SECRET_KEY` | 自动生成 | 用于会话的 HMAC 签名密钥 |
 | `EXTRA_SCRIPT_SRC` | _(空)_ | CSP 允许的统计域名，空格分隔（如 `plausible.io umami.is`） |
+| `LINKBREEZE_PRIMARY_HOST` | _（空）_ | 管理后台所在的主机；自定义域名的主机锁定会对其他所有主机返回 404（环境变量优先于后台设置） |
 
 <details>
 <summary>💳 &nbsp;钱包通行证变量（Google Wallet / Apple Wallet）</summary>
@@ -389,6 +396,12 @@ cloudflared tunnel --url http://localhost:3000
 
 运行时设置（页面 slug、标题、SEO、主题）通过管理后台管理并存储在数据库中 - 无需修改代码。
 
+## 🌐 自定义域名
+
+将自有域名指向页面——一个实例，多个身份。访客打开 `https://jane.com/` 即可直接看到 Jane 的页面，并配有自动 canonical 重定向、利于 SEO 的站点地图和严格的管理后台主机锁定。绑定会在首次真实访问时激活（DNS 自验证），页面范围决定域名是该页面本身（独占）还是所有 slug 的中心。
+
+完整设置——DNS、泛域名 TLS 以及 Caddy、nginx、Traefik 的即拷即用反向代理配置——见 **[docs/custom-domains.md](docs/custom-domains.md)**。
+
 ## 🎨 主题系统
 
 开箱即用包含 11 个预设：**Aurora**（动画旗舰）、**Glassmorphism**、**Neon Cyberpunk**、**Editorial Paper**、**Terminal Mono**、**Pastel Soft**、**Brutalist**、**Retro Sunset**、**Minimal Light**、**8-Bit Retro** 和 **Frutiger Aero**。
@@ -410,7 +423,7 @@ cloudflared tunnel --url http://localhost:3000
 
 ## 📖 文档与链接
 
-[贡献指南](CONTRIBUTING.md) · [安全策略](SECURITY.md) · [更新日志](CHANGELOG.md) · [故障排查](TROUBLESHOOTING.md) · [架构决策](docs/adr/) · [配置参考](.env.example)
+[贡献指南](CONTRIBUTING.md) · [安全策略](SECURITY.md) · [更新日志](CHANGELOG.md) · [故障排查](TROUBLESHOOTING.md) · [Custom Domains](docs/custom-domains.md) · [架构决策](docs/adr/) · [配置参考](.env.example)
 
 源码：[GitHub](https://github.com/Manak-hash/LinkBreeze)（权威源） · [GitLab](https://gitlab.com/omnirise00/linkbreeze)（公开拉取镜像，自动同步） · 镜像：[`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 

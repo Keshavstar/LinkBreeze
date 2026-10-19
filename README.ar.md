@@ -52,6 +52,10 @@
     <td valign="top">📱 <strong>أدوات مدمجة</strong><br/>YouTube وSpotify وSoundCloud وVimeo وBandcamp في صفحتك</td>
     <td valign="top">🎯 <strong>رموز QR</strong><br/>تُولَّد تلقائيًا، ألوان مخصصة، صورة رمزية أو أيقونة الموقع في المنتصف، SVG/PNG حتى 1024 بكسل</td>
   </tr>
+  <tr>
+    <td width="50%" valign="top">🌐 <strong>نطاقات مخصصة</strong><br/>اربط نطاقاتك الخاصة بالصفحات — يصل الزوار إلى jane.com مباشرة دون /slug</td>
+    <td valign="top">⏰ <strong>نسخ احتياطي مجدول</strong><br/>نسخ احتياطية داخلية يومية/أسبوعية/شهرية مع استعادة بنقرة واحدة، دون cron</td>
+  </tr>
 </table>
 
 
@@ -74,6 +78,8 @@
 - **🔔 إشعارات التحديث** - شريط في لوحة التحكم عند توفر نسخة جديدة. لا اتصال خارجي، لا تحديث تلقائي
 - **🔑 لوحة تحكم سريعة** - كل ما سبق من لوحة واحدة نظيفة وفورية
 
+- **🌐 نطاقات مخصصة** - اربط نطاقاتك الخاصة بالصفحات؛ نطاق حصري أو مركز، تحويلات canonical تلقائية، قفل إدارة صارم حسب المستضيف
+- **⏰ نسخ احتياطي مجدول** - نسخ احتياطية داخلية يومية/أسبوعية/شهرية مع احتفاظ واستعادة بنقرة واحدة، دون cron
 </details>
 
 ## 🚀 البدء السريع
@@ -366,6 +372,7 @@ cloudflared tunnel --url http://localhost:3000
 | `BACKUP_MIN_FREE_MB` | `50` | تجاوز كتابة النسخ الاحتياطية عندما تنخفض المساحة الحرة عن هذا الحد |
 | `SECRET_KEY` | يُولَّد تلقائيًا | مفتاح توقيع HMAC للجلسات |
 | `EXTRA_SCRIPT_SRC` | _(فارغ)_ | نطاقات الإحصائيات مفصولة بمسافات من أجل CSP (مثل `plausible.io umami.is`) |
+| `LINKBREEZE_PRIMARY_HOST` | _(فارغ)_ | المستضيف الأساسي الذي تعمل عليه لوحة الإدارة؛ قفل النطاقات المخصص يُرجع 404 لكل مستضيف آخر (متغير البيئة يتجاوز إعداد الإدارة) |
 
 <details>
 <summary>💳 &nbsp;متغيرات تذاكر المحفظة (Google Wallet / Apple Wallet)</summary>
@@ -389,6 +396,12 @@ cloudflared tunnel --url http://localhost:3000
 
 إعدادات التشغيل (اسم الصفحة المختصر، العنوان، SEO، الثيم) تُدار عبر لوحة التحكم وتُخزَّن في قاعدة البيانات - دون أي تعديل على الكود.
 
+## 🌐 النطاقات المخصصة
+
+وجّه نطاقاتك الخاصة إلى الصفحات — نسخة واحدة، هويات متعددة. يصل الزوار إلى `https://jane.com/` فيرون صفحة Jane مباشرة، مع تحويلات canonical تلقائية وخرائط مواقع صديقة لمحركات البحث وقفل إدارة صارم حسب المستضيف. تتفعّل الروابط عند أول زيارة حقيقية (DNS ذاتي التحقق)، ويحدد نطاق كل صفحة ما إن كان النطاق هو الصفحة نفسها (حصري) أم مركزًا لجميع المعرّفات.
+
+الإعداد الكامل — DNS وTLS wildcard وتكوينات وكيل عكسي جاهزة للنسخ لـ Caddy وnginx وTraefik — في **[docs/custom-domains.md](docs/custom-domains.md)**.
+
 ## 🎨 نظام الثيمات
 
 11 إعدادًا مسبقًا مضمَّنة افتراضيًا: **Aurora** (الواجهة المتحركة الرئيسية)، **Glassmorphism**، **Neon Cyberpunk**، **Editorial Paper**، **Terminal Mono**، **Pastel Soft**، **Brutalist**، **Retro Sunset**، **Minimal Light**، **8-Bit Retro** و **Frutiger Aero**.
@@ -410,7 +423,7 @@ cloudflared tunnel --url http://localhost:3000
 
 ## 📖 الوثائق والروابط
 
-[دليل المساهمة](CONTRIBUTING.md) · [سياسة الأمان](SECURITY.md) · [سجل التغييرات](CHANGELOG.md) · [حل المشكلات](TROUBLESHOOTING.md) · [قرارات المعمارية](docs/adr/) · [مرجع الإعدادات](.env.example)
+[دليل المساهمة](CONTRIBUTING.md) · [سياسة الأمان](SECURITY.md) · [سجل التغييرات](CHANGELOG.md) · [حل المشكلات](TROUBLESHOOTING.md) · [Custom Domains](docs/custom-domains.md) · [قرارات المعمارية](docs/adr/) · [مرجع الإعدادات](.env.example)
 
 المصدر: [GitHub](https://github.com/Manak-hash/LinkBreeze) (المرجع) · [GitLab](https://gitlab.com/omnirise00/linkbreeze) (نسخة عامة للسحب فقط، تُزامَن تلقائيًا) · الصورة: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 
