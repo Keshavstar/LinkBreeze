@@ -163,11 +163,15 @@ describe("isBackupDue", () => {
     const slot = localTs(2026, 9, slotDay, 3, 0);
     const lastRun = slot + 10 * 60_000;
 
-    // The next monthly slot is ~30 days later; just before it: not due.
-    const beforeNext = slot + 30 * 86_400_000 - 60_000;
+    // The next monthly slot is ~30 days later — same day-of-month, October
+    // (NOT slotDay + 30, which would spill into November). Built from local
+    // calendar dates (NOT slot + N×86_400_000 ms): a DST transition inside
+    // the 30-day window (e.g. Africa/Casablanca +01→+00) would otherwise
+    // land "1 minute before/after" an hour off the local slot time.
+    const beforeNext = localTs(2026, 10, slotDay, 2, 59);
     expect(isBackupDue(beforeNext, lastRun, "monthly", 180)).toBe(false);
     // Just after: due.
-    const afterNext = slot + 30 * 86_400_000 + 60_000;
+    const afterNext = localTs(2026, 10, slotDay, 3, 1);
     expect(isBackupDue(afterNext, lastRun, "monthly", 180)).toBe(true);
   });
 

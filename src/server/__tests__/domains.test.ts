@@ -1,7 +1,13 @@
+// MUST be the first non-vitest import: it swaps @/db to the sql.js
+// in-memory engine with all migrations applied. The real better-sqlite3
+// file DB starts EMPTY in CI ("no such table") — same reason the #94
+// search-visibility integration suite uses this harness.
+import "@/server/queries/__tests__/integration-setup";
+
 import { afterAll, describe, expect, it } from "vitest";
 import { eq } from "drizzle-orm";
 
-import { db } from "@/db";
+import { db } from "@/server/queries/__tests__/integration-setup";
 import { domains, pages } from "@/db/schema";
 import {
   activateDomain,
@@ -19,16 +25,14 @@ import {
 import { normalizeHost } from "@/lib/host-routing";
 
 /**
- * Integration tests for the domains data layer (#85). Writes go to the dev
- * database (same harness as search-visibility.integration) — everything this
- * suite creates is removed in afterAll, and it uses dedicated fixture hosts
- * that no real binding would use.
+ * Integration tests for the domains data layer (#85), on the shared
+ * in-memory harness. Fixture pages/hosts are dedicated and removed in
+ * afterAll so the shared in-memory DB stays clean for other suites.
  */
 
-const FIX_PAGE = "lb-domains-test-page";
+const FIX_SLUG = "lb-domains-test-page";
 const HOSTS = [
   "lb-test-primary.example",
-  "www.lb-test-primary.example",
   "lb-test-alias.example",
   "BÜCHER.lb-test.example", // inserted raw; must normalize on read
 ];
@@ -50,10 +54,11 @@ describe("domains data layer (#85)", () => {
   it("creates a page + bindings, listing normalizes hosts", async () => {
     await cleanup();
 
-    const [page] = await db
+    const page = db
       .insert(pages)
-      .values({ slug: FIX_PAGE, title: "Domains test page" })
-      .returning({ id: pages.id });
+      .values({ slug: FIX_SLUG, title: "Domains test page" })
+      .returning()
+      .get();
     pageId = page.id;
 
     primaryId = await createDomain({
@@ -63,20 +68,19 @@ describe("domains data layer (#85)", () => {
       behavior: "serve",
     });
     aliasId = await createDomain({
-      host: normalizeHost(HOSTS[2]),
+      host: normalizeHost(HOSTS[1]),
       pageId,
       kind: "alias",
       behavior: "redirect_canonical",
     });
     // A row stored un-normalized (as a hand edit or legacy bug might) must
-    // still match: the read path re-normalizes.
-    await db.insert(domains).values({
-      host: HOSTS[3],
-      pageId,
-      kind: "alias",
-      behavior: "serve",
-      status: "active",
-    });
+    // still match: the read path re-normalizes. The create action always
+    // normalizes, so the raw form is written directly through drizzle.
+    const [raw] = await db
+      .insert(domains)
+      .values({ host: HOSTS[2], pageId, kind: "alias", behavior: "serve", status: "active" })
+      .returning({ id: domains.id });
+    expect(raw.id).toBeGreaterThan(0);
 
     const rows = await listAdminDomains();
     const mine = rows.filter((r) => r.pageId === pageId);
@@ -90,7 +94,7 @@ describe("domains data layer (#85)", () => {
   it("proxy read path returns bindings joined with the page slug", async () => {
     const bindings = await getDomainBindings();
     const mine = bindings.filter((b) => b.pageId === pageId);
-    expect(mine.some((b) => b.host === "lb-test-primary.example" && b.pageSlug === FIX_PAGE)).toBe(true);
+    expect(mine.some((b) => b.host === "lb-test-primary.example" && b.pageSlug === FIX_SLUG)).toBe(true);
   });
 
   it("scope map reflects hub/exclusive and NULL defaults to exclusive", async () => {

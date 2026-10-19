@@ -38,6 +38,14 @@ describe("backup-store", () => {
   });
 
   it("lists only backup artifacts, newest first", async () => {
+    // The write test above created a real timestamp-stamped backup — clear
+    // any live-stamped files so the hardcoded oldest/newest fixtures below
+    // control the ordering regardless of the wall clock. (This test used to
+    // be a date bomb: once "now" moved past the NEWEST fixture's stamp
+    // (2026-10-19T03:00Z), the freshly written file always sorted first.)
+    for (const f of readdirSync(dir)) {
+      if (/^linkbreeze-backup-\d{8}T\d{6}\.json$/.test(f)) rmSync(path.join(dir, f));
+    }
     // Out-of-band older + newest files, plus junk that must stay invisible.
     writeFileSync(path.join(dir, NAME_A), '{"old":true}');
     writeFileSync(path.join(dir, NAME_B), '{"new":true}');
