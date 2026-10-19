@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       publish_test:
-        description: "Build AND push ghcr.io/manak-hash/linkbreeze:test (multi-arch, no version tag, no GitHub release)"
+        description: "Build AND push ghcr.io/omnirise/linkbreeze:test (multi-arch, no version tag, no GitHub release)"
         type: boolean
         default: false
 
@@ -217,7 +217,7 @@ jobs:
   # deploys the new update-banner data via Vercel. The url field is always
   # forced to the canonical GitHub release so the banner link can never point
   # at a mirror. Requires the WEBSITE_SYNC_TOKEN secret (PAT with repo scope
-  # on Manak-hash/LinkBreeze-Website).
+  # on OmniRise/LinkBreeze-Website).
   website-sync:
     name: Sync latest-version.json to website (PR)
     if: needs.setup.outputs.mode == 'release'
@@ -229,7 +229,7 @@ jobs:
       - name: Check out website repo
         uses: actions/checkout@v7
         with:
-          repository: Manak-hash/LinkBreeze-Website
+          repository: OmniRise/LinkBreeze-Website
           token: ${{ secrets.WEBSITE_SYNC_TOKEN }}
           path: website
 
@@ -237,7 +237,7 @@ jobs:
         env:
           TAG: ${{ github.ref_name }}
         run: |
-          jq --arg url "https://github.com/Manak-hash/LinkBreeze/releases/tag/${TAG}" \
+          jq --arg url "https://github.com/OmniRise/LinkBreeze/releases/tag/${TAG}" \
             '.url = $url' \
             latest-version.json > website/public/latest-version.json
           cat website/public/latest-version.json
@@ -254,7 +254,7 @@ jobs:
           git checkout -b "$BRANCH"
           git commit -am "chore(release): sync latest-version.json for ${TAG}"
           git push origin "$BRANCH"
-          gh pr create -R Manak-hash/LinkBreeze-Website \
+          gh pr create -R OmniRise/LinkBreeze-Website \
             --base main --head "$BRANCH" \
             --title "Release sync: ${TAG}" \
             --body "Automated sync of \`public/latest-version.json\` for ${TAG} (source: LinkBreeze release workflow). Merge to deploy the new update-banner data."
