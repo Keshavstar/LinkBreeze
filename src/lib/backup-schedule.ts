@@ -155,9 +155,11 @@ function isScheduledDay(d: Date, interval: number): boolean {
 }
 
 /** Backup artifact filenames — UTC timestamps keep listings sort-stable
- *  across server timezone moves. `linkbreeze-backup-YYYYMMDDTHHMMSS.json` */
+ *  across server timezone moves. `linkbreeze-backup-YYYYMMDDTHHMMSS.json`,
+ *  with an optional `-N` disambiguator when two runs land in the same second
+ *  (the store adds it on collision instead of overwriting). */
 export const BACKUP_FILENAME_RE =
-  /^linkbreeze-backup-(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})\.json$/;
+  /^linkbreeze-backup-(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})(?:-\d+)?\.json$/;
 
 export function makeBackupFilename(d: Date): string {
   const p = (n: number) => String(n).padStart(2, "0");

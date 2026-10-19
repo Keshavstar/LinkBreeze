@@ -190,16 +190,21 @@ export function BackupsCard({
             <div className="flex flex-col gap-2">
               <Label htmlFor="backup-frequency">{t("frequency")}</Label>
               {/* Native select: form-native so the autosaved FormData carries
-                  the value without wiring a headless component into it. */}
+                  the value without wiring a headless component into it.
+                  color-scheme is scoped here (the app sets none globally) so
+                  the native dropdown list and its options follow the theme
+                  instead of rendering UA-white with unreadable text. */}
               <select
                 id="backup-frequency"
                 name="backupFrequency"
                 defaultValue={frequency}
                 onChange={() => schedule()}
-                className="h-9 rounded-lg border border-border bg-transparent px-2 text-sm"
+                className="h-9 rounded-lg border border-input bg-transparent px-2 text-sm text-foreground outline-none transition-colors [color-scheme:light] focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30 dark:[color-scheme:dark]"
               >
                 {FREQUENCIES.map((f) => (
-                  <option key={f} value={f}>{t(f)}</option>
+                  <option key={f} value={f} className="bg-background text-foreground">
+                    {t(f)}
+                  </option>
                 ))}
               </select>
             </div>
@@ -211,7 +216,7 @@ export function BackupsCard({
                 type="time"
                 defaultValue={timeOfDay}
                 onChange={() => schedule()}
-                className="max-w-32"
+                className="max-w-32 [color-scheme:light] dark:[color-scheme:dark]"
               />
             </div>
             <div className="flex flex-col gap-2">

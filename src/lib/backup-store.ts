@@ -2,6 +2,7 @@ import "server-only";
 
 import path from "node:path";
 import { statfs, mkdir, readdir, readFile, writeFile, unlink, rename, stat } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import {
   BACKUP_FILENAME_RE,
   type BackupFileMeta,
@@ -43,12 +44,22 @@ export async function freeDiskMb(): Promise<number | null> {
 }
 
 /** Serialize + atomically write one backup. Writes to a temp file and renames
- *  so a crash mid-write never leaves a truncated file that looks restorable. */
+ *  so a crash mid-write never leaves a truncated file that looks restorable.
+ *  A filename collision (two runs in the same second — e.g. a fast double
+ *  "Run now") gets a `-N` suffix instead of silently overwriting the
+ *  previous backup. */
 export async function writeBackupFile(
   payload: string,
 ): Promise<BackupFileMeta> {
   await ensureBackupDir();
-  const filename = backupFilenameNow();
+  const base = backupFilenameNow();
+  let filename = base;
+  let n = 1;
+  // The backup lock serializes runs, so this loop is at most one iteration
+  // in practice — it only guards the rename-overwrite edge.
+  while (existsSync(path.join(BACKUP_DIR, filename))) {
+    filename = base.replace(/\.json$/, `-${n++}.json`);
+  }
   const finalPath = path.join(BACKUP_DIR, filename);
   const tmpPath = `${finalPath}.tmp`;
   await writeFile(tmpPath, payload, "utf8");
