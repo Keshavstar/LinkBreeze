@@ -1,17 +1,62 @@
 import { ImageResponse } from "next/og";
 import { headers } from "next/headers";
-import { getPageBySlug, getActiveTheme, getThemeById } from "@/server/queries";
-import { resolveOgThemeBackground } from "@/lib/og-theme";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import {
+  getPageBySlug,
+  getActiveTheme,
+  getThemeById,
+  getActiveLinks,
+} from "@/server/queries";
+import {
+  resolveOgThemeBackground,
+  withAlpha,
+  selectOgLinks,
+} from "@/lib/og-theme";
 
 export const runtime = "nodejs";
 
 /**
- * Dynamic OG image (AUTO mode). When the page has a custom uploaded OG image
- * (ogImageMode === "custom" && ogImageUrl), generateMetadata points og:image
- * at that file directly and crawlers never hit this route. This route serves
- * the auto card: it follows the page's theme for EVERY background type
- * (see src/lib/og-theme.ts), plus the page avatar/title/bio.
+ * Dynamic OG image (AUTO mode) — "Poster Hero" layout.
+ *
+ * When the page has a custom uploaded OG image (ogImageMode === "custom" &&
+ * ogImageUrl), generateMetadata points og:image at that file directly and
+ * crawlers never hit this route. The auto card follows the page's theme for
+ * EVERY background type (src/lib/og-theme.ts) and showcases the page: big
+ * centered identity (avatar/name/bio) plus the top link titles as pills, so
+ * the card sells the content instead of floating small text in empty space.
+ *
+ * Every color derives from the theme: pills/borders are low-alpha mixes of
+ * the theme TEXT color (legible on light and dark backgrounds alike),
+ * accents use the theme primary. The LinkBreeze mark (top-left) is the real
+ * brand asset, always rendered as-is — brand identity is not theme-recolorable.
  */
+
+/** The brand mark, read once from public/ and embedded as a data URI —
+ *  satori cannot fetch relative URLs, and crawlers must not wait on a
+ *  network fetch for a static asset. Falls back to null (no mark) if the
+ *  file is ever missing. */
+let brandMarkCache: string | null | undefined;
+async function brandMarkDataUri(): Promise<string | null> {
+  if (brandMarkCache !== undefined) return brandMarkCache;
+  try {
+    const svg = await readFile(
+      path.join(process.cwd(), "public", "logo-mark.svg"),
+      "utf8",
+    );
+    brandMarkCache = `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
+  } catch {
+    brandMarkCache = null;
+  }
+  return brandMarkCache;
+}
+
+/** Max pill count + the "+N more" tail keeps the row on one line for any
+ *  page. Bio/name are truncated — satori has no line-clamp. */
+const MAX_PILLS = 4;
+const BIO_MAX_CHARS = 160;
+const NAME_MAX_CHARS = 48;
+
 export async function GET(
   _req: Request,
   { params }: { params: Promise<{ slug: string }> },
@@ -34,12 +79,23 @@ export async function GET(
     ? ((await getThemeById(page.themeId)) ?? (await getActiveTheme()))
     : await getActiveTheme();
 
-  const name = page?.title || "LinkBreeze";
-  const bio = page?.bio || "All my links in one place";
+  const name = (page?.title || "LinkBreeze").slice(0, NAME_MAX_CHARS);
+  const bio = (page?.bio || "All my links in one place").slice(0, BIO_MAX_CHARS);
   const textColor = theme?.textColor || "#eceafe";
   const primary = theme?.primaryColor || "#533fd6";
+  const secondary = theme?.secondaryColor || primary;
 
   const og = resolveOgThemeBackground(theme);
+
+  // Pills: low-alpha mixes of the TEXT color stay legible on light AND dark
+  // backgrounds; an unparseable text color (named CSS color) falls back to
+  // primary mixes so the pills never render invisible.
+  const pillBg = withAlpha(textColor, 0.07) ?? withAlpha(primary, 0.14) ?? "rgba(128, 128, 128, 0.14)";
+  const pillBorder = withAlpha(textColor, 0.2) ?? withAlpha(primary, 0.4) ?? "rgba(128, 128, 128, 0.4)";
+  const bioColor = withAlpha(textColor, 0.92) ?? textColor;
+
+  const activeLinks = page ? await getActiveLinks(page.id) : [];
+  const pills = selectOgLinks(activeLinks, MAX_PILLS);
 
   const rawAvatar = page?.avatarUrl || null;
   const avatarSrc = rawAvatar
@@ -56,18 +112,17 @@ export async function GET(
       : `${origin}${og.imageUrl.startsWith("/") ? "" : "/"}${og.imageUrl}`
     : null;
 
+  const brandMark = await brandMarkDataUri();
+  const initial = (name.trim()[0] || "L").toUpperCase();
+
   return new ImageResponse(
     (
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "flex-start",
           width: "100%",
           height: "100%",
+          display: "flex",
           background: og.background,
-          padding: 80,
           position: "relative",
         }}
       >
@@ -95,60 +150,157 @@ export async function GET(
             }}
           />
         ) : null}
-        {avatarSrc ? (
+
+        {/* Brand: real mark top-left, wordmark top-right (banner color split) */}
+        {brandMark ? (
           <img
-            src={avatarSrc}
-            width={140}
-            height={140}
+            src={brandMark}
             alt=""
-            style={{
-              display: "flex",
-              borderRadius: 9999,
-              marginBottom: 44,
-              objectFit: "cover",
-              border: `4px solid ${primary}`,
-            }}
+            width={52}
+            height={52}
+            style={{ position: "absolute", top: 30, left: 46, display: "flex" }}
           />
         ) : null}
         <div
           style={{
+            position: "absolute",
+            top: 40,
+            right: 52,
             display: "flex",
-            fontSize: 76,
+            fontSize: 26,
             fontWeight: 800,
+            letterSpacing: -0.5,
             color: textColor,
-            letterSpacing: -2,
-            lineHeight: 1.05,
-            marginBottom: 18,
           }}
         >
-          {name}
+          Link<span style={{ display: "flex", color: primary }}>Breeze</span>
         </div>
-        <div
-          style={{ display: "flex", fontSize: 32, color: textColor, opacity: 0.7 }}
-        >
-          {bio}
-        </div>
+
+        {/* Poster identity */}
         <div
           style={{
+            position: "relative",
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
-            marginTop: 52,
-            fontSize: 24,
-            color: primary,
-            fontWeight: 600,
+            justifyContent: "center",
+            width: "100%",
+            height: "100%",
+            padding: "56px 90px",
           }}
         >
+          {avatarSrc ? (
+            <img
+              src={avatarSrc}
+              alt=""
+              width={170}
+              height={170}
+              style={{
+                display: "flex",
+                borderRadius: 9999,
+                objectFit: "cover",
+                border: `5px solid ${primary}`,
+                marginBottom: 36,
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                width: 170,
+                height: 170,
+                borderRadius: 9999,
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 70,
+                fontWeight: 800,
+                color: "#ffffff",
+                background: `linear-gradient(135deg, ${primary}, ${secondary})`,
+                border: `5px solid ${primary}`,
+                marginBottom: 36,
+              }}
+            >
+              {initial}
+            </div>
+          )}
+
           <div
             style={{
               display: "flex",
-              width: 56,
-              height: 8,
-              background: primary,
-              borderRadius: 9999,
-              marginRight: 16,
+              fontSize: name.length > 24 ? 64 : 82,
+              fontWeight: 800,
+              color: textColor,
+              letterSpacing: -2,
+              lineHeight: 1.02,
+              marginBottom: 22,
+              textAlign: "center",
             }}
-          />
-          LinkBreeze
+          >
+            {name}
+          </div>
+          <div
+            style={{
+              display: "flex",
+              fontSize: 31,
+              lineHeight: 1.4,
+              color: bioColor,
+              maxWidth: 780,
+              textAlign: "center",
+              marginBottom: pills.shown.length > 0 ? 46 : 0,
+            }}
+          >
+            {bio}
+          </div>
+
+          {pills.shown.length > 0 ? (
+            <div style={{ display: "flex", gap: 16 }}>
+              {pills.shown.map((title) => (
+                <div
+                  key={title}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 11,
+                    padding: "13px 24px",
+                    borderRadius: 9999,
+                    fontSize: 21,
+                    fontWeight: 600,
+                    color: textColor,
+                    background: pillBg,
+                    border: `1px solid ${pillBorder}`,
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      width: 9,
+                      height: 9,
+                      borderRadius: 9999,
+                      background: primary,
+                    }}
+                  />
+                  {title}
+                </div>
+              ))}
+              {pills.extra > 0 ? (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "13px 24px",
+                    borderRadius: 9999,
+                    fontSize: 21,
+                    fontWeight: 600,
+                    color: textColor,
+                    background: pillBg,
+                    border: `1px solid ${pillBorder}`,
+                  }}
+                >
+                  + {pills.extra} more
+                </div>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       </div>
     ),

@@ -188,3 +188,63 @@ export function hexAlpha(color: string, alpha: number): string {
     .padStart(2, "0");
   return `#${hex}${a}`;
 }
+
+/**
+ * Satori-safe translucent color for ANY css color the theme may carry:
+ * hex (3/6) and rgb()/rgba() become rgba(r,g,b,a); anything else (named
+ * colors like "white") returns null so the caller can fall back to a
+ * theme-derived color instead of guessing. Unlike hexAlpha this works on
+ * non-hex input rather than passing it through at the wrong alpha.
+ */
+export function withAlpha(color: string, alpha: number): string | null {
+  const c = color.trim();
+  const clamped = Math.min(1, Math.max(0, alpha));
+  const hex = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.exec(c);
+  if (hex) {
+    const full =
+      hex[1].length === 3
+        ? hex[1]
+            .split("")
+            .map((ch) => ch + ch)
+            .join("")
+        : hex[1];
+    const r = parseInt(full.slice(0, 2), 16);
+    const g = parseInt(full.slice(2, 4), 16);
+    const b = parseInt(full.slice(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${clamped})`;
+  }
+  const fn = /^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*([\d.]+)\s*)?\)$/.exec(c);
+  if (fn) {
+    return `rgba(${fn[1]}, ${fn[2]}, ${fn[3]}, ${clamped})`;
+  }
+  return null;
+}
+
+/** Shape the route needs from a link row to draw a pill. */
+export interface OgLinkInput {
+  title: string;
+  type?: string | null;
+}
+
+export interface OgLinkPills {
+  /** Up to `max` display titles, in page order. */
+  shown: string[];
+  /** How many more active links exist beyond the shown ones. */
+  extra: number;
+}
+
+/** Pick the link titles the OG poster showcases: dividers carry no content
+ *  and empty titles render as blank chips, so both are dropped; the rest
+ *  keep page order up to `max`, with the remainder as a "+N more" count. */
+export function selectOgLinks(
+  links: OgLinkInput[],
+  max = 4,
+): OgLinkPills {
+  const usable = links
+    .filter((l) => l.type !== "divider" && typeof l.title === "string" && l.title.trim().length > 0)
+    .map((l) => l.title.trim());
+  return {
+    shown: usable.slice(0, max),
+    extra: Math.max(0, usable.length - max),
+  };
+}

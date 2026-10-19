@@ -2,6 +2,8 @@ import { describe, it, expect } from "vitest";
 import {
   resolveOgThemeBackground,
   hexAlpha,
+  withAlpha,
+  selectOgLinks,
 } from "@/lib/og-theme";
 
 /**
@@ -140,5 +142,69 @@ describe("hexAlpha", () => {
   it("passes non-hex colors through untouched", () => {
     expect(hexAlpha("rgba(1, 2, 3, 0.5)", 0.2)).toBe("rgba(1, 2, 3, 0.5)");
     expect(hexAlpha("white", 0.5)).toBe("white");
+  });
+});
+
+describe("withAlpha (satori-safe translucent colors)", () => {
+  it("converts 6-digit hex to rgba", () => {
+    expect(withAlpha("#eceafe", 0.07)).toBe("rgba(236, 234, 254, 0.07)");
+    expect(withAlpha("#000000", 0.5)).toBe("rgba(0, 0, 0, 0.5)");
+  });
+
+  it("expands 3-digit hex", () => {
+    expect(withAlpha("#fff", 1)).toBe("rgba(255, 255, 255, 1)");
+  });
+
+  it("converts rgb()/rgba() theme colors (drops their old alpha)", () => {
+    expect(withAlpha("rgb(36, 29, 82)", 0.16)).toBe("rgba(36, 29, 82, 0.16)");
+    expect(withAlpha("rgba(10, 20, 30, 0.9)", 0.25)).toBe("rgba(10, 20, 30, 0.25)");
+  });
+
+  it("clamps out-of-range alphas", () => {
+    expect(withAlpha("#112233", 5)).toBe("rgba(17, 34, 51, 1)");
+    expect(withAlpha("#112233", -0.5)).toBe("rgba(17, 34, 51, 0)");
+  });
+
+  it("returns null for unparseable colors so callers can fall back", () => {
+    expect(withAlpha("white", 0.2)).toBeNull();
+    expect(withAlpha("", 0.2)).toBeNull();
+    expect(withAlpha("calc(1px + 2px)", 0.2)).toBeNull();
+  });
+});
+
+describe("selectOgLinks (poster pills)", () => {
+  const links = (titles: string[], type = "url") =>
+    titles.map((title) => ({ title, type }));
+
+  it("keeps page order up to max and counts the rest", () => {
+    const pills = selectOgLinks(links(["A", "B", "C", "D", "E", "F"]));
+    expect(pills).toEqual({ shown: ["A", "B", "C", "D"], extra: 2 });
+  });
+
+  it("drops dividers and blank titles", () => {
+    const pills = selectOgLinks([
+      { title: "Portfolio", type: "url" },
+      { title: "", type: "url" },
+      { title: "—", type: "divider" },
+      { title: "   ", type: "url" },
+      { title: "Contact", type: "email" },
+    ]);
+    expect(pills).toEqual({ shown: ["Portfolio", "Contact"], extra: 0 });
+  });
+
+  it("returns empty for a linkless page (no pill row rendered)", () => {
+    expect(selectOgLinks([])).toEqual({ shown: [], extra: 0 });
+    expect(selectOgLinks([{ title: "—", type: "divider" }]).shown).toEqual([]);
+  });
+
+  it("trims surrounding whitespace from titles", () => {
+    expect(selectOgLinks(links(["  Padded  "])).shown).toEqual(["Padded"]);
+  });
+
+  it("respects a custom max", () => {
+    expect(selectOgLinks(links(["A", "B", "C"]), 2)).toEqual({
+      shown: ["A", "B"],
+      extra: 1,
+    });
   });
 });
