@@ -687,7 +687,7 @@ const en = {
       modeAria: "OG image mode",
       modeAuto: "Auto (theme)",
       modeCustom: "Custom image",
-      autoHint: "A card generated from your page's theme: background, colors and avatar update automatically when you change the theme.",
+      autoHint: "Generated from your page's theme - background, colors, avatar and your top links update automatically when you change your content.",
       customHint: "Upload your own image (1200 x 630 recommended). It is served directly as the share image.",
       previewAlt: "Social share image preview",
       upload: "Upload image",

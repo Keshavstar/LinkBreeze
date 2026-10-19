@@ -8,6 +8,7 @@ import {
   getAnalyticsRetentionDays,
   getSetting,
   getAllSubscribers,
+  getActiveLinks,
 } from "@/server/queries";
 import { isUpdateCheckEnabled } from "@/lib/update-check";
 import { maybeRunScheduledBackup, getBackupOverview } from "@/server/backup-scheduler";
@@ -83,6 +84,11 @@ export default async function SettingsPage({
   // card consumes (theme, display name/title, bio, avatar). ANY change to any
   // of them — theme pick, profile edits, avatar upload — yields a new version,
   // so the preview in the Appearance tab re-fetches without a manual reload.
+  // Poster Hero (#83 follow-up): the auto card now renders the page's top
+  // link titles, so link edits must bust the preview cache too.
+  const ogLinkTitles = activePage
+    ? (await getActiveLinks(activePage.id)).map((l) => l.title)
+    : [];
   const ogPreviewVersion = createHash("sha1")
     .update(
       [
@@ -93,6 +99,7 @@ export default async function SettingsPage({
         activePage?.avatarUrl ?? "",
         activePage?.ogImageUrl ?? "",
         activePage?.ogImagePosX ?? 0,
+        ogLinkTitles.join("\u0001"),
       ].join("|"),
     )
     .digest("hex")
