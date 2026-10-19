@@ -52,6 +52,10 @@
     <td valign="top">📱 <strong>Widgets Incorporados</strong><br/>YouTube, Spotify, SoundCloud, Vimeo e Bandcamp na sua página</td>
     <td valign="top">🎯 <strong>Códigos QR</strong><br/>Gerados automaticamente, cores personalizáveis, avatar ou favicon no centro, SVG/PNG até 1024px</td>
   </tr>
+  <tr>
+    <td width="50%" valign="top">🌐 <strong>Domínios personalizados</strong><br/>Aponte seus próprios domínios para páginas — visitantes chegam em jane.com, sem /slug</td>
+    <td valign="top">⏰ <strong>Backups agendados</strong><br/>Backups internos diários/semanais/mensais com restauração em um clique, sem cron</td>
+  </tr>
 </table>
 
 
@@ -74,6 +78,8 @@
 - **🔔 Notificações de Atualização** - Banner no painel quando uma nova versão estiver disponível. Sem phone-home, sem atualização automática
 - **🔑 Painel Admin Rápido** - Tudo acima a partir de um painel limpo e instantâneo
 
+- **🌐 Domínios personalizados** - Aponte seus próprios domínios para páginas; escopo exclusivo ou hub, redirecionamentos canônicos automáticos, bloqueio de admin estrito por host
+- **⏰ Backups agendados** - Backups internos diários/semanais/mensais com retenção e restauração em um clique, sem cron
 </details>
 
 ## 🚀 Início Rápido
@@ -366,6 +372,7 @@ Toda a configuração é feita via variáveis de ambiente. **[`.env.example`](.e
 | `BACKUP_MIN_FREE_MB` | `50` | Pular a gravação de backups quando o espaço livre cair abaixo deste valor |
 | `SECRET_KEY` | Gerado automaticamente | Chave de assinatura HMAC para sessões |
 | `EXTRA_SCRIPT_SRC` | _(vazio)_ | Domínios de análises separados por espaço para o CSP (ex: `plausible.io umami.is`) |
+| `LINKBREEZE_PRIMARY_HOST` | _(vazio)_ | Host principal onde fica a administração; o bloqueio de domínios personalizados retorna 404 em todos os outros hosts (a variável de ambiente tem prioridade sobre a configuração) |
 
 <details>
 <summary>💳 &nbsp;Variáveis de carteira (Google Wallet / Apple Wallet)</summary>
@@ -389,6 +396,12 @@ Toda página pública renderiza um bloco de compartilhamento com um botão "Salv
 
 As configurações de tempo de execução (slug da página, título, SEO, tema) são gerenciadas pelo painel admin e armazenadas no banco de dados - sem necessidade de alterar código.
 
+## 🌐 Domínios personalizados
+
+Aponte seus próprios domínios para páginas — uma instância, várias identidades. Visitantes chegam em `https://jane.com/` e veem a página de Jane diretamente, com redirecionamentos canônicos automáticos, sitemaps prontos para SEO e bloqueio de admin estrito por host. Os vínculos são ativados na primeira visita real (DNS autoverificado), e o escopo por página decide se um domínio É a página (exclusivo) ou um hub para todos os slugs.
+
+Configuração completa — DNS, TLS curinga e configurações de proxy reverso prontas para copiar para Caddy, nginx e Traefik — em **[docs/custom-domains.md](docs/custom-domains.md)**.
+
 ## 🎨 Sistema de Temas
 
 11 predefinições estão incluídas de fábrica: **Aurora** (carro-chefe animado), **Glassmorphism**, **Neon Cyberpunk**, **Editorial Paper**, **Terminal Mono**, **Pastel Soft**, **Brutalist**, **Retro Sunset**, **Minimal Light**, **8-Bit Retro** e **Frutiger Aero**.
@@ -410,7 +423,7 @@ O motor de temas é um sistema de tokens baseado em propriedades personalizadas 
 
 ## 📖 Docs & Links
 
-[Contribuição](CONTRIBUTING.md) · [Política de Segurança](SECURITY.md) · [Histórico de Alterações](CHANGELOG.md) · [Solução de Problemas](TROUBLESHOOTING.md) · [Decisões de Arquitetura](docs/adr/) · [Referência de configuração](.env.example)
+[Contribuição](CONTRIBUTING.md) · [Política de Segurança](SECURITY.md) · [Histórico de Alterações](CHANGELOG.md) · [Solução de Problemas](TROUBLESHOOTING.md) · [Custom Domains](docs/custom-domains.md) · [Decisões de Arquitetura](docs/adr/) · [Referência de configuração](.env.example)
 
 Fonte: [GitHub](https://github.com/Manak-hash/LinkBreeze) (canônico) · [GitLab](https://gitlab.com/omnirise00/linkbreeze) (espelho público de pull, sincronizado automaticamente) · Imagem: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 

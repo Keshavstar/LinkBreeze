@@ -195,6 +195,54 @@ Your public page lives at `/<slug>`. The default slug is `u`.
 - **After changing**: The old slug immediately returns a 404. There are **no
   redirects** — update any links or QR codes pointing to the old URL.
 - **Reserved words**: `/login`, `/setup`, `/dashboard`, `/links`, `/profile`,
-  `/settings`, `/theme` are admin-reserved and cannot be used as slugs.
+  `/settings`, `/theme`, `/pages`, `/domains` are admin-reserved and cannot
+  be used as slugs.
 - **QR codes**: QR codes are generated for the current slug. If you change your
   slug, download a new QR code from the admin panel.
+
+## Custom domains not working
+
+Full setup guide: [docs/custom-domains.md](docs/custom-domains.md).
+
+### Domain shows 404 or the wrong site
+
+1. **DNS**: the domain needs an `A`/`AAAA` record (or `CNAME`) pointing at
+   the machine running LinkBreeze. Check with `dig jane.com` or the
+   **Check DNS** button in Admin → Domains.
+2. **Reverse proxy**: every bound host must route to the LinkBreeze
+   container, and the proxy must pass the original host through
+   (`proxy_set_header Host $host;` in nginx). If the proxy sends its
+   `server_name` instead of the visitor's host, host routing cannot match.
+3. **Binding**: the domain must exist in Admin → Domains. A binding shows
+   **Pending** until its first real request arrives — visit the domain once
+   (or press **Activate now** to test before DNS propagates).
+
+### TLS / certificate errors
+
+LinkBreeze never terminates TLS — the reverse proxy does. You need a
+wildcard certificate (e.g. `*.example.com`) or per-domain certificates.
+Caddy automates this (see `docs/custom-domains.md` for a working config);
+with nginx use certbot's DNS-01 challenge for wildcards.
+
+### Admin, login, or setup returns 404 on my domain
+
+That is the **admin host lock** working as designed. Admin surfaces only
+answer on the primary host — the one configured in Admin → Domains →
+Routing policy or the `LINKBREEZE_PRIMARY_HOST` environment variable (env
+wins). Visit your primary host to log in. To disable the lock entirely, set
+Admin host lock to **Off** — not recommended for public deployments.
+
+### www.jane.com does not work
+
+By default `www.<bound-domain>` redirects to the bound domain. If it
+doesn't, either bind `www.jane.com` explicitly in Admin → Domains, or check
+that your DNS record and reverse proxy cover the `www` subdomain. The
+behavior is configurable in Routing policy → www handling.
+
+### The same page is reachable at /slug and the domain
+
+With the default canonical strategy (**301**), slug URLs on the primary
+host redirect to the domain automatically. If your edge proxy makes 301s
+impossible, switch the canonical strategy to **Canonical tag only** — the
+page then emits `<link rel="canonical">` pointing at the domain root
+instead.

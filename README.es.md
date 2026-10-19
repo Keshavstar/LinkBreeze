@@ -52,6 +52,10 @@
     <td valign="top">📱 <strong>Widgets integrados</strong><br/>YouTube, Spotify, SoundCloud, Vimeo y Bandcamp en tu página</td>
     <td valign="top">🎯 <strong>Códigos QR</strong><br/>Generados automáticamente, colores personalizados, avatar o favicon en el centro, SVG/PNG hasta 1024px</td>
   </tr>
+  <tr>
+    <td width="50%" valign="top">🌐 <strong>Dominios personalizados</strong><br/>Apunta tus propios dominios a páginas — los visitantes llegan a jane.com, sin /slug</td>
+    <td valign="top">⏰ <strong>Copias programadas</strong><br/>Copias internas diarias/semanales/mensuales con restauración en un clic, sin cron</td>
+  </tr>
 </table>
 
 
@@ -74,6 +78,8 @@
 - **🔔 Notificaciones de actualización** - Banner en el panel cuando hay una nueva versión disponible. Sin conexiones automáticas ni actualizaciones automáticas
 - **🔑 Panel de administración rápido** - Todo lo anterior desde un panel limpio e instantáneo
 
+- **🌐 Dominios personalizados** - Apunta tus propios dominios a páginas; alcance exclusivo o hub, redirecciones canónicas automáticas, bloqueo de admin estricto por host
+- **⏰ Copias programadas** - Copias internas diarias/semanales/mensuales con retención y restauración en un clic, sin cron
 </details>
 
 ## 🚀 Inicio rápido
@@ -366,6 +372,7 @@ Toda la configuración se realiza mediante variables de entorno. **[`.env.exampl
 | `BACKUP_MIN_FREE_MB` | `50` | Omitir la escritura de copias cuando el espacio libre baje de este valor |
 | `SECRET_KEY` | Generada automáticamente | Clave de firma HMAC para las sesiones |
 | `EXTRA_SCRIPT_SRC` | _(vacío)_ | Dominios de analítica separados por espacios para la CSP (por ejemplo, `plausible.io umami.is`) |
+| `LINKBREEZE_PRIMARY_HOST` | _(vacío)_ | Host principal donde vive tu administración; el bloqueo de dominios personalizados devuelve 404 en todos los demás hosts (la variable de entorno tiene prioridad sobre el ajuste) |
 
 <details>
 <summary>💳 &nbsp;Variables de wallet pass (Google Wallet / Apple Wallet)</summary>
@@ -389,6 +396,12 @@ Cada página pública renderiza un bloque para compartir con un botón "Guardar 
 
 Los ajustes en tiempo de ejecución (slug de la página, título, SEO, tema) se gestionan desde el panel de administración y se almacenan en la base de datos - no es necesario modificar el código.
 
+## 🌐 Dominios personalizados
+
+Apunta tus propios dominios a tus páginas — una instancia, muchas identidades. Los visitantes llegan a `https://jane.com/` y ven la página de Jane directamente, con redirecciones canónicas automáticas, sitemaps listos para SEO y un bloqueo de admin estricto por host. Las vinculaciones se activan en su primera visita real (DNS autoverificado), y el alcance por página decide si un dominio ES la página (exclusivo) o un hub para todos los slugs.
+
+Configuración completa — DNS, TLS comodín y configuraciones de proxy inverso listas para copiar para Caddy, nginx y Traefik — en **[docs/custom-domains.md](docs/custom-domains.md)**.
+
 ## 🎨 Sistema de temas
 
 Se incluyen 11 preajustes de serie: **Aurora** (el buque insignia animado), **Glassmorphism**, **Neon Cyberpunk**, **Editorial Paper**, **Terminal Mono**, **Pastel Soft**, **Brutalist**, **Retro Sunset**, **Minimal Light**, **8-Bit Retro** y **Frutiger Aero**.
@@ -410,7 +423,7 @@ El motor de temas es un sistema de tokens basado en propiedades CSS personalizad
 
 ## 📖 Documentación y enlaces
 
-[Guía de contribución](CONTRIBUTING.md) · [Política de seguridad](SECURITY.md) · [Registro de cambios](CHANGELOG.md) · [Solución de problemas](TROUBLESHOOTING.md) · [Decisiones de arquitectura](docs/adr/) · [Referencia de configuración](.env.example)
+[Guía de contribución](CONTRIBUTING.md) · [Política de seguridad](SECURITY.md) · [Registro de cambios](CHANGELOG.md) · [Solución de problemas](TROUBLESHOOTING.md) · [Custom Domains](docs/custom-domains.md) · [Decisiones de arquitectura](docs/adr/) · [Referencia de configuración](.env.example)
 
 Fuente: [GitHub](https://github.com/Manak-hash/LinkBreeze) (canónico) · [GitLab](https://gitlab.com/omnirise00/linkbreeze) (espejo público de solo lectura, sincronizado automáticamente) · Imagen: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 

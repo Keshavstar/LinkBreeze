@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { getSetting } from "@/server/queries";
+import { getDomainBindings } from "@/server/domains";
+import { normalizeHost } from "@/lib/host-routing";
 
 export const dynamic = "force-dynamic";
 
@@ -11,6 +13,17 @@ export async function GET() {
   const origin = process.env.BASE_URL
     ? process.env.BASE_URL.replace(/\/$/, "")
     : `${headerList.get("x-forwarded-proto") || "http"}://${headerList.get("x-forwarded-host") || headerList.get("host") || "localhost"}`;
+
+  // Custom domains (#85): each active serving domain is a first-class
+  // identity URL (root). On a bound host only that identity is listed —
+  // a custom domain exposes exactly one page, so its sitemap says so.
+  const requestHost = normalizeHost(
+    headerList.get("x-forwarded-host") || headerList.get("host"),
+  );
+  const bindings = await getDomainBindings();
+  const boundHere = bindings.find(
+    (b) => b.host === requestHost && b.behavior === "serve" && b.status === "active",
+  );
 
   const slug = (await getSetting("slug")) || "u";
   // Search-engine visibility (#94): a hidden page is dropped from the
@@ -29,13 +42,38 @@ export async function GET() {
     });
   }
 
+  // URL set: on a bound host, exactly that domain's root (an exclusive
+  // custom domain IS one page). Otherwise the instance's own slug URL plus
+  // every active serving domain root — crawlers discover all identities
+  // from the primary host's sitemap.
+  const urls: string[] = [];
+  if (boundHere) {
+    urls.push(`https://${boundHere.host}/`);
+  } else {
+    urls.push(`${origin}/${slug}`);
+    for (const b of bindings) {
+      if (
+        b.kind === "primary" &&
+        b.behavior === "serve" &&
+        b.status === "active"
+      ) {
+        const root = `https://${b.host}/`;
+        if (root !== `${origin}/` && !urls.includes(root)) urls.push(root);
+      }
+    }
+  }
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>${origin}/${slug}</loc>
+${urls
+  .map(
+    (loc) => `  <url>
+    <loc>${loc}</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-  </url>
+  </url>`,
+  )
+  .join("\n")}
 </urlset>`;
 
   return new NextResponse(xml, {

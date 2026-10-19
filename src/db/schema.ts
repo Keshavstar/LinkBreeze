@@ -93,6 +93,34 @@ export const pages = sqliteTable("pages", {
   ogImagePosX: real("og_image_pos_x"),
   ogImagePosY: real("og_image_pos_y"),
   ogImageZoom: real("og_image_zoom"),
+
+  // ─── Custom domains (#85) ───
+  // What a host bound to this page exposes: 'exclusive' (NULL = default) →
+  // the domain IS the page (foreign slugs 404); 'hub' → the page renders at
+  // root and every slug keeps resolving under the domain (path routing).
+  domainScope: text("domain_scope"), // 'exclusive' | 'hub' | NULL (= exclusive)
+});
+
+// ─── Domains (custom domains, #85) ────────────────────
+// Host→page bindings read by src/proxy.ts on every request (Node runtime).
+// `host` is stored normalized: lowercase punycode, no port, no trailing dot
+// (see normalizeHost in src/lib/host-routing.ts).
+export const domains = sqliteTable("domains", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  pageId: integer("page_id").notNull().references(() => pages.id, { onDelete: "cascade" }),
+  host: text("host").notNull().unique(),
+  // 'primary' = the page's canonical identity; 'alias' = secondary host.
+  kind: text("kind").notNull().default("primary"), // primary | alias
+  // serve = render the page; redirect_canonical = 301 same path to the
+  // page's primary domain; redirect_slug = 301 to the slug on the primary
+  // domain. Aliases may redirect; a primary with a redirect behavior acts
+  // as a pure forwarder (useful while migrating).
+  behavior: text("behavior").notNull().default("serve"), // serve | redirect_canonical | redirect_slug
+  // 'pending' until the first real request arrives with this Host header
+  // (self-verifying — no fake "verified" state), or the operator activates
+  // it manually for /etc/hosts-style testing.
+  status: text("status").notNull().default("pending"), // pending | active
+  createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
 });
 
 // ─── Link sections (1.3) ──────────────────────────────

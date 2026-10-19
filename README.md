@@ -52,6 +52,10 @@
     <td valign="top">📱 <strong>Embed Widgets</strong><br/>YouTube, Spotify, SoundCloud, Vimeo and Bandcamp on your page</td>
     <td valign="top">🎯 <strong>QR Codes</strong><br/>Auto-generated, custom colors, avatar or favicon center, SVG/PNG up to 1024px</td>
   </tr>
+  <tr>
+    <td width="50%" valign="top">🌐 <strong>Custom Domains</strong><br/>Bind your own domains to pages — visitors land on jane.com, no /slug</td>
+    <td valign="top">⏰ <strong>Scheduled Backups</strong><br/>Daily/weekly/monthly app-internal backups with one-click restore, no cron needed</td>
+  </tr>
 </table>
 
 
@@ -74,6 +78,8 @@
 - **🔔 Update Notifications** - Dashboard banner when a new version is available. No phone-home, no auto-update
 - **🔑 Fast Admin Panel** - Everything above from one clean, instant dashboard
 
+- **🌐 Custom Domains** - Bind your own domains to pages; exclusive or hub scope, automatic canonical redirects, strict admin host lock
+- **⏰ Scheduled Backups** - Daily/weekly/monthly app-internal backups with retention and one-click restore, no cron required
 </details>
 
 ## 🚀 Quick Start
@@ -366,6 +372,7 @@ All configuration is via environment variables. **[`.env.example`](.env.example)
 | `BACKUP_MIN_FREE_MB` | `50` | Skip writing backups when free space drops below this |
 | `SECRET_KEY` | Auto-generated | HMAC signing key for sessions |
 | `EXTRA_SCRIPT_SRC` | _(empty)_ | Space-separated analytics domains for CSP (e.g. `plausible.io umami.is`) |
+| `LINKBREEZE_PRIMARY_HOST` | _(empty)_ | Primary host your admin lives on; the custom-domains admin lock 404s every other host (env beats the admin setting) |
 
 <details>
 <summary>💳 &nbsp;Wallet pass variables (Google Wallet / Apple Wallet)</summary>
@@ -389,6 +396,12 @@ Every public page renders a share block with a "Save contact" button (universal 
 
 Runtime settings (page slug, title, SEO, theme) are managed via the admin dashboard and stored in the database - no code changes needed.
 
+## 🌐 Custom Domains
+
+Point your own domains at pages — one instance, many identities. Visitors land on `https://jane.com/` and see Jane's page directly, with automatic canonical redirects, SEO-ready sitemaps and a strict admin host lock. Bindings activate on their first real visit (self-verifying DNS), and per-page scope decides whether a domain IS the page (exclusive) or a hub for all slugs.
+
+Full setup — DNS, wildcard TLS and copy-paste reverse-proxy configs for Caddy, nginx and Traefik — in **[docs/custom-domains.md](docs/custom-domains.md)**.
+
 ## 🎨 Theme System
 
 11 presets are included out of the box: **Aurora** (animated flagship), **Glassmorphism**, **Neon Cyberpunk**, **Editorial Paper**, **Terminal Mono**, **Pastel Soft**, **Brutalist**, **Retro Sunset**, **Minimal Light**, **8-Bit Retro** and **Frutiger Aero**.
@@ -410,7 +423,7 @@ The theme engine is a CSS custom property (`--lb-*`) token system - every color,
 
 ## 📖 Docs & Links
 
-[Contributing](CONTRIBUTING.md) · [Security Policy](SECURITY.md) · [Changelog](CHANGELOG.md) · [Troubleshooting](TROUBLESHOOTING.md) · [Architecture Decisions](docs/adr/) · [Configuration reference](.env.example)
+[Contributing](CONTRIBUTING.md) · [Security Policy](SECURITY.md) · [Changelog](CHANGELOG.md) · [Troubleshooting](TROUBLESHOOTING.md) · [Custom Domains](docs/custom-domains.md) · [Architecture Decisions](docs/adr/) · [Configuration reference](.env.example)
 
 Source: [GitHub](https://github.com/Manak-hash/LinkBreeze) (canonical) · [GitLab](https://gitlab.com/omnirise00/linkbreeze) (public pull mirror, synced automatically) · Image: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 

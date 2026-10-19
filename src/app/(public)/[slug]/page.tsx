@@ -17,6 +17,8 @@ import { rateLimit } from "@/lib/rate-limit";
 import { getCountry } from "@/lib/geo";
 import { isBot } from "@/lib/bot-detect";
 import { getSession } from "@/lib/auth";
+import { getDomainPolicy, getServingBindingForHost } from "@/server/domains";
+import { normalizeHost } from "@/lib/host-routing";
 import { maybeRunScheduledBackup } from "@/server/backup-scheduler";
 import { ProfileHeader } from "@/components/public/ProfileHeader";
 import { LinkCard } from "@/components/public/LinkCard";
@@ -77,6 +79,22 @@ export async function generateMetadata({
   const origin = await getOrigin();
   const url = `${origin}/${slug}`;
 
+  // Custom domains (#85): when this request arrives on a host bound to a
+  // page, the page's identity URL is the domain ROOT — not /slug, and not
+  // whatever host the crawler happened to reach. With the default '301'
+  // canonical strategy crawlers are redirected before this renders; the
+  // 'tag' strategy exists precisely for setups where the redirect is
+  // impossible (edge proxies), so it relies on this block.
+  let canonicalUrl = url;
+  if ((await getDomainPolicy()).canonical !== "off") {
+    const hostHeader = normalizeHost(
+      (await headers()).get("x-forwarded-host") || (await headers()).get("host"),
+    );
+    if (await getServingBindingForHost(hostHeader)) {
+      canonicalUrl = `https://${hostHeader}/`;
+    }
+  }
+
   // Custom OG image (per-page): when the page has an uploaded image AND the
   // mode is custom, point og:image at the file directly (scaled to the
   // crop the user picked); crawlers never hit the dynamic renderer.
@@ -126,13 +144,13 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: { canonical: canonicalUrl },
     ...(hidden ? { robots: { index: false, follow: true } } : {}),
     icons,
     openGraph: {
       title,
       description,
-      url,
+      url: canonicalUrl,
       type: "profile",
       siteName: title,
       images: useCustomOg
