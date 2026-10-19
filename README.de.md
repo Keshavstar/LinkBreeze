@@ -412,7 +412,7 @@ Die Theme-Engine ist ein Token-System auf Basis von CSS-Custom-Properties (`--lb
 
 [Mitmachen](CONTRIBUTING.md) · [Sicherheitsrichtlinie](SECURITY.md) · [Changelog](CHANGELOG.md) · [Fehlerbehebung](TROUBLESHOOTING.md) · [Architekturentscheidungen](docs/adr/) · [Konfigurationsreferenz](.env.example)
 
-Quelle: [GitLab](https://gitlab.com/omnirise00/linkbreeze) (kanonischer öffentlicher Mirror, automatisch synchronisiert) · [GitHub](https://github.com/Manak-hash/LinkBreeze) · Image: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
+Quelle: [GitHub](https://github.com/Manak-hash/LinkBreeze) (kanonisch) · [GitLab](https://gitlab.com/omnirise00/linkbreeze) (öffentlicher Pull-Mirror, automatisch synchronisiert) · Image: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 
 Issues und PRs sind auf beiden Forges willkommen.
 

@@ -412,7 +412,7 @@ cloudflared tunnel --url http://localhost:3000
 
 [دليل المساهمة](CONTRIBUTING.md) · [سياسة الأمان](SECURITY.md) · [سجل التغييرات](CHANGELOG.md) · [حل المشكلات](TROUBLESHOOTING.md) · [قرارات المعمارية](docs/adr/) · [مرجع الإعدادات](.env.example)
 
-المصدر: [GitLab](https://gitlab.com/omnirise00/linkbreeze) (النسخة العامة المرجعية، تُزامَن تلقائيًا) · [GitHub](https://github.com/Manak-hash/LinkBreeze) · الصورة: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
+المصدر: [GitHub](https://github.com/Manak-hash/LinkBreeze) (المرجع) · [GitLab](https://gitlab.com/omnirise00/linkbreeze) (نسخة عامة للسحب فقط، تُزامَن تلقائيًا) · الصورة: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 
 المشكلات وطلبات السحب مرحّب بها على أيٍّ من المنصتين.
 

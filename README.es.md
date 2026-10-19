@@ -412,7 +412,7 @@ El motor de temas es un sistema de tokens basado en propiedades CSS personalizad
 
 [Guía de contribución](CONTRIBUTING.md) · [Política de seguridad](SECURITY.md) · [Registro de cambios](CHANGELOG.md) · [Solución de problemas](TROUBLESHOOTING.md) · [Decisiones de arquitectura](docs/adr/) · [Referencia de configuración](.env.example)
 
-Fuente: [GitLab](https://gitlab.com/omnirise00/linkbreeze) (espejo público canónico, sincronizado automáticamente) · [GitHub](https://github.com/Manak-hash/LinkBreeze) · Imagen: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
+Fuente: [GitHub](https://github.com/Manak-hash/LinkBreeze) (canónico) · [GitLab](https://gitlab.com/omnirise00/linkbreeze) (espejo público de solo lectura, sincronizado automáticamente) · Imagen: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 
 Issues y PRs son bienvenidos en cualquiera de los dos forges.
 

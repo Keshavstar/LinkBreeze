@@ -209,3 +209,52 @@ jobs:
         run: |
           docker buildx imagetools inspect "${{ env.IMAGE }}:${{ steps.meta.outputs.version || steps.meta-test.outputs.version }}"
           docker buildx imagetools inspect "${{ env.HUB_IMAGE }}:${{ steps.meta.outputs.version || steps.meta-test.outputs.version }}"
+
+  # Website sync: the marketing site is the source of truth for update checks
+  # (linkbreeze.omnirise.dev/latest-version.json). On a release tag, copy this
+  # repo's prepared latest-version.json (version/releasedAt/notes edited as
+  # part of release prep) into the website repo and open a PR — merging it
+  # deploys the new update-banner data via Vercel. The url field is always
+  # forced to the canonical GitHub release so the banner link can never point
+  # at a mirror. Requires the WEBSITE_SYNC_TOKEN secret (PAT with repo scope
+  # on Manak-hash/LinkBreeze-Website).
+  website-sync:
+    name: Sync latest-version.json to website (PR)
+    if: needs.setup.outputs.mode == 'release'
+    runs-on: ubuntu-latest
+    needs: [setup, merge]
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check out website repo
+        uses: actions/checkout@v7
+        with:
+          repository: Manak-hash/LinkBreeze-Website
+          token: ${{ secrets.WEBSITE_SYNC_TOKEN }}
+          path: website
+
+      - name: Update website latest-version.json
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          jq --arg url "https://github.com/Manak-hash/LinkBreeze/releases/tag/${TAG}" \
+            '.url = $url' \
+            latest-version.json > website/public/latest-version.json
+          cat website/public/latest-version.json
+
+      - name: Open PR on the website repo
+        env:
+          GH_TOKEN: ${{ secrets.WEBSITE_SYNC_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          cd website
+          git config user.name "linkbreeze-release-bot"
+          git config user.email "bot@users.noreply.github.com"
+          BRANCH="release-sync/${TAG}"
+          git checkout -b "$BRANCH"
+          git commit -am "chore(release): sync latest-version.json for ${TAG}"
+          git push origin "$BRANCH"
+          gh pr create -R Manak-hash/LinkBreeze-Website \
+            --base main --head "$BRANCH" \
+            --title "Release sync: ${TAG}" \
+            --body "Automated sync of \`public/latest-version.json\` for ${TAG} (source: LinkBreeze release workflow). Merge to deploy the new update-banner data."

@@ -412,7 +412,7 @@ The theme engine is a CSS custom property (`--lb-*`) token system - every color,
 
 [Contributing](CONTRIBUTING.md) · [Security Policy](SECURITY.md) · [Changelog](CHANGELOG.md) · [Troubleshooting](TROUBLESHOOTING.md) · [Architecture Decisions](docs/adr/) · [Configuration reference](.env.example)
 
-Source: [GitLab](https://gitlab.com/omnirise00/linkbreeze) (canonical public mirror, synced automatically) · [GitHub](https://github.com/Manak-hash/LinkBreeze) · Image: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
+Source: [GitHub](https://github.com/Manak-hash/LinkBreeze) (canonical) · [GitLab](https://gitlab.com/omnirise00/linkbreeze) (public pull mirror, synced automatically) · Image: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 
 Issues and PRs are welcome on either forge.
 

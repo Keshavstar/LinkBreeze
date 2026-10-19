@@ -412,7 +412,7 @@ Le moteur de thèmes est un système de tokens basé sur des propriétés CSS pe
 
 [Guide de contribution](CONTRIBUTING.md) · [Politique de sécurité](SECURITY.md) · [Journal des modifications](CHANGELOG.md) · [Dépannage](TROUBLESHOOTING.md) · [Décisions d'architecture](docs/adr/) · [Référence de configuration](.env.example)
 
-Source : [GitLab](https://gitlab.com/omnirise00/linkbreeze) (miroir public canonique, synchronisé automatiquement) · [GitHub](https://github.com/Manak-hash/LinkBreeze) · Image : [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
+Source : [GitHub](https://github.com/Manak-hash/LinkBreeze) (canonique) · [GitLab](https://gitlab.com/omnirise00/linkbreeze) (miroir public de tirage, synchronisé automatiquement) · Image : [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 
 Les issues et PRs sont les bienvenues sur l'un ou l'autre forge.
 

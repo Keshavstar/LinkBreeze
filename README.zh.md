@@ -412,7 +412,7 @@ cloudflared tunnel --url http://localhost:3000
 
 [贡献指南](CONTRIBUTING.md) · [安全策略](SECURITY.md) · [更新日志](CHANGELOG.md) · [故障排查](TROUBLESHOOTING.md) · [架构决策](docs/adr/) · [配置参考](.env.example)
 
-源码：[GitLab](https://gitlab.com/omnirise00/linkbreeze)（权威公开镜像，自动同步） · [GitHub](https://github.com/Manak-hash/LinkBreeze) · 镜像：[`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
+源码：[GitHub](https://github.com/Manak-hash/LinkBreeze)（权威源） · [GitLab](https://gitlab.com/omnirise00/linkbreeze)（公开拉取镜像，自动同步） · 镜像：[`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 
 欢迎在任一平台提交 Issue 和 PR。
 
