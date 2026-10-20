@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useActionState } from "react";
 import { verifyLoginTotp } from "@/server/actions/two-factor";
-import { LocalePicker } from "@/components/admin/LocalePicker";
+import { LanguageDropdown } from "@/components/language-dropdown";
 import type { ActionResult } from "@/lib/errors";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,9 +48,9 @@ export function TotpForm() {
   );
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
+    <div className="relative flex min-h-screen items-center justify-center bg-background p-4">
+      <LanguageDropdown className="absolute end-4 top-4 sm:end-6 sm:top-6" align="end" />
       <div className="w-full max-w-sm">
-        <LocalePicker className="mb-4" />
         <Card className="w-full max-w-sm">
           <CardHeader className="items-center text-center">
             <Image src="/logo-mark.svg" alt="LinkBreeze" width={48} height={48} unoptimized className="mx-auto mb-2" />

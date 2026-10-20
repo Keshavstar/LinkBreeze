@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useTranslations } from "next-intl";
-import { LocalePicker } from "@/components/admin/LocalePicker";
+import { LanguageDropdown } from "@/components/language-dropdown";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
@@ -160,10 +160,9 @@ export function SetupWizard({
   const currentIndex = STEPS.findIndex((s) => s.id === step);
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center px-5 py-10">
+    <div className="relative flex min-h-screen w-full items-center justify-center px-5 py-10">
+      <LanguageDropdown className="absolute end-5 top-5 sm:end-8 sm:top-8" align="end" />
       <div className="w-full max-w-md aurora-rise">
-        {/* Pre-auth language selector — first thing a new user can act on */}
-        <LocalePicker className="mb-6" />
         {/* Header */}
         <header className="mb-6 flex flex-col items-center text-center">
           <Image

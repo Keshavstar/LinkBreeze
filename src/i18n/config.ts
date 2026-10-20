@@ -53,6 +53,18 @@ export const LOCALE_NAMES: Record<Locale, string> = {
   "pt-BR": "Português (Brasil)",
 };
 
+/** English display names — secondary line under the endonym in the picker. */
+export const LOCALE_ENGLISH_NAMES: Record<Locale, string> = {
+  en: "English",
+  fr: "French",
+  es: "Spanish",
+  de: "German",
+  zh: "Chinese",
+  hi: "Hindi",
+  ar: "Arabic",
+  "pt-BR": "Portuguese (Brazil)",
+};
+
 /** Text direction per locale. Everything except ar is LTR (for now). */
 export function localeDir(locale: Locale): "ltr" | "rtl" {
   return locale === "ar" ? "rtl" : "ltr";
