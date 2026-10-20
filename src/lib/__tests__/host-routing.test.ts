@@ -333,6 +333,19 @@ describe("resolveHostRequest — canonical strategy", () => {
     });
   });
 
+  it("301s @-slugged pages to the bound domain", () => {
+    const decision = resolve({
+      host: "links.example.com",
+      pathname: "/@jane",
+      bindings: [binding({ pageSlug: "@jane" })],
+    });
+    expect(decision).toEqual({
+      type: "redirect",
+      location: "https://jane.com/@jane",
+      status: 301,
+    });
+  });
+
   it("leaves unbound slugs alone on the primary host", () => {
     expect(resolve({ host: "links.example.com", pathname: "/other" }).type).toBe("pass");
   });

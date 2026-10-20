@@ -171,9 +171,10 @@ export function GeneralTab({
                 name="slug"
                 defaultValue={slug}
                 required
-                pattern="^[a-zA-Z0-9_\-]+$"
+                pattern="^@?[a-zA-Z0-9_\-]+$"
                 maxLength={64}
                 className="max-w-48"
+                onChange={() => schedule()}
               />
               <a
                 href={`/${slug}`}

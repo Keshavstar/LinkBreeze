@@ -13,6 +13,7 @@ import {
   withAlpha,
   selectOgLinks,
 } from "@/lib/og-theme";
+import { decodeSlugParam } from "@/lib/link-slug";
 
 export const runtime = "nodejs";
 
@@ -61,7 +62,8 @@ export async function GET(
   _req: Request,
   { params }: { params: Promise<{ slug: string }> },
 ) {
-  const { slug } = await params;
+  const { slug: rawSlug } = await params;
+  const slug = decodeSlugParam(rawSlug);
   const h = await headers();
   const origin = process.env.BASE_URL
     ? process.env.BASE_URL.replace(/\/$/, "")

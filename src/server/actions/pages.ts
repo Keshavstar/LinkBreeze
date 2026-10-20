@@ -26,7 +26,10 @@ const slugSchema = z
   .string()
   .min(1, "Slug is required")
   .max(80, "Slug must be 80 characters or less")
-  .regex(/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i, "Slug can only contain letters, numbers, and hyphens");
+  .regex(
+    /^@?[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i,
+    "Slug can only contain letters, numbers, and hyphens (plus an optional leading @)",
+  );
 
 /**
  * Media URL validation for <img>/<video src> values (avatar, banner,

@@ -83,3 +83,16 @@ export function slugError(slug: string): SlugErrorReason | null {
 export function isNumericRef(ref: string): boolean {
   return /^\d+$/.test(ref);
 }
+
+/**
+ * Decode a slug path param: Next delivers dynamic params URL-encoded, so a
+ * page saved as `@name` arrives here as `%40name`. Malformed sequences
+ * (`%zz`) fall back to the raw value instead of throwing.
+ */
+export function decodeSlugParam(raw: string): string {
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    return raw;
+  }
+}

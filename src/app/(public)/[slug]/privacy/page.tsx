@@ -14,13 +14,15 @@ import {
   type ThemeInput,
 } from "@/lib/theme-tokens";
 import { parseCustomFontId, buildFontFaceCss } from "@/lib/custom-fonts";
+import { decodeSlugParam } from "@/lib/link-slug";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug: rawSlug } = await params;
+  const slug = decodeSlugParam(rawSlug);
   const page = await getPageBySlug(slug);
   if (!page) return { title: "Privacy Policy" };
   return {
@@ -58,7 +60,8 @@ export default async function PrivacyPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params;
+  const { slug: rawSlug } = await params;
+  const slug = decodeSlugParam(rawSlug);
   const page = await getPageBySlug(slug);
   if (!page) notFound();
 

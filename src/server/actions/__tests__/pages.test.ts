@@ -61,6 +61,18 @@ describe("createPageAction", () => {
     expect(res.success).toBe(false);
   });
 
+  it("allows a leading @ in the slug", async () => {
+    const res = await createPageAction(fd({ slug: "@church", title: "Church", bio: "" }));
+    expect(res.success).toBe(true);
+  });
+
+  it("rejects @ anywhere but the start", async () => {
+    expect((await createPageAction(fd({ slug: "na@me" }))).success).toBe(false);
+    expect((await createPageAction(fd({ slug: "name@" }))).success).toBe(false);
+    expect((await createPageAction(fd({ slug: "@-nope" }))).success).toBe(false);
+    expect((await createPageAction(fd({ slug: "@" }))).success).toBe(false);
+  });
+
   it("rejects duplicate slug", async () => {
     mocks.getAllPages.mockResolvedValue([{ id: 1, slug: "exists" }]);
     const res = await createPageAction(fd({ slug: "exists" }));

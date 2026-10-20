@@ -290,7 +290,7 @@ export function resolveHostRequest(input: ResolveInput): HostDecision {
   const hideSlugsOnUnknownHosts =
     policy.unknownFallback === "404" && host !== policy.primaryHost;
   if (policy.canonical === "301" && !hideSlugsOnUnknownHosts) {
-    const slugMatch = path.match(/^\/([a-z0-9](?:[a-z0-9-]*[a-z0-9])?)(\/|$)/i);
+    const slugMatch = path.match(/^\/(@?[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)(\/|$)/i);
     if (slugMatch) {
       const slug = slugMatch[1].toLowerCase();
       const page = bindings.find(

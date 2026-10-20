@@ -43,6 +43,7 @@ import {
   type ThemeInput,
 } from "@/lib/theme-tokens";
 import { parseCustomFontId, buildFontFaceCss } from "@/lib/custom-fonts";
+import { decodeSlugParam } from "@/lib/link-slug";
 
 export const revalidate = 60;
 
@@ -69,7 +70,8 @@ interface PageProps {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug: rawSlug } = await params;
+  const slug = decodeSlugParam(rawSlug);
   const page = await getPageBySlug(slug);
   if (!page) return { title: "Page not found" };
 
@@ -167,7 +169,8 @@ export async function generateMetadata({
 }
 
 export default async function PublicPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug: rawSlug } = await params;
+  const slug = decodeSlugParam(rawSlug);
   const page = await getPageBySlug(slug);
 
   if (!page) {
