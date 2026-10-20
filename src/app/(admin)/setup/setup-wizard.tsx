@@ -321,7 +321,10 @@ export function SetupWizard({
                     type="text"
                     placeholder="jane-doe"
                     required
-                    pattern="[a-zA-Z0-9_-]+"
+                    // Single backslash: JSX delivers it raw, and v-mode HTML
+                    // pattern regexes require the dash escaped (a bare or
+                    // double-escaped dash makes browsers drop the pattern).
+                    pattern="[a-zA-Z0-9_\-]+"
                     maxLength={64}
                   />
                 </FormField>

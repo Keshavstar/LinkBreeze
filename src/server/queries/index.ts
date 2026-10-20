@@ -760,6 +760,24 @@ export async function createUser(
   return created[0];
 }
 
+/**
+ * Create the first user atomically. The getUserCount() pre-check in the
+ * setup routes is TOCTOU — two concurrent POSTs on a fresh instance could
+ * both pass it and mint two admin rows. The count re-check lives inside
+ * the same transaction as the insert, so exactly one caller wins. Returns
+ * null when a user already exists.
+ */
+export function createFirstUser(
+  username: string,
+  passwordHash: string,
+): UserRow | null {
+  return db.transaction((tx) => {
+    const rows = tx.select({ c: sql<number>`count(*)` }).from(users).all();
+    if ((rows[0]?.c ?? 0) > 0) return null;
+    return tx.insert(users).values({ username, passwordHash }).returning().all()[0];
+  });
+}
+
 export async function updateUserPassword(
   userId: number,
   passwordHash: string,

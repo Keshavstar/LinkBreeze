@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { RESERVED_SLUGS } from "@/lib/link-slug";
 import { getSession } from "@/lib/auth";
 import {
   updateProfile as updateProfileQuery,
@@ -16,7 +17,12 @@ const profileSchema = z.object({
     .string()
     .min(1)
     .max(64)
-    .regex(/^[a-zA-Z0-9_-]+$/, "Slug may only contain letters, numbers, hyphens and underscores"),
+    .regex(/^[a-zA-Z0-9_-]+$/, "Slug may only contain letters, numbers, hyphens and underscores")
+    // Onboarding bypasses the pages-actions slug resolver, so enforce the
+    // reserved-word blocklist here — slug "login" would otherwise make the
+    // public page unreachable (ADMIN_RESERVED redirects it to /login).
+    .refine((v) => !RESERVED_SLUGS.includes(v.toLowerCase() as (typeof RESERVED_SLUGS)[number]), "That slug is reserved")
+    .transform((v) => v.toLowerCase()),
 });
 
 export async function POST(req: NextRequest) {

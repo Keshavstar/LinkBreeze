@@ -80,7 +80,7 @@ async function setTrustCookie(userId: number, secretBase32: string): Promise<voi
   store.set(TRUST_COOKIE, `${trustToken(userId, secretBase32, ua)}|${ua}`, {
     httpOnly: true,
     sameSite: "lax",
-    secure: (await headers()).get("x-forwarded-proto")?.split(",")[0].trim().toLowerCase() === "https",
+    secure: (await headers()).get("x-forwarded-proto")?.split(",").pop()!.trim().toLowerCase() === "https",
     path: "/",
     maxAge: TRUST_MAX_AGE,
   });
@@ -120,7 +120,10 @@ export async function verifyLoginTotp(formData: FormData): Promise<ActionResult>
   if (!parsed.success) {
     return validationError(parsed.error.issues[0]?.message ?? "Invalid input");
   }
-  const { username, pending, code, trust } = parsed.data;
+  // login() mints the pending token over the DB username — trim here too so
+  // a stray space in the form field can't desync the two steps.
+  const username = parsed.data.username.trim();
+  const { pending, code, trust } = parsed.data;
 
   if (!verifyPendingToken(pending, username)) {
     return {
@@ -229,6 +232,8 @@ export async function startTotpSetup(): Promise<
   // never appears in any URL or API response consumed by the QR route.
   const store = await cookies();
   store.set("lb_totp_setup_uri", otpauthUri(secret, user.username), {
+    // carries the plaintext otpauth secret — never send it over plain HTTP
+    secure: (await headers()).get("x-forwarded-proto")?.split(",").pop()!.trim().toLowerCase() === "https",
     httpOnly: true,
     sameSite: "lax",
     path: "/",
@@ -251,6 +256,22 @@ export async function confirmTotpSetup(formData: FormData): Promise<
   if (blocked) return blocked;
   const session = await getSession();
   if (!session) return unauthorizedError();
+
+  // Confirm is authenticated-only but still a 6-digit guessing surface —
+  // same throttle as the login TOTP step.
+  const h = await headers();
+  const ip =
+    (h.get("x-forwarded-for")?.split(",").pop() || "").trim() ||
+    (h.get("x-real-ip") || "").toString() ||
+    "0.0.0.0";
+  const limited = await totpRateLimit(ip);
+  if (limited && !limited.success) {
+    return {
+      success: false,
+      error: limited.error ?? "Too many attempts. Wait a minute and try again.",
+      errorCode: limited.errorCode ?? ErrorCode.RATE_LIMIT,
+    };
+  }
 
   const parsed = confirmSchema.safeParse({ code: formData.get("code") });
   if (!parsed.success) {
@@ -294,6 +315,23 @@ const disableSchema = z.object({ code: z.string().min(6).max(16) });
  * Disable 2FA. Requires a current TOTP code or a recovery code — losing the
  * authenticator is exactly when you need this, so recovery codes must work.
  */
+/** Check a recovery code against the user's hashed recovery codes. */
+async function verifyRecoveryCodeAgainstUser(
+  user: { id: number; recoveryCodes: string | null },
+  code: string,
+): Promise<boolean> {
+  if (!user.recoveryCodes) return false;
+  try {
+    const hashes = JSON.parse(user.recoveryCodes) as string[];
+    for (const h of hashes) {
+      if (await verifyRecoveryCode(code.toLowerCase(), h)) return true;
+    }
+  } catch (err) {
+    logError("disableTotp:recovery", err, { userId: user.id });
+  }
+  return false;
+}
+
 export async function disableTotp(formData: FormData): Promise<ActionResult> {
   const blocked = demoGuard();
   if (blocked) return blocked;
@@ -310,25 +348,24 @@ export async function disableTotp(formData: FormData): Promise<ActionResult> {
     return validationError("Two-factor authentication is not enabled.");
   }
   const secret = decryptSecret(user.totpSecret);
+  let ok = false;
   if (!secret) {
-    // Unreadable state: allow the disable (fail-open for the legit admin who
-    // rotated SECRET_KEY) — but require SOMETHING: accept any well-formed code.
+    // Unreadable state (e.g. SECRET_KEY rotated): TOTP cannot be verified,
+    // so fail CLOSED to a recovery code — hashed independently of the TOTP
+    // secret — instead of accepting any well-formed string. 2FA must keep
+    // protecting the session exactly when the authenticator is gone.
     logError("disableTotp", new Error("totp_secret decrypt failed on disable"), { userId: user.id });
-  } else {
-    let ok = verifyTotp(secret, parsed.data.code);
-    if (!ok && user.recoveryCodes) {
-      try {
-        const hashes = JSON.parse(user.recoveryCodes) as string[];
-        for (const h of hashes) {
-          if (await verifyRecoveryCode(parsed.data.code.toLowerCase(), h)) {
-            ok = true;
-            break;
-          }
-        }
-      } catch (err) {
-        logError("disableTotp:recovery", err, { userId: user.id });
-      }
+    ok = await verifyRecoveryCodeAgainstUser(user, parsed.data.code);
+    if (!ok) {
+      return {
+        success: false,
+        error: "Enter a valid recovery code to disable two-factor authentication.",
+        errorCode: ErrorCode.UNAUTHORIZED,
+      };
     }
+  } else {
+    ok = verifyTotp(secret, parsed.data.code);
+    if (!ok) ok = await verifyRecoveryCodeAgainstUser(user, parsed.data.code);
     if (!ok) {
       return {
         success: false,

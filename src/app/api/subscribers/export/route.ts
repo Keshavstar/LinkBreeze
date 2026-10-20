@@ -1,16 +1,12 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
+import { csvCell } from "@/lib/csv";
 import { getAllSubscribers } from "@/server/queries";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const CSV_HEADER = ["email", "subscribed_at", "consent_at", "consent_text"];
-
-function csvCell(v: unknown): string {
-  const s = v == null ? "" : String(v);
-  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-}
 
 /** CSV export of all subscriber emails. Auth-required. */
 export async function GET() {

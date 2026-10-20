@@ -4,14 +4,10 @@ import { db } from "@/db";
 import { analyticsPageviews, analyticsClicks, links } from "@/db/schema";
 import { eq, gt } from "drizzle-orm";
 import { parseRange, sinceExpr } from "@/lib/analytics-range";
+import { csvCell } from "@/lib/csv";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-function csvCell(v: unknown): string {
-  const s = v == null ? "" : String(v);
-  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-}
 
 /** CSV export of raw analytics rows for the chosen range/metric. Auth-required. */
 export async function GET(request: NextRequest) {

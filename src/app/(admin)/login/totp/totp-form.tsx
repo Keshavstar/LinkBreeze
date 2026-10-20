@@ -29,7 +29,9 @@ export function TotpForm() {
   const searchParams = useSearchParams();
   const username = searchParams.get("u") ?? "";
   const pending = searchParams.get("p") ?? "";
-  const from = searchParams.get("from") || "/dashboard";
+  // site-relative paths only - blocks "https://evil" and "//evil" open redirects
+  const rawFrom = searchParams.get("from") || "/dashboard";
+  const from = rawFrom.startsWith("/") && !rawFrom.startsWith("//") ? rawFrom : "/dashboard";
 
   const [state, formAction, isPending] = useActionState(
     async (_prev: unknown, formData: FormData) => {

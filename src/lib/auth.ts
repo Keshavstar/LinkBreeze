@@ -32,7 +32,11 @@ async function isHttps(): Promise<boolean> {
   const h = await headers();
   // x-forwarded-proto is the standard header set by reverse proxies.
   const xfp = h.get("x-forwarded-proto");
-  if (xfp) return xfp.split(",")[0].trim().toLowerCase() === "https";
+  if (xfp) {
+    // The nearest trusted proxy APPENDS its value — the last hop is the
+    // trustworthy one (left-most is client-spoofable).
+    return xfp.split(",").pop()!.trim().toLowerCase() === "https";
+  }
   return false;
 }
 
@@ -60,11 +64,14 @@ export async function getSession(): Promise<SessionPayload | null> {
   const payload = verifyToken(token);
   if (!payload) return null;
 
-  // Verify password version — invalidates sessions after password change
+  // Verify password version — invalidates sessions after password change.
+  // Deliberately does NOT clear the cookie here: getSession() runs inside
+  // Server Component renders, where cookies().set() throws in Next 15/16
+  // (a stale-pv cookie used to hard-lock the admin out of every page
+  // INCLUDING /login). Returning null is enough — the proxy redirects to
+  // /login and the next successful login overwrites the cookie.
   const currentVersion = Number(await getSetting("sessionVersion")) || 0;
   if (payload.pv !== currentVersion) {
-    // Session is stale — destroy it
-    await destroySession();
     return null;
   }
 

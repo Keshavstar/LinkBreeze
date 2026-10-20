@@ -243,6 +243,10 @@ export interface DnsCheckResult {
 export async function checkDomainDnsAction(
   host: string,
 ): Promise<ActionResult<DnsCheckResult>> {
+  // Demo instances are public with auto-login — a DNS oracle for every
+  // visitor is not acceptable, so this follows the demoGuard pattern too.
+  const blocked = demoGuard();
+  if (blocked) return blocked;
   if (!(await getSession())) return unauthorizedError();
 
   const normalized = parseDomainInput(host);

@@ -24,7 +24,9 @@ export function LoginForm() {
   const t = useTranslations("login");
   const router = useRouter();
   const searchParams = useSearchParams();
-  const from = searchParams.get("from") || "/dashboard";
+  // site-relative paths only - blocks "https://evil" and "//evil" open redirects
+  const rawFrom = searchParams.get("from") || "/dashboard";
+  const from = rawFrom.startsWith("/") && !rawFrom.startsWith("//") ? rawFrom : "/dashboard";
 
   const [state, formAction, isPending] = useActionState(
     async (_prev: unknown, formData: FormData) => {

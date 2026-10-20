@@ -15,6 +15,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  // Route handlers are not covered by the server-action bodySizeLimit —
+  // cap the parse explicitly.
+  const len = Number(request.headers.get("content-length") || 0);
+  if (len > 2 * 1024 * 1024) {
+    return NextResponse.json({ error: "Theme file too large" }, { status: 413 });
+  }
   const text = await request.text();
   const result = await importTheme(text);
   if (!result.success) {

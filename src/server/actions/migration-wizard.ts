@@ -10,6 +10,7 @@ import {
   type ImportedLink,
 } from "@/lib/migration-wizard";
 import { rateLimit } from "@/lib/rate-limit";
+import { isAllowedLinkUrl } from "@/lib/link-url";
 import { fetchAndCacheFavicon, extractDomain } from "@/lib/favicon";
 import { mapWithConcurrency } from "@/lib/concurrency";
 
@@ -156,9 +157,18 @@ export async function confirmImport(
     return { success: false, error: "Invalid import data" };
   }
 
-  // Filter to only selected links.
-  const selectedLinks = linksToImport.filter((l) => l.selected && l.url && l.title);
-  const selectedSocial = socialToImport.filter((l) => l.selected && l.url);
+  // Filter to only selected links — AND re-apply the URL scheme allowlist.
+  // The client JSON here is untrusted input (direct action invocation, a
+  // crafted import file, or a hostile source page); without this check a
+  // "javascript:" URL reaches createLink and renders as a live href on the
+  // PUBLIC page. Mirror of the add-link action's validation boundary.
+  const MAX_IMPORT_LINKS = 200;
+  const selectedLinks = linksToImport.filter(
+    (l) => l.selected && l.url && l.title && isAllowedLinkUrl(l.type || "url", l.url),
+  ).slice(0, MAX_IMPORT_LINKS);
+  const selectedSocial = socialToImport.filter(
+    (l) => l.selected && l.url && isAllowedLinkUrl("url", l.url),
+  ).slice(0, MAX_IMPORT_LINKS);
 
   let importedCount = 0;
 

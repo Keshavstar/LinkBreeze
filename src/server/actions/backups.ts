@@ -161,5 +161,10 @@ export async function deleteStoredBackup(
 
 /** Dismiss the dashboard backup-failure notice. */
 export async function dismissBackupNotice(): Promise<void> {
+  // Hiding a "backups are failing" signal is a settings mutation — keep it
+  // session-gated even though the caller is only flipping a flag.
+  if (!(await getSession())) {
+    throw new Error("Unauthorized");
+  }
   await dismissBackupFailureNotice();
 }

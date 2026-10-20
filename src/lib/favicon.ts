@@ -148,6 +148,31 @@ export async function getCachedFaviconUrl(url: string): Promise<string | null> {
   return null;
 }
 
+/**
+ * Read a response body with a hard byte cap — streaming, so an
+ * attacker-controlled oversized body is aborted mid-download instead of
+ * buffered whole (memory-exhaustion DoS). Mirrors the og-fetcher pattern.
+ */
+async function readBodyWithCap(res: Response, cap: number): Promise<Buffer | null> {
+  const len = Number(res.headers.get("content-length") || 0);
+  if (len > cap) return null;
+  const reader = res.body?.getReader();
+  if (!reader) return null;
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.length;
+    if (total > cap) {
+      await reader.cancel().catch(() => {});
+      return null;
+    }
+    chunks.push(value);
+  }
+  return Buffer.concat(chunks);
+}
+
 async function tryHtmlHeadLinks(url: string): Promise<CandidateResult | null> {
   try {
     const controller = new AbortController();
@@ -167,8 +192,10 @@ async function tryHtmlHeadLinks(url: string): Promise<CandidateResult | null> {
     const contentType = res.headers.get("content-type") || "";
     if (!contentType.includes("text/html")) return null;
 
-    // Read up to 256KB (enough for <head>).
-    const text = await res.text();
+    // Read up to 256KB (enough for <head>) — enforced, not assumed.
+    const body = await readBodyWithCap(res, 256 * 1024);
+    if (!body) return null;
+    const text = body.toString("utf8");
 
     // Find all <link rel="icon"> / shortcut icon / apple-touch-icon hrefs.
     const hrefs = extractIconHrefs(text, url);
@@ -258,8 +285,8 @@ async function fetchImage(imageUrl: string): Promise<CandidateResult | null> {
     if (!res.ok) return null;
 
     const contentType = (res.headers.get("content-type") || "").toLowerCase();
-    const buffer = Buffer.from(await res.arrayBuffer());
-    if (buffer.length === 0) return null;
+    const buffer = await readBodyWithCap(res, 1024 * 1024);
+    if (!buffer || buffer.length === 0) return null;
 
     // Determine extension from content type or magic bytes.
     const ext = detectExt(contentType, buffer);

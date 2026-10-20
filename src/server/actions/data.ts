@@ -1,5 +1,7 @@
 "use server";
 
+import { acquireBackupLock, releaseBackupLock } from "@/lib/backup-lock";
+import { sanitizeThemeFields } from "@/lib/theme-schema";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
@@ -136,19 +138,29 @@ export async function restoreBackup(formData: FormData): Promise<ActionResult> {
   if (blocked) return blocked;
   if (!(await getSession())) return unauthorizedError();
 
-  const file = formData.get("file");
-  if (!(file instanceof File)) {
-    return validationError("No backup file provided");
+  // Same invariant the scheduled paths enforce: never restore while a
+  // backup (or another restore) is running — a snapshot taken mid-restore
+  // would capture a half-replaced database.
+  if (!acquireBackupLock()) {
+    return validationError("Another backup or restore is in progress. Try again in a moment.");
   }
-
-  let parsed: BackupPayload;
   try {
-    parsed = JSON.parse(await file.text()) as BackupPayload;
-  } catch {
-    return validationError("Invalid JSON file");
-  }
+    const file = formData.get("file");
+    if (!(file instanceof File)) {
+      return validationError("No backup file provided");
+    }
 
-  return applyBackupPayload(parsed);
+    let parsed: BackupPayload;
+    try {
+      parsed = JSON.parse(await file.text()) as BackupPayload;
+    } catch {
+      return validationError("Invalid JSON file");
+    }
+
+    return await applyBackupPayload(parsed);
+  } finally {
+    releaseBackupLock();
+  }
 }
 
 /** Wipe all analytics + reset per-link click counters. */
@@ -302,6 +314,14 @@ export async function importTheme(json: string): Promise<ActionResult> {
     return validationError(result.error.issues[0]?.message ?? "Invalid theme file");
   }
   const t = result.data;
+  // Theme fields are interpolated into the public page's CSS — apply the
+  // same sanitizer as backup restore (drops invalid/CSS-unsafe values;
+  // defaults cover what's dropped).
+  {
+    const { clean, dropped } = sanitizeThemeFields(t as unknown as Record<string, unknown>);
+    for (const key of dropped) delete (t as unknown as Record<string, unknown>)[key];
+    Object.assign(t as unknown as Record<string, unknown>, clean);
+  }
 
   const { themeNameExists, insertCustomFont, updateCustomFontFamily } = await import("@/server/queries");
   if (await themeNameExists(t.name)) {

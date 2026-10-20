@@ -16,6 +16,9 @@ test.describe("custom domains — feature-off guarantees", () => {
   test("an unbound Host header does not change page serving", async ({ request }) => {
     // Anyone can point a random domain at the instance; with fallback=path
     // (the default) the response must be identical to a normal visit.
+    // Canonical/og metadata intentionally reflect the request host (pre-
+    // domains behavior — BASE_URL pins it), so normalize both hosts out
+    // before comparing.
     const viaHost = await request.get("/linkbreeze", {
       headers: { Host: "stranger.example" },
       maxRedirects: 0,
@@ -23,7 +26,8 @@ test.describe("custom domains — feature-off guarantees", () => {
     const normal = await request.get("/linkbreeze", { maxRedirects: 0 });
     expect(viaHost.status()).toBe(normal.status());
     if (normal.status() === 200) {
-      expect(await viaHost.text()).toBe(await normal.text());
+      const normalize = (text: string) => text.replace(/:\/\/[^/"']+/g, "://<ORIGIN>");
+      expect(normalize(await viaHost.text())).toBe(normalize(await normal.text()));
     }
   });
 
@@ -40,7 +44,9 @@ test.describe("custom domains — feature-off guarantees", () => {
     });
     expect(res.status()).toBe(200);
     const body = await res.text();
-    expect(body).toContain("User-agent");
+    // RFC 9309: the user-agent token is matched case-insensitively; Next's
+    // built-in robots route emits `User-Agent: *`.
+    expect(body).toMatch(/user-agent/i);
     // The two new admin paths stay disallowed (#85).
     expect(body).toContain("/domains");
     expect(body).toContain("/pages");

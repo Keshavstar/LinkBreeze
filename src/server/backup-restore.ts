@@ -1,3 +1,4 @@
+import { sanitizeThemeFields } from "@/lib/theme-schema";
 import { z } from "zod";
 import { db } from "@/db";
 import {
@@ -231,7 +232,15 @@ export async function applyBackupPayload(
   parsed.profile = validatedProfile.data as ProfileRow[];
   parsed.links = validatedLinks.data as LinkRow[];
   parsed.settings = validatedSettings.data as Array<{ key: string; value: string }>;
-  parsed.themes = validatedThemes.data as ThemeRow[];
+  parsed.themes = validatedThemes.data.map((theme) => {
+    // Theme fields land in the public page's CSS — run the same import
+    // sanitizer as the theme-file import path (drops invalid/CSS-unsafe
+    // values; row fields are optional so the DB defaults apply).
+    const { clean, dropped } = sanitizeThemeFields(theme);
+    const safe = { ...theme } as Record<string, unknown>;
+    for (const key of dropped) delete safe[key];
+    return { ...safe, ...clean } as ThemeRow;
+  });
 
   // Sections are optional (v1 backups have none). Validate when present.
   let sections: z.infer<typeof sectionRowSchema>[] = [];

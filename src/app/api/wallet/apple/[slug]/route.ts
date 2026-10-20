@@ -11,10 +11,16 @@ export const dynamic = "force-dynamic";
 function getOrigin(request: NextRequest): string {
   if (process.env.BASE_URL) return process.env.BASE_URL.replace(/\/$/, "");
   const proto = request.headers.get("x-forwarded-proto") || "http";
+  // Host-deciding rule matches the domain-routing proxy: only trust
+  // X-Forwarded-Host behind LINKBREEZE_TRUST_X_FORWARDED_HOST (a proxy
+  // that overwrites it) — otherwise a spoofed header would steer the
+  // encoded URL (QR phishing).
   const host =
-    request.headers.get("x-forwarded-host") ||
-    request.headers.get("host") ||
-    "localhost";
+    pickRequestHost(
+      request.headers.get("x-forwarded-host"),
+      request.headers.get("host"),
+      process.env.LINKBREEZE_TRUST_X_FORWARDED_HOST === "true",
+    ) || "localhost";
   return `${proto}://${host}`;
 }
 

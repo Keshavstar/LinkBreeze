@@ -141,3 +141,53 @@ export const customSchema = z.object({
   profileLayout: z.enum(["classic", "hero", "banner"]).optional(),
   textAnimation: z.enum(["none", "typewriter", "gradient-flow"]).optional(),
 });
+
+
+/**
+ * Import/restore sanitizer for theme rows (theme-file import + backup
+ * restore). The customizeActiveTheme action validates through customSchema,
+ * but the import paths historically accepted raw strings — and every one
+ * of these fields is interpolated into the public page's CSS (url('…'),
+ * linear-gradient(…), --lb-* custom properties, font-family). A crafted
+ * community theme or backup could therefore inject arbitrary CSS.
+ *
+ * Each field present on the row is checked against its customSchema field
+ * schema; invalid values are DROPPED (the DB default applies) instead of
+ * rejecting the whole payload, so older exports keep importing. Free-form
+ * CSS-adjacent strings (backgroundValue, angles, font families, spacing)
+ * additionally must not contain context-breaking characters ({ } ; @ < >).
+ */
+const cssContextUnsafe = /[{};@<>]/;
+
+export function sanitizeThemeFields<T extends Record<string, unknown>>(
+  row: T,
+): { clean: Record<string, unknown>; dropped: string[] } {
+  const clean: Record<string, unknown> = {};
+  const dropped: string[] = [];
+  for (const [key, schema] of Object.entries(customSchema.shape)) {
+    const value = row[key];
+    if (value === undefined || value === null) continue;
+    const result = (schema as z.ZodTypeAny).safeParse(value);
+    if (!result.success) {
+      dropped.push(key);
+      continue;
+    }
+    if (
+      (key === "backgroundValue" ||
+        key === "backgroundAngle" ||
+        key === "fontFamily" ||
+        key === "cardFontFamily" ||
+        key === "letterSpacing" ||
+        key === "blur" ||
+        key === "radius" ||
+        key === "containerWidth") &&
+      typeof result.data === "string" &&
+      cssContextUnsafe.test(result.data)
+    ) {
+      dropped.push(key);
+      continue;
+    }
+    clean[key] = result.data;
+  }
+  return { clean, dropped };
+}

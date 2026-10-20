@@ -12,6 +12,7 @@
  *    social platforms via detectPlatform().
  */
 
+import { isAllowedLinkUrl } from "@/lib/link-url";
 import * as cheerio from "cheerio";
 import type { AnyNode } from "domhandler";
 import { detectPlatform, type SocialPlatform } from "@/lib/social-icons";
@@ -203,7 +204,10 @@ function extractLinksFromNextData(
           ? String(obj.thumbnail || obj.image || obj.imageUrl)
           : undefined;
 
-        if (url && title) {
+        // Same scheme allowlist as the save path — a hostile source page's
+        // __NEXT_DATA__ must not smuggle javascript: URLs into the import
+        // preview (they would be pre-selected for the admin to confirm).
+        if (url && title && isAllowedLinkUrl("url", url)) {
           const platform = detectPlatform(url);
           found.push({
             title,

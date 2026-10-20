@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getUserCount, getUserByUsername } from "@/server/queries";
 import { hashPassword, createSession } from "@/lib/auth";
-import { createUser } from "@/server/queries";
+import { createFirstUser } from "@/server/queries";
 
 const setupSchema = z.object({
   username: z
@@ -49,7 +49,15 @@ export async function POST(req: NextRequest) {
     }
 
     const passwordHash = await hashPassword(password);
-    const user = await createUser(username.trim(), passwordHash);
+    // Atomic first-user insert: closes the concurrent-POST setup race (the
+    // getUserCount() guard above alone is a TOCTOU).
+    const user = await createFirstUser(username.trim(), passwordHash);
+    if (!user) {
+      return NextResponse.json(
+        { success: false, error: "Setup has already been completed" },
+        { status: 409 },
+      );
+    }
     await createSession(user.id, user.username);
 
     return NextResponse.json({ success: true });

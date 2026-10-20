@@ -95,6 +95,10 @@ export async function proxy(request: NextRequest) {
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon") ||
+    // The dot check passes static-asset-looking paths before domain routing
+    // AND the admin gate. No real admin route contains a dot (all protected
+    // prefixes are exact static paths), so this is safe today — any new
+    // admin route with a dotted segment would skip the auth gate here.
     pathname.includes(".")
   ) {
     return next();
