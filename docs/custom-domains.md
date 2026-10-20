@@ -13,9 +13,18 @@ serve many domains: each page can own a domain, visitors land on
    everything else (analytics, /go links, vCard/wallet, email capture)
    keeps working unchanged because they're same-origin.
 
+   `Host` is the only header trusted by default. `X-Forwarded-Host` is
+   honored only with `LINKBREEZE_TRUST_X_FORWARDED_HOST=true` — set that
+   solely when a trusted proxy **overwrites** the header (nginx
+   `proxy_set_header X-Forwarded-Host $host;`, Caddy). Proxies that merely
+   forward the client's header (cloudflared tunnel, some CDNs) must leave
+   it unset: a spoofed forwarded host could otherwise bypass the admin
+   host lock or self-activate a pending domain.
+
 A binding shows **Pending** until the first real request arrives with that
-`Host` header — that's the activation proof (no fake "verified" state).
-Use **Activate now** to flip it manually for `/etc/hosts`-style testing.
+`Host` header — that's the activation proof (no fake "verified" state; a
+spoofed `X-Forwarded-Host` cannot flip it). Use **Activate now** to flip
+it manually for `/etc/hosts`-style testing.
 
 ## Requirements
 
@@ -87,7 +96,8 @@ server {
 ```
 
 `proxy_set_header Host $host;` is required — host-based routing reads it
-(`X-Forwarded-Host` is honored too).
+(`X-Forwarded-Host` is only honored with `LINKBREEZE_TRUST_X_FORWARDED_HOST=true`,
+since nginx here overwrites it, that is safe to enable).
 
 ### Traefik
 
@@ -142,7 +152,9 @@ http:
   domain's A record at your server; the lock makes sure your login page and
   session cookies are never exposed on a host you don't control.
 - **Unknown hosts** — what an unbound host sees: *path routing* (the
-  classic behavior, default), *404*, or *redirect to primary*.
+  classic behavior, default), *404*, or *redirect to primary*. With *404*,
+  the fallback also wins over the canonical 301 on unknown hosts, so bound
+  slugs stay hidden from hosts you don't control.
 - **www handling** — when `www.<bound-domain>` is not bound explicitly:
   *redirect to the bound domain* (default, SEO-consistent), *serve like the
   bound domain*, or *off* (explicit aliases only).
@@ -172,3 +184,7 @@ http:
   they can no longer be used as public page slugs.
 - Analytics stay page-keyed, exactly as before — a domain visit increments
   the bound page's counters, nothing else changes.
+- On an **exclusive** domain, per-slug artifacts serve only for that
+  page: `/api/vcard/<slug>` and the wallet pass routes 404 for every other
+  slug, matching the "the domain IS the page" scope. Machinery without a
+  slug (analytics, sitemap, robots) keeps working on every host.

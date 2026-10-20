@@ -5,6 +5,7 @@ import {
   isMachinePath,
   normalizeHost,
   parseDomainInput,
+  pickRequestHost,
   primaryServeBinding,
   resolveHostRequest,
   wwwApexOf,
@@ -101,6 +102,23 @@ describe("wwwApexOf", () => {
 
 // ── Path classification ──────────────────────────────────────────────────
 
+// ── pickRequestHost ───────────────────────────────────────────────────────
+
+describe("pickRequestHost", () => {
+  it("uses the raw Host header by default (never trusts the client)", () => {
+    expect(pickRequestHost("evil.example", "jane.com", false)).toBe("jane.com");
+    expect(pickRequestHost("evil.example", null, false)).toBeNull();
+  });
+
+  it("honors X-Forwarded-Host only behind the explicit trust flag", () => {
+    expect(pickRequestHost("edge.example", "jane.com", true)).toBe("edge.example");
+    // Flag on but header absent → falls back to Host.
+    expect(pickRequestHost(null, "jane.com", true)).toBe("jane.com");
+    expect(pickRequestHost("", "jane.com", true)).toBe("jane.com");
+    expect(pickRequestHost(null, null, true)).toBeNull();
+  });
+});
+
 describe("isAdminPath", () => {
   it("covers admin pages and admin APIs, nothing public", () => {
     for (const p of [
@@ -123,6 +141,8 @@ describe("isAdminPath", () => {
       "/api/subscribers/export",
       "/api/subscribers/clear",
       "/api/themes/import",
+      "/api/themes/export",
+      "/api/totp-qr",
     ]) {
       expect(isAdminPath(p), p).toBe(true);
     }
@@ -331,6 +351,39 @@ describe("resolveHostRequest — canonical strategy", () => {
       });
       expect(decision.type).toBe("pass");
     }
+  });
+
+  it("defers to the 404 fallback on unknown hosts (no slug leakage)", () => {
+    // With unknown-host fallback = 404, a canonical 301's Location would
+    // reveal which slugs are domain-bound — the fallback wins instead.
+    const policy = { ...DEFAULT_POLICY, unknownFallback: "404" as const };
+    expect(
+      resolve({ host: "stranger.example", pathname: "/jane", policy }).type,
+    ).toBe("not_found");
+  });
+
+  it("still canonicalizes on the primary host when fallback is 404", () => {
+    const decision = resolve({
+      host: "links.example.com",
+      pathname: "/jane",
+      policy: { ...DEFAULT_POLICY, unknownFallback: "404" as const },
+    });
+    expect(decision).toMatchObject({
+      location: "https://jane.com/jane",
+      status: 301,
+    });
+  });
+
+  it("keeps cross-host dedup when fallback is path (default)", () => {
+    const decision = resolve({
+      host: "stranger.example",
+      pathname: "/jane",
+      policy: { ...DEFAULT_POLICY, unknownFallback: "path" as const },
+    });
+    expect(decision).toMatchObject({
+      location: "https://jane.com/jane",
+      status: 301,
+    });
   });
 });
 

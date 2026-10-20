@@ -114,6 +114,24 @@ export function parseDomainInput(raw: string): string | null {
 }
 
 /**
+ * Decide which header identifies the request host for domain routing.
+ * The raw `Host` header is the safe default: a client behind a header-
+ * forwarding proxy (cloudflared forwards client headers verbatim) can set
+ * `X-Forwarded-Host` freely, so trusting it lets an attacker pick which
+ * binding resolves — bypassing the strict admin host lock, defeating the
+ * unknown-host 404 fallback, and flipping pending domains to active.
+ * Opt in only when a trusted proxy OVERWRITES the header (nginx/Caddy).
+ */
+export function pickRequestHost(
+  xForwardedHost: string | null | undefined,
+  host: string | null | undefined,
+  trustXForwardedHost: boolean,
+): string | null {
+  if (trustXForwardedHost && xForwardedHost) return xForwardedHost;
+  return host ?? null;
+}
+
+/**
  * www/apex relationship: wwwApexOf("www.jane.com") → { isWww: true, apex: "jane.com" }.
  * Only the exact "www." prefix counts (not arbitrary subdomains).
  */
@@ -142,6 +160,8 @@ export function isAdminPath(pathname: string): boolean {
     "/api/subscribers/clear",
     "/api/subscribers/export",
     "/api/themes/import",
+    "/api/themes/export",
+    "/api/totp-qr",
   ]);
   if (adminExact.has(pathname) || adminApiExact.has(pathname)) return true;
   return (
@@ -263,7 +283,13 @@ export function resolveHostRequest(input: ResolveInput): HostDecision {
   }
 
   // ── 4. Canonical 301: slug paths on the primary host move to the domain ──
-  if (policy.canonical === "301") {
+  // With the 404 unknown-host fallback, canonical is skipped on non-primary
+  // hosts: the 301's Location would reveal which slugs are domain-bound,
+  // defeating the operator's explicit slug-privacy choice. The fallback
+  // below then decides (404 / redirect / pass).
+  const hideSlugsOnUnknownHosts =
+    policy.unknownFallback === "404" && host !== policy.primaryHost;
+  if (policy.canonical === "301" && !hideSlugsOnUnknownHosts) {
     const slugMatch = path.match(/^\/([a-z0-9](?:[a-z0-9-]*[a-z0-9])?)(\/|$)/i);
     if (slugMatch) {
       const slug = slugMatch[1].toLowerCase();

@@ -373,6 +373,7 @@ Toute la configuration passe par des variables d'environnement. **[`.env.example
 | `SECRET_KEY` | Générée automatiquement | Clé de signature HMAC des sessions |
 | `EXTRA_SCRIPT_SRC` | _(vide)_ | Domaines d'analytique séparés par des espaces pour la CSP (ex. `plausible.io umami.is`) |
 | `LINKBREEZE_PRIMARY_HOST` | _(vide)_ | Hôte principal où vit votre admin ; le verrou admin des domaines personnalisés renvoie 404 sur tous les autres hôtes (l'env a priorité sur le réglage admin) |
+| `LINKBREEZE_TRUST_X_FORWARDED_HOST` | `false` | Faire confiance à `X-Forwarded-Host` pour le routage des domaines - à activer uniquement derrière un proxy qui ÉCRASE cet en-tête (nginx, Caddy) ; l'en-tête `Host` par défaut ne peut pas être falsifié |
 
 <details>
 <summary>💳 &nbsp;Variables de passes wallet (Google Wallet / Apple Wallet)</summary>

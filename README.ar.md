@@ -373,6 +373,7 @@ cloudflared tunnel --url http://localhost:3000
 | `SECRET_KEY` | يُولَّد تلقائيًا | مفتاح توقيع HMAC للجلسات |
 | `EXTRA_SCRIPT_SRC` | _(فارغ)_ | نطاقات الإحصائيات مفصولة بمسافات من أجل CSP (مثل `plausible.io umami.is`) |
 | `LINKBREEZE_PRIMARY_HOST` | _(فارغ)_ | المستضيف الأساسي الذي تعمل عليه لوحة الإدارة؛ قفل النطاقات المخصص يُرجع 404 لكل مستضيف آخر (متغير البيئة يتجاوز إعداد الإدارة) |
+| `LINKBREEZE_TRUST_X_FORWARDED_HOST` | `false` | الثقة بترويسة `X-Forwarded-Host` لتوجيه النطاقات - فعّلها فقط خلف وكيل يعيد كتابة الترويسة (nginx و Caddy)؛ ترويسة `Host` الافتراضية لا يمكن تزويرها |
 
 <details>
 <summary>💳 &nbsp;متغيرات تذاكر المحفظة (Google Wallet / Apple Wallet)</summary>

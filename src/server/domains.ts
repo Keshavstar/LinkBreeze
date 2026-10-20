@@ -226,3 +226,26 @@ export async function getDomainByHost(host: string) {
   const rows = await db.select().from(domains).where(eq(domains.host, host)).limit(1);
   return rows[0] ?? null;
 }
+
+/**
+ * Exclusive-scope guard for slug-parameterized public routes (vCard, wallet
+ * passes). A bound host in exclusive scope IS one page — its domain must not
+ * hand out other pages' per-slug artifacts. Returns true when the request is
+ * fine: unbound/unknown host (no domain logic) or hub scope (all slugs
+ * intentionally resolve).
+ */
+export async function isSlugServedOnHost(
+  host: string | null | undefined,
+  slug: string,
+): Promise<boolean> {
+  const normalized = normalizeHost(host);
+  if (!normalized) return true;
+  const bindings = await getDomainBindings();
+  const binding = bindings.find(
+    (b) => b.host === normalized && b.behavior === "serve",
+  );
+  if (!binding) return true;
+  const scopeMap = await getDomainScopeMap(bindings);
+  if ((scopeMap.get(binding.pageId) ?? "exclusive") === "hub") return true;
+  return binding.pageSlug === slug;
+}

@@ -5,7 +5,11 @@ import {
   LOCALE_HEADER,
   isAvailableLocale,
 } from "@/i18n/config";
-import { normalizeHost, resolveHostRequest } from "@/lib/host-routing";
+import {
+  normalizeHost,
+  pickRequestHost,
+  resolveHostRequest,
+} from "@/lib/host-routing";
 import {
   getDomainBindings,
   getDomainPolicy,
@@ -97,8 +101,17 @@ export async function proxy(request: NextRequest) {
   }
 
   // ── 2. Custom domains (#85) ──────────────────────────────────────────────
+  // The raw Host header decides by default; X-Forwarded-Host is only
+  // honored behind an explicit operator opt-in (a trusted proxy that
+  // OVERWRITES it). A client-supplied X-Forwarded-Host would otherwise let
+  // the attacker choose the host identity: bypass the strict admin lock,
+  // defeat the unknown-host 404 fallback, and self-activate bindings.
   const host = normalizeHost(
-    request.headers.get("x-forwarded-host") || request.headers.get("host"),
+    pickRequestHost(
+      request.headers.get("x-forwarded-host"),
+      request.headers.get("host"),
+      process.env.LINKBREEZE_TRUST_X_FORWARDED_HOST === "true",
+    ),
   );
   if (host) {
     const [policy, bindings] = await Promise.all([
@@ -127,8 +140,12 @@ export async function proxy(request: NextRequest) {
       case "serve": {
         // First real hit on a pending binding proves the DNS/host path works
         // — flip it to active so the UI reflects reality. Never in demo mode
-        // (read-only data dir).
-        if (decision.activate && process.env.DEMO_MODE !== "true") {
+        // (read-only data dir). The flip additionally requires the raw Host
+        // header to match the binding: even on opt-in trust-XFH deployments
+        // a spoofed forwarded host must not mint an "active" domain.
+        const rawHost = normalizeHost(request.headers.get("host"));
+        const hostProven = rawHost === normalizeHost(decision.binding.host);
+        if (decision.activate && hostProven && process.env.DEMO_MODE !== "true") {
           await markDomainActive(decision.binding.id);
         }
         const rewritten = NextResponse.rewrite(

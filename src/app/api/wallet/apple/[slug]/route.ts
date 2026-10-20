@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPageBySlug, getActiveLinks } from "@/server/queries";
+import { isSlugServedOnHost } from "@/server/domains";
+import { pickRequestHost } from "@/lib/host-routing";
 import { rateLimit } from "@/lib/rate-limit";
 import { parseAppleCreds, buildApplePass } from "@/lib/wallet/apple-pass";
 
@@ -52,6 +54,16 @@ export async function GET(
   }
 
   const { slug } = await params;
+  // Exclusive-scope domains serve only their own page's pass (same rule as
+  // the vCard route) — a bound exclusive host IS one page.
+  const requestHost = pickRequestHost(
+    request.headers.get("x-forwarded-host"),
+    request.headers.get("host"),
+    process.env.LINKBREEZE_TRUST_X_FORWARDED_HOST === "true",
+  );
+  if (!(await isSlugServedOnHost(requestHost, slug))) {
+    return NextResponse.json({ error: "Page not found" }, { status: 404 });
+  }
   const page = await getPageBySlug(slug);
   if (!page) {
     return NextResponse.json({ error: "Page not found" }, { status: 404 });
