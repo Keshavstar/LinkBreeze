@@ -10,7 +10,7 @@ import {
   getAllSubscribers,
   getActiveLinks,
 } from "@/server/queries";
-import { isUpdateCheckEnabled } from "@/lib/update-check";
+import { isUpdateCheckEnabled, getUpdateStatus } from "@/lib/update-check";
 import { maybeRunScheduledBackup, getBackupOverview } from "@/server/backup-scheduler";
 import { formatTimeOfDay } from "@/lib/backup-schedule";
 import { parseQrStyle } from "@/lib/qr-style";
@@ -22,6 +22,7 @@ import { OgImageCard } from "./og-image-card";
 import { ChangePasswordForm } from "./change-password-form";
 import { TwoFactorCard } from "./two-factor-card";
 import { DataManager } from "./data-manager";
+import { UpdateStatusCard } from "./update-status-card";
 import { BackupsCard } from "./backups-card";
 import { SubscribersCard } from "./subscribers-card";
 import { MigrationWizard } from "@/components/admin/MigrationWizard";
@@ -74,6 +75,9 @@ export default async function SettingsPage({
 
   const slug = activePage?.slug || "u";
   const t = await getTranslations("settings");
+
+  // Update status card (Data tab): installed vs latest on GitHub + website.
+  const updateStatus = await getUpdateStatus();
 
   // #83: opportunistic scheduled-backup trigger on admin loads (quiet
   // instances whose owners log in but get no public traffic still back up).
@@ -211,6 +215,10 @@ export default async function SettingsPage({
           ),
           data: (
             <div className="flex flex-col gap-4">
+              <UpdateStatusCard
+                initial={updateStatus}
+                checksEnabled={updateCheckEnabled}
+              />
               <MigrationWizard pageId={activePage?.id ?? 0} />
               <SubscribersCard
                 subscribers={subscribers}
