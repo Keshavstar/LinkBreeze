@@ -1204,6 +1204,18 @@ const en = {
   },
 
   update: {
+    cardTitle: "Updates",
+    cardDesc: "Check your installed version against the latest release on GitHub and the website.",
+    installed: "Installed version",
+    githubLatest: "Latest on GitHub",
+    websiteLatest: "Latest on the website",
+    onLatest: "You're on the latest version.",
+    updateAvailable: "You can update to v{version}.",
+    recheck: "Recheck",
+    lastChecked: "Last checked {time}",
+    statusUnknown: "The latest version could not be determined.",
+    checksDisabled: "Automatic update checks are currently turned off.",
+    staleSource: "Couldn't reach {source} - showing the last known value from {time}.",
     available: "LinkBreeze v{version} is available",
     running: "You're running v{version}",
     viewReleaseNotes: "View release notes",
