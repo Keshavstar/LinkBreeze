@@ -1,6 +1,6 @@
 {
-  "version": "1.4.1",
-  "releasedAt": "2026-09-23",
-  "url": "https://github.com/Manak-hash/LinkBreeze/releases/tag/v1.4.1",
-  "notes": "The admin preview pane now follows every edit in real time: one shared save flow refreshes router data and cache-busts the preview after every action, and the forms it watches (theme editor, profile identity + social links, Settings General/Integration/Appearance) autosave as you type - with their dead Save buttons removed. Image uploads gain non-destructive fit/focus/zoom positioning for avatar, banner, and background with a shared drag-to-position picker that auto-opens after upload. The preview keeps its scroll position across reloads, cleared text fields no longer revert on refresh, the social picker no longer offers the X logo twice, media URLs are scheme-allowlisted (closes the CodeQL XSS alerts), and a transitive joi prototype-pollution override clears both Dependabot alerts."
+  "version": "1.5.0",
+  "releasedAt": "2026-10-24",
+  "url": "https://github.com/OmniRise/LinkBreeze/releases/tag/v1.5.0",
+  "notes": "Custom domains for pages: bind your own domain names to pages with per-alias redirect behavior, a new Domains admin section, DNS pre-flight checks, an admin host lock, and full SEO handling (canonicals, sitemaps, 301s). Automatic scheduled backups with keep-last-N retention and one-click restore from Settings. Custom /go/ redirect slugs that survive delete-and-recreate, and optional leading-@ page slugs for the handle style people know from other tools. The auto-generated OG share card is redesigned as a Poster Hero derived from the page theme, Settings gains an update status card with a Recheck button, the language picker becomes a compact dropdown, and self-hosters get the official omnirise/linkbreeze Docker Hub image plus a one-shot update script."
 }
