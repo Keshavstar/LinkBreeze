@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-10-24
+
 ### Added
 
 - **Update status card in Settings (Data tab)** — A new card shows the installed version next to the latest release from GitHub and from the website, with a status line ("You're on the latest version." or "You can update to vX.Y.Z." with release-notes link and the pull command), a Recheck button that bypasses the 24h cache, last-checked time, and a "last known value" note when a source is unreachable. The GitHub source is a new unauthenticated latest-release check (24h-cached like the website poll); the dashboard update banner is unchanged.
