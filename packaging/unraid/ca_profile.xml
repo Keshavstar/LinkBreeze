@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<Profile>
-  <Overview>Official Unraid templates for LinkBreeze, the self-hosted Linktree alternative: one public page for all your links with a real admin dashboard, privacy-first analytics, QR codes, and themes. Maintained by OmniRise.</Overview>
-  <Support>https://discord.gg/bAJMW3bAJa</Support>
-  <HomePage>https://linkbreeze.omnirise.dev</HomePage>
+<CommunityApplications>
+  <Profile>Official Unraid templates for LinkBreeze, the self-hosted Linktree alternative: one public page for all your links with a real admin dashboard, privacy-first analytics, QR codes, and themes. Maintained by OmniRise.</Profile>
   <Icon>https://linkbreeze.omnirise.dev/icon-192.png</Icon>
-</Profile>
+  <WebPage>https://github.com/OmniRise/LinkBreeze-Unraid-Templates</WebPage>
+  <Discord>https://discord.gg/bAJMW3bAJa</Discord>
+</CommunityApplications>
