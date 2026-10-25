@@ -13,8 +13,8 @@
 [![OmniRise](https://img.shields.io/badge/omnirise-06B6D4?style=for-the-badge&logo=rocket&logoColor=white)](https://omnirise.dev)
 [![YouTube](https://img.shields.io/badge/YouTube-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=_Ipf-_1B4BY)
 
-[![CI](https://img.shields.io/github/actions/workflow/status/Manak-hash/LinkBreeze/ci.yml?style=for-the-badge&logo=githubactions&label=CI&logoColor=white)](https://github.com/Manak-hash/LinkBreeze/actions/workflows/ci.yml)
-[![Latest Release](https://img.shields.io/github/v/release/Manak-hash/LinkBreeze?style=for-the-badge&logo=github&color=blue)](https://github.com/Manak-hash/LinkBreeze/releases/latest)
+[![CI](https://img.shields.io/github/actions/workflow/status/OmniRise/LinkBreeze/ci.yml?style=for-the-badge&logo=githubactions&label=CI&logoColor=white)](https://github.com/OmniRise/LinkBreeze/actions/workflows/ci.yml)
+[![Latest Release](https://img.shields.io/github/v/release/OmniRise/LinkBreeze?style=for-the-badge&logo=github&color=blue)](https://github.com/OmniRise/LinkBreeze/releases/latest)
 [![Discord](https://img.shields.io/discord/1559020936253022209?style=for-the-badge&logo=discord&logoColor=white&label=Discord&color=5865F2)](https://discord.gg/bAJMW3bAJa)
 
 </div>
@@ -158,7 +158,7 @@ docker compose up -d
 
 Actualización: `docker compose pull && docker compose up -d` · Registros: `docker compose logs -f linkbreeze`
 
-¿Prefieres compilar desde el código fuente? `git clone https://github.com/Manak-hash/LinkBreeze.git && cd LinkBreeze && docker compose up -d --build`
+¿Prefieres compilar desde el código fuente? `git clone https://github.com/OmniRise/LinkBreeze.git && cd LinkBreeze && docker compose up -d --build`
 
 </details>
 
@@ -213,7 +213,7 @@ Actualizaciones: **Stacks** → `linkbreeze` → **Editor** → **Pull and redep
 Requiere Node.js 18 o posterior.
 
 ```bash
-git clone https://github.com/Manak-hash/LinkBreeze.git
+git clone https://github.com/OmniRise/LinkBreeze.git
 cd LinkBreeze
 npm install
 cp .env.example .env
@@ -426,7 +426,7 @@ El motor de temas es un sistema de tokens basado en propiedades CSS personalizad
 
 [Guía de contribución](CONTRIBUTING.md) · [Política de seguridad](SECURITY.md) · [Registro de cambios](CHANGELOG.md) · [Solución de problemas](TROUBLESHOOTING.md) · [Custom Domains](docs/custom-domains.md) · [Decisiones de arquitectura](docs/adr/) · [Referencia de configuración](.env.example)
 
-Fuente: [GitHub](https://github.com/Manak-hash/LinkBreeze) (canónico) · [GitLab](https://gitlab.com/omnirise00/linkbreeze) (espejo público de solo lectura, sincronizado automáticamente) · Imagen: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
+Fuente: [GitHub](https://github.com/OmniRise/LinkBreeze) (canónico) · [GitLab](https://gitlab.com/omnirise00/linkbreeze) (espejo público de solo lectura, sincronizado automáticamente) · Imagen: [`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 
 Issues y PRs son bienvenidos en cualquiera de los dos forges.
 

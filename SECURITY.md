@@ -213,5 +213,5 @@ The public link page is designed to be fully accessible — it's a simple list o
 links that works without JavaScript enabled.
 
 If you encounter an accessibility issue, please
-[open a bug report](https://github.com/Manak-hash/LinkBreeze/issues/new?template=bug_report.md)
+[open a bug report](https://github.com/OmniRise/LinkBreeze/issues/new?template=bug_report.md)
 with the **Accessibility** label.

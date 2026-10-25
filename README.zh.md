@@ -13,8 +13,8 @@
 [![OmniRise](https://img.shields.io/badge/omnirise-06B6D4?style=for-the-badge&logo=rocket&logoColor=white)](https://omnirise.dev)
 [![YouTube](https://img.shields.io/badge/YouTube-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=_Ipf-_1B4BY)
 
-[![CI](https://img.shields.io/github/actions/workflow/status/Manak-hash/LinkBreeze/ci.yml?style=for-the-badge&logo=githubactions&label=CI&logoColor=white)](https://github.com/Manak-hash/LinkBreeze/actions/workflows/ci.yml)
-[![Latest Release](https://img.shields.io/github/v/release/Manak-hash/LinkBreeze?style=for-the-badge&logo=github&color=blue)](https://github.com/Manak-hash/LinkBreeze/releases/latest)
+[![CI](https://img.shields.io/github/actions/workflow/status/OmniRise/LinkBreeze/ci.yml?style=for-the-badge&logo=githubactions&label=CI&logoColor=white)](https://github.com/OmniRise/LinkBreeze/actions/workflows/ci.yml)
+[![Latest Release](https://img.shields.io/github/v/release/OmniRise/LinkBreeze?style=for-the-badge&logo=github&color=blue)](https://github.com/OmniRise/LinkBreeze/releases/latest)
 [![Discord](https://img.shields.io/discord/1559020936253022209?style=for-the-badge&logo=discord&logoColor=white&label=Discord&color=5865F2)](https://discord.gg/bAJMW3bAJa)
 
 </div>
@@ -158,7 +158,7 @@ docker compose up -d
 
 升级：`docker compose pull && docker compose up -d` · 日志：`docker compose logs -f linkbreeze`
 
-想从源码构建？`git clone https://github.com/Manak-hash/LinkBreeze.git && cd LinkBreeze && docker compose up -d --build`
+想从源码构建？`git clone https://github.com/OmniRise/LinkBreeze.git && cd LinkBreeze && docker compose up -d --build`
 
 </details>
 
@@ -213,7 +213,7 @@ podman run -d --name linkbreeze --restart unless-stopped -p 3000:3000 -v linkbre
 需要 Node.js 18+。
 
 ```bash
-git clone https://github.com/Manak-hash/LinkBreeze.git
+git clone https://github.com/OmniRise/LinkBreeze.git
 cd LinkBreeze
 npm install
 cp .env.example .env
@@ -426,7 +426,7 @@ cloudflared tunnel --url http://localhost:3000
 
 [贡献指南](CONTRIBUTING.md) · [安全策略](SECURITY.md) · [更新日志](CHANGELOG.md) · [故障排查](TROUBLESHOOTING.md) · [Custom Domains](docs/custom-domains.md) · [架构决策](docs/adr/) · [配置参考](.env.example)
 
-源码：[GitHub](https://github.com/Manak-hash/LinkBreeze)（权威源） · [GitLab](https://gitlab.com/omnirise00/linkbreeze)（公开拉取镜像，自动同步） · 镜像：[`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
+源码：[GitHub](https://github.com/OmniRise/LinkBreeze)（权威源） · [GitLab](https://gitlab.com/omnirise00/linkbreeze)（公开拉取镜像，自动同步） · 镜像：[`docker.io/omnirise/linkbreeze`](https://hub.docker.com/r/omnirise/linkbreeze)
 
 欢迎在任一平台提交 Issue 和 PR。
 

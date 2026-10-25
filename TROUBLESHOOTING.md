@@ -1,7 +1,7 @@
 # Troubleshooting
 
 Common issues and how to fix them. If your problem isn't listed here,
-[open an issue](https://github.com/Manak-hash/LinkBreeze/issues).
+[open an issue](https://github.com/OmniRise/LinkBreeze/issues).
 
 ---
 

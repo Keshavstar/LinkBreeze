@@ -5,7 +5,7 @@ Thanks for your interest in contributing! This guide covers everything you need.
 ## 🚀 Quick Start (Development)
 
 ```bash
-git clone https://github.com/Manak-hash/LinkBreeze.git
+git clone https://github.com/OmniRise/LinkBreeze.git
 cd LinkBreeze
 npm install
 cp .env.example .env
@@ -64,7 +64,7 @@ panel's theme customizer. There is no JSON file system — themes are live confi
 5. **Export the theme** — use the theme export button on the Theme page
    (`/theme` → Export), or use the backup export feature (`/settings` → Export)
    and extract the theme object
-6. **Open a [Theme Submission issue](https://github.com/Manak-hash/LinkBreeze/issues/new?template=theme_submission.md)** with the values and screenshot
+6. **Open a [Theme Submission issue](https://github.com/OmniRise/LinkBreeze/issues/new?template=theme_submission.md)** with the values and screenshot
 
 ### Theme Properties
 
@@ -104,9 +104,30 @@ Themes use a CSS custom property (`--lb-*`) token system. The full property set:
 | `noise` | string | `true`, `false` |
 | `mode` | string | `light`, `dark` |
 
+## 📦 Packaging and Deploy Integrations
+
+The official distribution of LinkBreeze is the published Docker image plus a
+compose file.
+
+**Maintained by the project:**
+
+- Docker, Docker Compose, and the install script (documented in the README)
+- CasaOS App Store listing: sources in `packaging/casaos/`
+- Runtipi app store: sources in `packaging/runtipi/`
+- Unraid Community Applications: sources in `packaging/unraid/`
+
+**Welcome as community PRs (reviewed, not maintained by us):**
+
+- Hosting-provider one-click deploy buttons
+- Additional platform catalogs: TrueNAS, Umbrel, Synology, and similar
+
+Community packaging PRs must pull the official published image (no source
+builds), mount the data volume for `/app/data`, and stay limited to
+documentation or packaging metadata changes.
+
 ## 🐛 Reporting Bugs
 
-Use the [Bug Report template](https://github.com/Manak-hash/LinkBreeze/issues/new?template=bug_report.md). Include:
+Use the [Bug Report template](https://github.com/OmniRise/LinkBreeze/issues/new?template=bug_report.md). Include:
 - LinkBreeze version
 - Deployment method (Docker, manual, Vercel)
 - Steps to reproduce
@@ -115,7 +136,7 @@ Use the [Bug Report template](https://github.com/Manak-hash/LinkBreeze/issues/ne
 
 ## 💡 Requesting Features
 
-Use the [Feature Request template](https://github.com/Manak-hash/LinkBreeze/issues/new?template=feature_request.md).
+Use the [Feature Request template](https://github.com/OmniRise/LinkBreeze/issues/new?template=feature_request.md).
 
 ## 📏 Coding Standards
 
@@ -134,5 +155,5 @@ to enable future multi-tenant support without rewriting the app.
 
 ## ❓ Questions?
 
-Open an [issue](https://github.com/Manak-hash/LinkBreeze/issues) with the
+Open an [issue](https://github.com/OmniRise/LinkBreeze/issues) with the
 `question` label.

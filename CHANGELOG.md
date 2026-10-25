@@ -28,6 +28,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Catalog packaging for CasaOS, Runtipi, and Unraid (`packaging/`)** — LinkBreeze now ships first-party app-store packaging as canonical sources under `packaging/`: a CasaOS App Store app definition (`packaging/casaos/`, pinned image, icon, screenshot, en_US metadata), a Runtipi v4 app-store repository (`packaging/runtipi/`, to be published as `OmniRise/LinkBreeze-Runtipi-Store`), and an Unraid Community Applications template repository (`packaging/unraid/`, dockerMan-format XML plus repository profile and MIT license, to be published as `OmniRise/LinkBreeze-Unraid-Templates`). All three pull the official `docker.io/omnirise/linkbreeze` image with a pinned semver tag, mount the data volume, and need no environment configuration (the setup wizard handles first run). The packaging policy is documented in CONTRIBUTING.md: these three catalogs are maintained by the project; other platforms and hosting-provider deploy buttons stay community-PR territory. Per-release maintenance is one step: bump the pinned version in the three manifests during the release fold.
+
+### Changed
+
+- **Dependency updates** — Overrides bumped for `fast-uri` ^3.1.7→^3.1.9 and a new `body-parser` ^2.4.0 override, resolving Dependabot alerts #66–70 (both packages are transitive through the shadcn CLI's express/MCP SDK chain, dev-tooling only). `node-forge` (#58) stays unchanged: no patched release exists, and `passkit-generator` uses it only for pass signing, never verification.
+
+- **Canonical repo URLs point at OmniRise/LinkBreeze** — All living documentation (README ×7, CONTRIBUTING, SECURITY, TROUBLESHOOTING) now references `github.com/OmniRise/LinkBreeze` instead of the pre-transfer `Manak-hash/LinkBreeze` URLs. The old links redirect, so nothing was broken; this makes the canonical location explicit and consistent with the Docker Hub namespace, the website, and the app-store listings.
+
 ## [1.5.0] - 2026-10-24
 
 ### Added
