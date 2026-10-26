@@ -245,7 +245,7 @@ export function MigrationWizard({ pageId }: MigrationWizardProps) {
                       onChange={() => toggleLink(i, true)}
                       className="size-4 accent-primary"
                     />
-                    {link.platform ? getPlatformLabel(link.platform) : "Social"}
+                    {link.platform ? getPlatformLabel(link.platform) : t("socialFallback")}
                   </label>
                 ))}
               </div>
@@ -259,7 +259,7 @@ export function MigrationWizard({ pageId }: MigrationWizardProps) {
                 <>
                   <Loader2 className="mr-2 size-4 animate-spin" />{t("importing")}</>
               ) : (
-                `Import ${totalSelected} ${totalSelected === 1 ? "item" : "items"}`
+                t("importItemCount", { count: totalSelected })
               )}
             </Button>
           </div>

@@ -4,7 +4,7 @@
 
 ---
 
-[English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · **Deutsch** · [中文](README.zh.md) · [العربية](README.ar.md) · [Português (Brasil)](README.pt-BR.md)
+[English](README.md) · [العربية](README.ar.md) · [中文](README.zh.md) · [Français](README.fr.md) · **Deutsch** · [Italiano](README.it.md) · [日本語](README.ja.md) · [Português (Brasil)](README.pt-BR.md) · [Русский](README.ru.md) · [Español](README.es.md) · [Türkçe](README.tr.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Docker](https://img.shields.io/badge/omnirise%2Flinkbreeze-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/omnirise/linkbreeze)
@@ -53,7 +53,7 @@
     <td valign="top">🎯 <strong>QR-Codes</strong><br/>Automatisch generiert, eigene Farben, Avatar oder Favicon in der Mitte, SVG/PNG bis 1024 px</td>
   </tr>
   <tr>
-    <td width="50%" valign="top">🌐 <strong>Eigene Domains</strong><br/>Verlinke eigene Domains auf Seiten — Besucher landen auf jane.com, ohne /slug</td>
+    <td width="50%" valign="top">🌐 <strong>Eigene Domains</strong><br/>Verlinke eigene Domains auf Seiten - Besucher landen auf jane.com, ohne /slug</td>
     <td valign="top">⏰ <strong>Geplante Backups</strong><br/>Interne tägliche/wöchentliche/monatliche Backups mit Ein-Klick-Wiederherstellung, ohne Cron</td>
   </tr>
 </table>
@@ -399,9 +399,9 @@ Laufzeiteinstellungen (Seiten-Slug, Titel, SEO, Theme) werden über das Admin-Da
 
 ## 🌐 Eigene Domains
 
-Leite eigene Domains auf Seiten weiter — eine Instanz, viele Identitäten. Besucher landen auf `https://jane.com/` und sehen Janes Seite direkt, mit automatischen Canonical-Weiterleitungen, SEO-tauglichen Sitemaps und strikter Admin-Host-Sperre. Bindungen werden beim ersten echten Besuch aktiv (selbstverifizierendes DNS), und der Seiten-Scope legt fest, ob eine Domain die Seite IST (exklusiv) oder ein Hub für alle Slugs.
+Leite eigene Domains auf Seiten weiter - eine Instanz, viele Identitäten. Besucher landen auf `https://jane.com/` und sehen Janes Seite direkt, mit automatischen Canonical-Weiterleitungen, SEO-tauglichen Sitemaps und strikter Admin-Host-Sperre. Bindungen werden beim ersten echten Besuch aktiv (selbstverifizierendes DNS), und der Seiten-Scope legt fest, ob eine Domain die Seite IST (exklusiv) oder ein Hub für alle Slugs.
 
-Komplette Einrichtung — DNS, Wildcard-TLS und Copy-Paste-Reverse-Proxy-Konfigurationen für Caddy, nginx und Traefik — in **[docs/custom-domains.md](docs/custom-domains.md)**.
+Komplette Einrichtung - DNS, Wildcard-TLS und Copy-Paste-Reverse-Proxy-Konfigurationen für Caddy, nginx und Traefik - in **[docs/custom-domains.md](docs/custom-domains.md)**.
 
 ## 🎨 Theme-System
 

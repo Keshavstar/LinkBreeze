@@ -164,3 +164,95 @@ test.describe("admin UI locale (pt-BR)", () => {
   });
 });
 
+test.describe("admin UI locale (it)", () => {
+  test("login screen renders in Italian when lb_locale=it", async ({ page }) => {
+    await page.context().addCookies([
+      {
+        name: "lb_locale",
+        value: "it",
+        url: BASE,
+      },
+    ]);
+
+    await page.goto("/login");
+
+    await expect(page.locator('[lang="it"]').first()).toBeVisible();
+
+    // translated labels (keys from src/locales/it.ts)
+    await expect(
+      page.getByRole("button", { name: "Accedi" }),
+    ).toBeVisible();
+    await expect(page.getByText("Nome utente")).toBeVisible();
+    await expect(page.getByText("Password")).toBeVisible();
+  });
+});
+
+test.describe("admin UI locale (ru)", () => {
+  test("login screen renders in Russian when lb_locale=ru", async ({ page }) => {
+    await page.context().addCookies([
+      {
+        name: "lb_locale",
+        value: "ru",
+        url: BASE,
+      },
+    ]);
+
+    await page.goto("/login");
+
+    await expect(page.locator('[lang="ru"]').first()).toBeVisible();
+
+    // translated labels (keys from src/locales/ru.ts)
+    await expect(
+      page.getByRole("button", { name: "Войти" }),
+    ).toBeVisible();
+    await expect(page.getByText("Имя пользователя")).toBeVisible();
+    await expect(page.getByText("Пароль")).toBeVisible();
+  });
+});
+
+test.describe("admin UI locale (tr)", () => {
+  test("login screen renders in Turkish when lb_locale=tr", async ({ page }) => {
+    await page.context().addCookies([
+      {
+        name: "lb_locale",
+        value: "tr",
+        url: BASE,
+      },
+    ]);
+
+    await page.goto("/login");
+
+    await expect(page.locator('[lang="tr"]').first()).toBeVisible();
+
+    // translated labels (keys from src/locales/tr.ts)
+    await expect(
+      page.getByRole("button", { name: "Giriş yap" }),
+    ).toBeVisible();
+    await expect(page.getByText("Kullanıcı adı")).toBeVisible();
+    await expect(page.getByText("Şifre")).toBeVisible();
+  });
+});
+
+test.describe("admin UI locale (ja)", () => {
+  test("login screen renders in Japanese when lb_locale=ja", async ({ page }) => {
+    await page.context().addCookies([
+      {
+        name: "lb_locale",
+        value: "ja",
+        url: BASE,
+      },
+    ]);
+
+    await page.goto("/login");
+
+    await expect(page.locator('[lang="ja"]').first()).toBeVisible();
+
+    // translated labels (keys from src/locales/ja.ts)
+    await expect(
+      page.getByRole("button", { name: "サインイン" }),
+    ).toBeVisible();
+    await expect(page.getByText("ユーザー名")).toBeVisible();
+    await expect(page.getByText("パスワード")).toBeVisible();
+  });
+});
+

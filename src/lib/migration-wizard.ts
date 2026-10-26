@@ -228,13 +228,119 @@ function extractLinksFromNextData(
       extractLinksFromNextData(item, found);
     }
   } else {
-    // It's an object — recurse into values.
-    for (const value of Object.values(data)) {
+    // It's an object — recurse into values, but never into subtrees that
+    // hold config/feature-flags/telemetry rather than the user's links.
+    // Linktree's __NEXT_DATA__ embeds a statsig feature-flag blob
+    // (props.pageProps.statsigInitValues.dynamicConfigs.thanksco_manual_sponsorships)
+    // whose .data[] are Linktree's OWN global affiliate promo links — an
+    // identical 26-item array on every profile. Without this skip the walker
+    // swallows that spam before ever reaching the real user links.
+    for (const [key, value] of Object.entries(data)) {
+      if (NEXT_DATA_SKIP_KEYS.has(key)) continue;
       extractLinksFromNextData(value, found);
     }
   }
 
   return found;
+}
+
+/**
+ * Config/feature-flag/telemetry subtrees that are never a user's links.
+ * Descending into these yields fake `{url,title}` arrays (ad sponsorships,
+ * blog teasers, ad config) that drown out the real content.
+ */
+const NEXT_DATA_SKIP_KEYS = new Set([
+  "statsigInitValues", // Linktree feature flags + global affiliate sponsorships
+  "googleAdConfig", // Linktree ad config
+  "latestBlogPosts", // Linktree's own blog teasers
+  "blogBatchIndex",
+]);
+
+/**
+ * Authoritative link containers for Linktree-style Next.js apps: the user's
+ * real links and socials live at these known paths. When present we trust
+ * them INSTEAD of the noisy generic recursive walk, which would otherwise
+ * also pick up the statsig affiliate blob (and, on mega-accounts that render
+ * client-side, return nothing but that blob).
+ *
+ * Reads both the top-level and `account.*` mirrors (they duplicate each other;
+ * dedup by URL) so we don't depend on which one a given Linktree build fills.
+ */
+const NEXT_DATA_LINK_PATHS: string[][] = [
+  ["props", "pageProps", "links"],
+  ["props", "pageProps", "socialLinks"],
+  ["props", "pageProps", "account", "links"],
+  ["props", "pageProps", "account", "socialLinks"],
+];
+
+/** Read a nested path out of a parsed __NEXT_DATA__ object. */
+function getAtPath(data: unknown, path: string[]): unknown {
+  let cur: unknown = data;
+  for (const seg of path) {
+    if (!cur || typeof cur !== "object") return undefined;
+    cur = (cur as Record<string, unknown>)[seg];
+  }
+  return cur;
+}
+
+/**
+ * Map a raw link-like object (Linktree shape) to an ImportedLink, applying the
+ * same scheme allowlist + platform detection the generic walker uses.
+ */
+function toImportedLink(item: unknown): ImportedLink | null {
+  if (!item || typeof item !== "object") return null;
+  const obj = item as Record<string, unknown>;
+  const url = String(obj.url || obj.link || "");
+  const title = String(obj.title || obj.name || "");
+  if (!url || !title) return null;
+  if (!isAllowedLinkUrl("url", url)) return null;
+  const description = obj.description ? String(obj.description) : undefined;
+  const imageUrl = obj.thumbnail || obj.image || obj.imageUrl
+    ? String(obj.thumbnail || obj.image || obj.imageUrl)
+    : undefined;
+  const platform = detectPlatform(url);
+  return {
+    title,
+    url,
+    description,
+    imageUrl,
+    type: "url",
+    isSocial: !!platform,
+    platform: platform ?? undefined,
+    selected: true,
+  };
+}
+
+/**
+ * Extract from the authoritative Linktree containers only. Returns null when
+ * none of the known paths exist as arrays (i.e. this isn't a Linktree-style
+ * app) so the caller falls back to the generic walker for other platforms.
+ * Returns an array (possibly empty) when the containers exist but hold no
+ * SSR links — a mega-account that renders client-side — so the caller knows
+ * to rely on the DOM fallback instead of resurrecting the affiliate blob.
+ */
+function extractAuthoritativeLinks(
+  data: unknown,
+): ImportedLink[] | null {
+  let sawContainer = false;
+  const out: ImportedLink[] = [];
+  const seen = new Set<string>();
+
+  for (const path of NEXT_DATA_LINK_PATHS) {
+    const arr = getAtPath(data, path);
+    if (!Array.isArray(arr)) continue;
+    sawContainer = true;
+    for (const item of arr) {
+      const link = toImportedLink(item);
+      if (!link) continue;
+      const key = link.url.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push(link);
+    }
+  }
+
+  return sawContainer ? out : null;
 }
 
 // ─── Inline script JSON extraction (Wix/Hopp, etc.) ────────────────────
@@ -269,6 +375,11 @@ function extractFromInlineScripts(
   $("script").each((_, el) => {
     // Skip external scripts (with src attribute).
     if ($(el).attr("src")) return;
+    // Skip __NEXT_DATA__ — that script is Tier 1's job (extractFromHtml parses
+    // it via tryNextData/extractAuthoritativeLinks). Re-parsing it here would
+    // re-walk the WHOLE tree and resurrect Linktree's statsig affiliate blob
+    // (thanksco_manual_sponsorships) that Tier 1 deliberately skipped.
+    if ($(el).attr("id") === "__NEXT_DATA__") return;
     const content = $(el).html();
     if (!content || content.length < 50) return;
 
@@ -600,7 +711,17 @@ export function extractFromHtml(
   let links: ImportedLink[] = [];
 
   if (nextData) {
-    links = extractLinksFromNextData(nextData);
+    // Prefer Linktree's authoritative link containers when this looks like a
+    // Linktree-style app (they expose props.pageProps.links / socialLinks).
+    // This keeps the generic walk — and its appetite for the statsig affiliate
+    // blob — away from Linktree entirely. Non-Linktree Next.js apps return
+    // null here and fall through to the generic walker below.
+    const authoritative = extractAuthoritativeLinks(nextData);
+    if (authoritative !== null) {
+      links = authoritative;
+    } else {
+      links = extractLinksFromNextData(nextData);
+    }
   }
 
   // Tier 2: Inline script extraction (Hopp/Wix, Beacons, etc.).
@@ -612,7 +733,10 @@ export function extractFromHtml(
     }
   }
 
-  // Tier 3: DOM scraping fallback (LittleLink, static HTML, etc.).
+  // Tier 3: DOM scraping fallback (LittleLink, static HTML, Linktree mega-
+  // accounts that render links client-side). Runs whenever structured tiers
+  // came back thin/empty — after the authoritative path, an empty result means
+  // "no SSR links", not "grab the affiliate blob".
   if (links.length === 0) {
     links = extractFromDom($, baseUrl);
   }

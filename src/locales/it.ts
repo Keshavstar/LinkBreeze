@@ -1,0 +1,1223 @@
+/**
+ * Italiano — locale admin UI.
+ *
+ * lastSyncedHash: 7f3b24d510f3 ← rigenerato da `npm run i18n:check -- --update`
+ * (mismatch = source inglese modificato, risincronizzare questo file)
+ */
+import type { Messages } from "./en";
+
+const it: Messages = {
+  meta: {
+    adminTitle: "LinkBreeze — Admin",
+    // `machine` finché un revisore madrelingua non approva; il selettore mostra un marker beta.
+    status: "reviewed" as const,
+  },
+
+  localePicker: {
+    label: "Lingua",
+  },
+
+  common: {
+    save: "Salva",
+    saving: "Salvataggio…",
+    cancel: "Annulla",
+    delete: "Elimina",
+    close: "Chiudi",
+    retry: "Riprova",
+    back: "Indietro",
+    next: "Avanti",
+    viewPage: "Vedi pagina pubblica",
+    saved: "Salvato!",
+  },
+
+  nav: {
+    dashboard: "Dashboard",
+    links: "Link",
+    theme: "Tema",
+    settings: "Impostazioni",
+    profile: "Profilo",
+    domains: "Domini",
+    primary: "Primario",
+  },
+
+  shell: {
+    signedInAs: "Accesso effettuato come <b>{name}</b>",
+    signOut: "Esci",
+    pagesSection: "Pagine",
+    visitSite: "Visita linkbreeze.omnirise.dev",
+    demoBannerLead: "Demo live.",
+    demoBannerVisit: "Visita LinkBreeze",
+    demoBannerDeploy: "Distribuisci la tua istanza",
+    livePreview: "Anteprima live",
+  },
+
+  login: {
+    title: "Accedi",
+    subtitle: "Accedi per gestire la tua pagina LinkBreeze",
+    username: "Nome utente",
+    password: "Password",
+    submit: "Accedi",
+    submitPending: "Accesso in corso…",
+    invalidCredentials: "Nome utente o password non validi.",
+    backToPage: "Torna alla pagina",
+    welcomeBack: "Bentornato",
+    totpPrompt: "Autenticazione a due fattori",
+    totpDesc: "Inserisci il codice a 6 cifre dalla tua app di autenticazione, oppure un codice di recupero.",
+    totpCode: "Codice di autenticazione",
+    totpSubmit: "Verifica",
+    totpVerifying: "Verifica in corso…",
+    totpTrust: "Considera affidabile questo dispositivo per 30 giorni",
+    totpInvalid: "Codice di autenticazione non valido.",
+    totpExpired: "Questo tentativo di accesso è scaduto. Effettua di nuovo l'accesso.",
+  },
+
+  setup: {
+
+    saving: "Salvataggio…",
+
+    thisIsTheOnlyAccount: "Questo è l'unico account. Lo userai per gestire tutto.",
+
+    chooseStartingPoint: "Scegli un punto di partenza. Potrai personalizzare tutto in seguito.",
+
+    importYourExistingPage: "Importa la tua pagina esistente",
+    welcomeTitle: "Benvenuto in LinkBreeze",
+    createAdminTitle: "Crea il tuo account admin",
+    createAccount: "Crea account",
+    creatingAccount: "Creazione dell'account…",
+    noEmailNote: "Richiede 30 secondi. Nessuna email necessaria.",
+    networkError: "Errore di rete. Riprova.",
+    setUpPage: "Configura la tua pagina",
+    profileStepNote: "Questo è ciò che vedono i visitatori. Potrai cambiare tutto in seguito.",
+    pickTheme: "Scegli un tema",
+    username: "Nome utente",
+    password: "Password",
+    passwordHint: "Almeno 8 caratteri con una maiuscola e un numero.",
+    displayName: "Nome visualizzato",
+    displayNamePlaceholder: "Jane Doe",
+    bio: "Bio",
+    bioHint: "Una riga su di te (opzionale)",
+    bioPlaceholder: "Designer, sviluppatore, creatore",
+    pageUrl: "URL della pagina",
+    pageUrlHint: "La tua pagina sarà disponibile su /your-slug",
+    finishSetup: "Completa la configurazione",
+    allSet: "Tutto pronto!",
+    pageLiveDesc: "La tua pagina è online. Aggiungi il tuo primo link per iniziare.",
+    goToDashboard: "Vai alla dashboard",
+  },
+
+  dashboard: {
+
+    backupNotice: {
+      title: "I backup automatici stanno fallendo",
+      body: "L'ultimo backup pianificato non è stato completato. Controlla in Impostazioni, poi Dati, per dettagli e backup archiviati.",
+      dismiss: "Ignora",
+    },
+
+    new: "Nuovo",
+
+    topLinks: "Link principali",
+
+    referrers: "Referrer",
+
+    devices: "Dispositivi",
+
+    countries: "Paesi",
+    title: "Dashboard",
+    subtitle: "Analitiche degli ultimi {range} giorni",
+    subtitleRetention: "Analitiche degli ultimi {range} giorni (dati conservati {retention} giorni)",
+    welcomeTitle: "Benvenuto nella tua dashboard",
+    welcomeBody: "La tua pagina è online su /{slug}. Aggiungi il tuo primo link per iniziare a raccogliere analitiche.",
+    addFirstLink: "Aggiungi il tuo primo link",
+    importExisting: "Importa la tua pagina esistente",
+    subscribersLink: "{count, plural, one {# iscritto} other {# iscritti}}",
+    subscribersTitle: "Iscritti email — apre Impostazioni → Dati",
+    exportCsv: "Esporta CSV",
+    viewsLabel: "Visualizzazioni",
+    clicksLabel: "Clic",
+    uniqueVisitors: "{count} visitatori unici",
+    linkClicksInRange: "Clic sui link nell'intervallo",
+    ctrLabel: "Tasso di clic",
+    ctrHint: "Clic / visualizzazioni",
+    activeLinks: "Link attivi",
+    totalLinks: "{count} in totale",
+    viewsOverTime: "Visualizzazioni nel tempo",
+    topReferrers: "Referrer principali",
+    referrersDesc: "Provenienza delle visualizzazioni",
+    devicesTitle: "Dispositivi",
+    devicesDesc: "Tipi di browser",
+    countriesTitle: "Paesi",
+    countriesDesc: "Località dei visitatori",
+    noDataYet: "Ancora nessun dato.",
+    noClicksYet: "Ancora nessun clic.",
+    dailyViewsClicks: "Visualizzazioni e clic giornalieri",
+    topLinksDesc: "{count, plural, one {# link con clic} other {# link con clic}}",
+  },
+
+  linksPage: {
+    deleting: "Eliminazione…",
+    delete: "Elimina",
+
+    showMore: "Mostra altri ({count} rimanenti)",
+
+    noIconsMatch: "Nessuna icona corrisponde a \\\"{query}\\\".",
+
+    chooseIcon: "Scegli un'icona…",
+
+    clicksCount: "{count} clic",
+
+    deleteSection: "Elimina sezione",
+
+    willBeRemoved: "Rimozione definitiva di “{title}”. Questa azione non può essere annullata.",
+
+    cancel: "Annulla",
+
+    compact: "Compatto",
+
+
+    richPreview: "Anteprima avanzata",
+
+
+    featured: "In evidenza",
+
+    active: "Attivo",
+
+    iconSection: "Icona",
+    iconAutoHint: "Recupera automaticamente il favicon del sito.",
+    iconModeAuto: "Automatico",
+    iconModeLucide: "Scegli",
+    iconModeCustom: "Carica",
+    iconUploadSelected: "Selezionato: {name}",
+
+    utmParameters: "Parametri UTM",
+
+    schedule: "Pianificazione",
+
+    showFrom: "Mostra da",
+
+    hideAfter: "Nascondi dopo",
+
+    star: "Preferito",
+
+    hidden: "Nascosto",
+
+    scheduled: "Pianificato",
+
+    dropLinksHere: "Trascina i link qui",
+
+    links: "Link",
+
+    addEditAndReorder: "Aggiungi, modifica e riordina i link della tua pagina. Raggruppali sotto intestazioni di sezione.",
+
+    addSection: "Aggiungi sezione",
+
+    addLink: "Aggiungi link",
+
+    noLinksYet: "Ancora nessun link",
+
+    addALinkOrImport: "Aggiungi un link o importalo da una pagina esistente.",
+
+    addYourFirstLink: "Aggiungi il tuo primo link",
+
+    importYourExistingPage: "Importa la tua pagina esistente",
+    ltUrl: "URL",
+    ltEmail: "Email",
+    ltPhone: "Telefono",
+    ltWhatsapp: "WhatsApp",
+    ltSms: "SMS",
+    ltVcard: "vCard (scheda contatto)",
+    ltFile: "Download di file",
+    ltEmbed: "Embed (YouTube, Spotify, ecc.)",
+    ltText: "Popup di testo",
+    ltLocation: "Posizione",
+    addDivider: "Aggiungi separatore",
+    dividerRow: "Separatore",
+    dividerHint: "Un'interruzione tematica tra i link. Il suo stile (linea, colore, spessore, larghezza) si imposta per tema in Tema → Link.",
+    slugLabel: "Slug di reindirizzamento personalizzato",
+    slugHint: "Opzionale. Rende il link condivisibile anche su /go/your-name, oltre all'ID numerico.",
+    slugChecking: "Verifica della disponibilità...",
+    slugAvailable: "Disponibile",
+    slugTaken: "Questo slug è già usato da un altro link",
+    slugErrInvalid: "Uno slug può contenere solo lettere minuscole, numeri e trattini",
+    slugErrReserved: "Questo slug è riservato dall'app",
+    slugErrNumeric: "Gli slug numerici sono riservati agli ID dei link",
+    slugErrLength: "Gli slug possono essere al massimo 64 caratteri",
+    ltDivider: "Separatore",
+    ltLocationLabel: "Indirizzo, luogo o link di Google Maps",
+    phLocation: "Moschea della Koutoubia, Marrakech",
+    phPopupText: "Testo più lungo mostrato nel popup quando si tocca la card.\\nSupporta **grassetto**, *corsivo*, `codice`, elenchi e titoli.",
+    phCtaUrl: "https://example.com/cta (vuoto = nessun pulsante)",
+    popupTextLabel: "Testo del popup",
+    ctaLabel: "Etichetta del pulsante CTA (opzionale)",
+    ctaUrlLabel: "URL CTA",
+    phCtaLabel: "Prenota ora (vuoto = nessun pulsante)",
+    phCtaLabelLocation: "Apri in Google Maps",
+    ltEmailLabel: "Indirizzo email",
+    ltPhoneLabel: "Numero di telefono",
+    ltWhatsappLabel: "Numero WhatsApp",
+    phEmail: "you@example.com",
+    phPhone: "+1 (555) 000-0000",
+    phUrl: "https://example.com",
+    title: "Link",
+    subtitle: "Aggiungi, riordina e organizza i link della tua pagina",
+    editLink: "Modifica link",
+    createDescription: "Crea un nuovo link per la tua pagina.",
+    updateDescription: "Aggiorna i dettagli di questo link.",
+    typeLabel: "Tipo",
+    cardStyle: "Stile card",
+    richHint: "Miniatura + anteprima automatica dai dati Open Graph del link. Se non trova immagini, ripiega sullo stile compatto.",
+    sectionPlaceholder: "I miei progetti",
+    iconLabel: "Icona (opzionale)",
+    iconShownHint: "Mostrata prima del titolo della sezione sulla tua pagina pubblica.",
+    editSection: "Modifica sezione",
+    createSectionDesc: "Raggruppa i link sotto un'intestazione con titolo sulla tua pagina pubblica.",
+    updateSectionDesc: "Aggiorna l'intestazione di questa sezione.",
+    dragReorder: "Trascina per riordinare",
+    dragReorderSection: "Trascina per riordinare la sezione",
+    editSectionAria: "Modifica sezione",
+    deleteSectionAria: "Elimina sezione",
+    openLinkAria: "Apri link",
+    linkAnalyticsAria: "Analitiche del link",
+    toggleVisibilityAria: "Attiva/disattiva la visibilità del link",
+    editLinkAria: "Modifica link",
+    deleteLinkAria: "Elimina link",
+    noSection: "Nessuna sezione",
+    removeIcon: "Rimuovi icona",
+    searchIcons: "Cerca icone…",
+    deleteLinkTitle: "Eliminare il link?",
+    deleteSectionTitle: "Eliminare la sezione?",
+    utmSource: "Sorgente",
+    utmMedium: "Mezzo",
+    utmCampaign: "Campagna",
+    utmTerm: "Termine (opzionale)",
+    utmContent: "Contenuto (opzionale)",
+    url: "URL",
+    title_field: "Titolo",
+    titlePlaceholder: "Il mio sito web",
+    description: "Descrizione (opzionale)",
+    descriptionPlaceholder: "Tutti i miei link in un unico posto",
+    animatedGif: "URL della GIF animata",
+    thumbnail: "URL miniatura (opzionale)",
+    icon: "Icona + titolo",
+    iconHint: "Icona + titolo. Pulito e semplice.",
+    customUrl: "URL personalizzato",
+    imageUrl: "URL immagine",
+    section: "Sezione",
+    duplicate: "Duplica",
+  },
+
+  profile: {
+
+    uploadImage: "Carica immagine",
+
+    thisInformationAppearsOnYourPublicPage: "Queste informazioni compaiono sulla tua pagina pubblica.",
+
+    addAPlatform: "Aggiungi una piattaforma",
+
+    uploading: "Caricamento…",
+
+    uploadBanner: "Carica banner",
+
+    uploadedCheck: "Caricato ✓",
+
+    customUrl: "URL personalizzato",
+    availableForWork: "✨ Disponibile per lavoro",
+    title: "Profilo",
+    details: "Dettagli",
+    identityDesc: "La tua identità pubblica",
+    subtitle: "La tua identità pubblica — nome, bio, avatar e link social",
+    displayName: "Nome visualizzato",
+    displayNamePlaceholder: "Jane Doe",
+    bio: "Bio",
+    bioPlaceholder: "Una breve descrizione",
+    avatar: "URL avatar",
+    avatarHint: "Max 2 MB. JPG, PNG, WebP.",
+    banner: "Immagine banner (opzionale)",
+    badge: "Testo del badge (opzionale)",
+    socialLinks: "Link social",
+    socialLinksHint:
+      "Le icone compaiono sopra le tue card dei link. Tocca una piattaforma per aggiungerla.",
+    removeSocial: "Rimuovi link social",
+    saveProfile: "Salva profilo",
+    savedToast: "Salvato!",
+  },
+
+  pages: {
+
+    thePageRsquoSLinksAreDeletedWithItInclud: "I link della pagina vengono eliminati con essa, compresa la loro cronologia dei clic.",
+
+    linksMoveToYourDefaultPageUncategorizedN: "I link vengono spostati sulla tua pagina predefinita, senza categoria. Nulla va perso.",
+
+    backToLinks: "Torna ai link",
+
+    newPage: "Nuova pagina",
+
+    slugHint: "Lo slug è il percorso URL. Puoi cambiarlo in seguito.",
+
+    slugCharsHint: "Lettere, numeri e trattini. Diventerà il tuo URL: /music",
+
+    keepTheLinks: "Mantieni i link",
+
+
+    deleteEverything: "Elimina tutto",
+
+
+    cancel: "Annulla",
+    title: "Pagine",
+    newPageDesc: "Crea una nuova pagina con i suoi link, il suo profilo e il suo tema.",
+    detailsTitle: "Dettagli pagina",
+    titleOptional: "Titolo (opzionale)",
+    titlePagePlaceholder: "La mia pagina musicale",
+    bioOptional: "Bio (opzionale)",
+    bioPlaceholder: "Una breve descrizione",
+    creating: "Creazione…",
+    createDescription: "Ogni pagina è un mini-profilo completo con i suoi link.",
+    slug: "Slug della pagina",
+    deletePageTitle: "Eliminare la pagina?",
+    create: "Crea pagina",
+  },
+
+  theme: {
+    customiseTitle: "Personalizza {name}",
+    editingCustom: "Modifica di un tema personalizzato",
+    presetCopyNote: "Preset — al salvataggio viene creata la tua copia",
+    saving: "Salvataggio…",
+    saveChanges: "Salva modifiche",
+    saved: "Salvato",
+    sharedPresetWarning: "{name} è un preset condiviso — modificarlo cambierebbe lo stile di ogni pagina che lo utilizza. Salva invece le tue personalizzazioni come nuovo tema.",
+    creating: "Creazione…",
+    createSave: "Crea e salva",
+    delete: "Elimina",
+    themesUseIt: "{count} tema/i lo utilizzano ({names}) e ripiegheranno su Inter.",
+    deleteFont: "Elimina font",
+    deleteNamedTheme: "Elimina \\\"{name}\\\"",
+    builtinNoDelete: "I temi incorporati non possono essere eliminati",
+    createsCopyOf: "Crea una copia modificabile di",
+    duplicating: "Duplicazione…",
+    duplicate: "Duplica",
+    uploading: "Caricamento…",
+    uploadMedia: "Carica",
+    uploadFont: "Carica font",
+    usedByThemes: "utilizzato da {count} temi",
+    cancel: "Annulla",
+    import: "Importa",
+    export: "Esporta",
+
+    thisActionCannotBeUndoneTheThemeWillBePe: "Questa azione non può essere annullata. Il tema verrà eliminato definitivamente.",
+
+    chooseAPresetOrFullyCustomiseYourPage: "Scegli un preset o personalizza completamente la tua pagina",
+
+    everyChangePreviewsLiveChangesApplyOnSav: "Ogni modifica viene mostrata in anteprima in tempo reale. Le modifiche si applicano al salvataggio.",
+
+    colorsCommaSeparated: "Colori (separati da virgola)",
+
+    setTheBannerImageOnTheProfilePageBannerI: "Imposta l'immagine banner nella pagina Profilo (campo Immagine banner). I layout Hero e Banner la usano come copertina.",
+
+    auroraIsDrivenByYourColorsAccentPrimaryA: "Aurora è guidata dai tuoi colori: accento (primario) e secondario tingono le macchie in movimento, e il primo colore di sfondo imposta la base.",
+
+    uploadMediaOrPasteAUrlToUnlockDisplayCon: "Carica un media o incolla un URL per sbloccare i controlli di visualizzazione (adattamento e punto focale).",
+
+    howTheMediaFillsThePage: "Come il media riempie la pagina",
+
+    downloadAThemeAsAJsonFileToBackItUpOrSha: "Scarica un tema come file .json per salvarne una copia o condividerlo, poi importalo su un'altra istanza.",
+
+    nameOfTheCopy: "Nome della copia",
+
+    theOriginalStaysUntouched: "L'originale resta intatto.",
+
+    importAmpExport: "Importa & esporta",
+
+    noThemesUseThisFont: "Nessun tema utilizza questo font.",
+
+    onlyUploadFontsYouHaveTheLicenseToUseUpl: "Carica solo font di cui possiedi la licenza d'uso. Il caricamento avviene una volta sola; poi potrai sceglierlo per qualsiasi tema.",
+
+    auto: "Automatico",
+
+
+
+    focalHint: "Trascina il punto per impostare il punto focale — la parte che resta visibile quando gli schermi la ritagliano.",
+
+
+
+
+
+
+    deleteFontTitle: "Eliminare \\\"{name}\\\"?",
+
+
+
+    kb: "KB",
+
+    center: "Centro",
+    // etichette delle opzioni (i valori sono chiave i18n; vedi theme-constants.ts)
+    tabBackground: "Sfondo",
+    tabTypography: "Tipografia",
+    tabLinks: "Link",
+    tabProfile: "Profilo",
+    tabEffects: "Effetti",
+    bgSolid: "Tinta unita",
+    bgGradient: "Gradiente",
+    bgRadial: "Radiale",
+    bgMesh: "Mesh",
+    bgAurora: "Aurora",
+    bgAnimatedGradient: "Gradiente animato",
+    bgImage: "Immagine",
+    bgVideo: "Video",
+    bgGif: "GIF animata",
+    lsPill: "Pillola",
+    lsRounded: "Arrotondato",
+    lsSharp: "Spigoloso",
+    lsGlass: "Vetro",
+    lsOutline: "Contorno",
+    lsNeon: "Neon",
+    lsPixel: "Pixel",
+    lsGel: "Gel",
+    shadowNone: "Nessuna",
+    shadowSubtle: "Sottile",
+    shadowSoft: "Morbida",
+    shadowMedium: "Media",
+    shadowStrong: "Forte",
+    hoverLift: "Solleva",
+    hoverScale: "Scala",
+    hoverGlow: "Bagliore",
+    hoverNone: "Nessuno",
+    angle90: "90° (orizzontale)",
+    angle135: "135° (diagonale)",
+    angle160: "160° (accentuato)",
+    angle180: "180° (verticale)",
+    weightLight: "Light",
+    weightRegular: "Regular",
+    weightMedium: "Medium",
+    weightSemibold: "Semibold",
+    weightBold: "Bold",
+    sizeSm: "Piccolo",
+    sizeMd: "Medio",
+    sizeLg: "Grande",
+    alignLeft: "Sinistra",
+    alignCenter: "Centro",
+    alignRight: "Destra",
+    densityCompact: "Compatto",
+    densityNormal: "Normale",
+    densityRelaxed: "Spaziato",
+    revealLift: "Sollevamento (sale)",
+    revealScale: "Scala (si espande)",
+    revealFadeUp: "Appare dal basso",
+    revealSlideIn: "Scorrimento in entrata",
+    revealZoomIn: "Zoom in entrata",
+    revealBlurIn: "Messa a fuoco in entrata",
+    revealNone: "Nessuna",
+    avCircle: "Cerchio",
+    avSquircle: "Squircle",
+    avRounded: "Quadrato arrotondato",
+    avSquare: "Quadrato",
+    borderSolid: "Accento pieno",
+    borderGradient: "Gradiente",
+    borderGlow: "Bagliore",
+    borderRing: "Anello (con offset)",
+    borderNone: "Nessuno",
+    dividerSection: "Separatore",
+    divSolid: "Linea continua",
+    divDashed: "Linea tratteggiata",
+    divDotted: "Linea punteggiata",
+    divGradient: "Dissolvenza a gradiente",
+    dividerStyle: "Stile linea",
+    dividerColor: "Colore linea",
+    dividerThickness: "Spessore",
+    dividerWidth: "Larghezza",
+    layoutClassic: "Classico (avatar + nome + bio)",
+    layoutHero: "Hero (immagine banner, nome sovrapposto)",
+    layoutBanner: "Banner (immagine ampia sopra il classico)",
+    textAnimNone: "Nessuna",
+    textAnimTypewriter: "Macchina da scrivere (nome visualizzato)",
+    textAnimGradientFlow: "Flusso a gradiente (nome visualizzato)",
+    focalCover: "Cover",
+    focalCoverTitle: "Riempi la pagina, ritagliando i bordi se necessario",
+    focalContain: "Contain",
+    focalContainTitle: "Mostra l'immagine intera, con bande laterali se necessario",
+    focalTile: "Tile",
+    focalTileTitle: "Ripeti alle dimensioni naturali — per motivi e texture",
+    mockWebsite: "Il mio sito web",
+    demoAvatarInitial: "A",
+    demoName: "Il tuo nome",
+    demoBio: "Designer & creatore",
+    mockVideo: "Ultimo video",
+    title: "Tema",
+    subtitle: "Progetta l'aspetto della tua pagina pubblica",
+    activeTheme: "Tema attivo",
+    layout: "Layout",
+    profileLayout: "Layout del profilo",
+    colors: "Colori",
+    accent: "Accento (primario)",
+    secondary: "Secondario",
+    text: "Testo",
+    background: "Sfondo",
+    cardBackground: "Sfondo card",
+    cardBorder: "Bordo card",
+    cardStyle: "Stile card",
+    linkStyle: "Stile link",
+    buttonSize: "Dimensione pulsanti",
+    cornerRadius: "Raggio degli angoli",
+    containerWidth: "Larghezza contenitore",
+    borderWidth: "Spessore bordo",
+    effects: "Effetti",
+    hoverEffect: "Effetto hover",
+    revealAnimation: "Animazione di ingresso",
+    noiseTexture: "Texture a rumore",
+    glassBlur: "Sfocatura vetro",
+    glow: "Bagliore",
+    glowColor: "Colore bagliore",
+    overlayColor: "Colore overlay",
+    overlayOpacity: "Opacità overlay",
+    opacity: "Opacità",
+    typography: "Tipografia",
+    fontScale: "Scala del font",
+    letterSpacing: "Spaziatura lettere",
+    cardFontToggle: "Usa un font diverso per le card",
+    cardFontLabel: "Font delle card",
+    displayNameAnimation: "Animazione del nome visualizzato",
+    avatarShape: "Forma avatar",
+    avatarBorder: "Bordo avatar",
+    avatarSize: "Dimensione avatar",
+    floatingAvatar: "Avatar fluttuante",
+    badge: "Badge",
+    deleteTheme: "Elimina tema",
+    duplicateTheme: "Duplica tema",
+    importExport: "Importa & esporta",
+    previewImport: "Anteprima importazione",
+    pickTheme: "Scegli un tema",
+    mutedText: "Testo attenuato",
+    hideAfter: "Nascondi dopo",
+    showFrom: "Mostra da",
+    alignment: "Allineamento",
+    angle: "Angolo",
+    density: "Densità",
+    shadow: "Ombra",
+    weight: "Peso",
+    typeLabel: "Tipo",
+    imageFit: "Adattamento immagine",
+    imageUrl: "URL immagine",
+    videoUrl: "URL video (.mp4 / .webm)",
+    animatedGif: "URL della GIF animata",
+    displayNameOptional: "Nome visualizzato (opzionale)",
+    newThemeName: "Nome del nuovo tema",
+    themeCopyPlaceholder: "Il mio tema (copia)",
+    selectPlaceholder: "Seleziona…",
+    dupFailed: "Duplicazione del tema non riuscita. Riprova.",
+    delFailed: "Eliminazione del tema non riuscita. Riprova.",
+    deleting: "Eliminazione…",
+    importFailed: "Importazione non riuscita",
+    importing: "Importazione…",
+    chooseJsonFile: "Scegli file JSON…",
+    saveAsOwn: "Salvare come tema personale?",
+    focalPoint: "Punto focale — trascina o usa i tasti freccia",
+    recenter: "Ricentra",
+    recenterFocal: "Ricentra il punto focale",
+    customizerSections: "Sezioni del personalizzatore",
+    applying: "Applicazione…",
+    deleteCustomConfirm: "Eliminare questo tema personalizzato?",
+    avatarHint: "Max 2 MB. JPG, PNG, WebP.",
+    gifHint: "Max 2 MB. Mantieni i loop brevi — le GIF grandi appesantiscono la pagina per i visitatori da mobile.",
+    videoHint: "Max 5 MB, autoplay in loop senza audio. Fallback: i colori di sfondo riempiono la pagina quando il video non si carica.",
+    profileSectionLabel: "Profilo",
+  },
+
+  settings: {
+    title: "Impostazioni",
+    qrTitle: "Codice QR",
+    qrCardDesc: "Personalizza e scarica il QR per /{slug}. Inquadralo per aprire la tua pagina pubblica — usalo su stampa o schermi.",
+    subtitle:
+      "Configurazione della pagina, aspetto e sicurezza dell'account per /{slug}",
+
+    tabs: {
+      general: "Generale",
+      integration: "Integrazione",
+      appearance: "Aspetto",
+      security: "Sicurezza",
+      data: "Dati",
+    },
+
+    language: {
+      title: "Lingua",
+      description:
+        "Lingua dell'interfaccia del pannello admin. La tua pagina pubblica non è interessata.",
+    },
+
+    visibility: {
+      title: "Visibilità sui motori di ricerca",
+      description:
+        "Controlla se i motori di ricerca possono elencare la tua pagina pubblica.",
+      visibleLabel: "Visibile",
+      visibleHint: "La tua pagina può comparire nei risultati di ricerca e nella sitemap.",
+      hiddenLabel: "Nascosta",
+      hiddenHint:
+        "La pagina resta raggiungibile, ma chiede ai motori di ricerca di non indicizzarla e viene rimossa dalla sitemap.",
+      footnote:
+        "La rimozione dipende dal fatto che i motori di ricerca onorino la richiesta; le pagine già indicizzate possono metterci settimane a scomparire.",
+    },
+
+    general: {
+      privacyPlaceholder: "# Informativa sulla privacy\\n\\nQuesta pagina utilizza analitiche che rispettano la privacy...",
+      saving: "Salvataggio…",
+      saveGeneral: "Salva impostazioni generali",
+    footerPlaceholder: "© 2026 Jane Doe",
+      title: "Generale",
+      description: "Slug della pagina, titolo, metadati SEO, footer e informativa sulla privacy.",
+      pageSlug: "Slug della pagina",
+      slugHintRich: "La tua pagina pubblica si trova su <code>/{slug}</code>",
+      viewPublicPage: "Vedi pagina pubblica",
+      pageTitle: "Titolo della pagina (SEO)",
+      pageTitlePlaceholder: "Jane Doe — Link",
+      seoDescription: "Descrizione SEO",
+      seoPlaceholder: "Tutti i miei link in un unico posto",
+      footerText: "Testo footer (opzionale)",
+      privacyPolicy: "Informativa sulla privacy (opzionale)",
+      privacyHintRich: "Lascia vuoto per generare automaticamente dalle impostazioni della pagina. I visitatori possono sempre accedervi su <code>/{slug}/privacy</code>. Supporta Markdown (titoli, elenchi, <strong>grassetto</strong>, <em>corsivo</em>, <code>codice</code>).",
+      save: "Salva impostazioni generali",
+    },
+
+    ogImage: {
+      title: "Immagine di anteprima social (OG)",
+      description: "L'immagine mostrata quando la tua pagina viene condivisa sui social media e nelle app di messaggistica.",
+      modeAria: "Modalità immagine OG",
+      modeAuto: "Automatica (tema)",
+      modeCustom: "Immagine personalizzata",
+      autoHint: "Generata dal tema della tua pagina - sfondo, colori, avatar e link principali si aggiornano automaticamente quando cambi i contenuti.",
+      customHint: "Carica la tua immagine (consigliato 1200 x 630). Viene servita direttamente come immagine di condivisione.",
+      previewAlt: "Anteprima dell'immagine di condivisione social",
+      upload: "Carica immagine",
+      uploading: "Caricamento…",
+      adjustPosition: "Regola il ritaglio",
+      remove: "Rimuovi",
+      crawlerCacheHint: "Le piattaforme social mettono in cache le immagini di condivisione in modo aggressivo - dopo una modifica possono volerci giorni per aggiornarsi ovunque.",
+    },
+
+    integration: {
+      saving: "Salvataggio…",
+      saveIntegration: "Salva impostazioni di integrazione",
+      title: "Integrazione",
+      description: "Analitiche, CSS personalizzato e raccolta email.",
+      analyticsScript: "Script di analitiche (opzionale)",
+      analyticsHintRich: "Incolla uno snippet di script per Plausible, Umami, Matomo, Google Analytics, ecc. Aggiungi il dominio del provider a <code>EXTRA_SCRIPT_SRC</code> nel tuo .env così che CSP consenta il caricamento.",
+      customCss: "CSS personalizzato (opzionale)",
+      customCssHintRich: "CSS grezzo iniettato in un tag <code>&lt;style&gt;</code> sulla tua pagina pubblica.",
+      emailCapture: "Iscrizione email",
+      emailCaptureHintRich: "Mostra un modulo di iscrizione email in fondo alla tua pagina pubblica. Gli iscritti sono memorizzati nel tuo database e possono essere esportati come CSV.",
+      consentText: "Testo del consenso email",
+      consentHintRich: "Mostrato accanto alla casella di consenso nel modulo di iscrizione email. Lascia vuoto per il testo predefinito: <em>Acconsento a ricevere email e capisco di poter annullare l'iscrizione in qualsiasi momento.</em>",
+      consentPlaceholder:
+        "Acconsento a ricevere email e capisco di poter annullare l'iscrizione in qualsiasi momento.",
+      enabled: "Abilitato",
+      disabled: "Disabilitato",
+      save: "Salva impostazioni di integrazione",
+      walletCardTitle: "Esportazioni wallet e contatti",
+      walletCardDesc: "I pulsanti sulla tua pagina pubblica sono abilitati tramite variabili d'ambiente lato server (usa le tue credenziali).",
+      walletGoogleName: "Google Wallet",
+      walletAppleName: "Apple Wallet",
+      walletGoogleOn: "Configurato — i visitatori vedono \\\"Aggiungi a Google Wallet\\\".",
+      walletGoogleOff: "Non configurato — imposta GOOGLE_WALLET_ISSUER_ID e GOOGLE_WALLET_SERVICE_ACCOUNT_JSON per abilitare.",
+      walletAppleOn: "Configurato — i visitatori vedono \\\"Aggiungi a Apple Wallet\\\".",
+      walletAppleOff: "Non configurato — imposta le variabili APPLE_WALLET_* (cert, chiave, WWDR, team ID, pass type ID) per abilitare.",
+      walletStatusOn: "Attivo",
+      walletStatusOff: "Disattivo",
+      walletCertValid: "Certificato di firma valido fino al {date}.",
+      walletCertExpiring: "Il certificato di firma scade tra {days} giorni — rinnovalo prima che i pass smettano di funzionare.",
+      walletCertExpired: "Certificato di firma SCADUTO {days} giorni fa — la generazione dei pass sta fallendo.",
+      shareBlock: "Blocco condivisione (Salva contatto / wallet)",
+      shareBlockHintRich: "Mostra una discreta riga <em>Salva contatto</em> / wallet sotto i tuoi link sulla pagina pubblica. Disattivato per impostazione predefinita.",
+    },
+
+    appearance: {
+      saving: "Salvataggio…",
+      saveAppearance: "Salva aspetto",
+      title: "Aspetto",
+      description: "Favicon e impostazioni visive predefinite per pagina.",
+      activeTheme: "Tema attivo",
+      changeTheme: "Cambia tema",
+      favicon: "Favicon",
+      faviconHint: "Carica .ico, .png, .svg, .gif o .webp (max 1 MB).",
+      currentFavicon: "Favicon attuale",
+      uploadFavicon: "Carica favicon",
+      uploading: "Caricamento…",
+      save: "Salva aspetto",
+      // Selettore posizione immagine (Spec: Image-Positioning)
+      positionPickerAria: "Posizione immagine: trascina per impostare la parte visibile",
+      imageFitAria: "Adattamento immagine",
+      fitCover: "Cover",
+      fitContain: "Contain",
+      zoomLabel: "Zoom",
+      zoomWheelHint: "Suggerimento: scorri sull'immagine per fare zoom.",
+      resetAdjustments: "Reimposta posizione",
+      adjustPosition: "Regola",
+      positionTitle: "Posizione immagine",
+    },
+
+    security: {
+
+      updatePassword: "Aggiorna password",
+
+      updating: "Aggiornamento…",
+
+      changePassword: "Cambia password",
+
+
+      description: "Cambia la tua password admin.",
+      desc: "Aggiorna la tua password admin.",
+      currentPassword: "Password attuale",
+      newPassword: "Nuova password",
+      passwordHint: "Almeno 8 caratteri con una maiuscola e un numero.",
+      updated: "Password aggiornata.",
+
+
+      twoFactor: {
+      title: "Autenticazione a due fattori",
+      idleDesc: "Aggiungi un secondo fattore (app di autenticazione) all'accesso admin.",
+      enabledDesc: "L'accesso admin richiede un codice dalla tua app di autenticazione.",
+      enable: "Abilita 2FA",
+      disable: "Disabilita 2FA",
+      working: "Elaborazione…",
+      setupTitle: "Configura la tua app di autenticazione",
+      setupDesc: "Scansiona il codice QR con la tua app di autenticazione (Google Authenticator, Authy, 1Password…), poi inserisci il codice a 6 cifre per confermare.",
+      qrAlt: "Codice QR per l'autenticazione a due fattori",
+      manualEntry: "Non riesci a scansionare? Inserisci il codice manualmente",
+      codeLabel: "Codice a 6 cifre",
+      verify: "Verifica e abilita",
+      disableHint: "Inserisci un codice dalla tua app di autenticazione — oppure un codice di recupero — per disattivare il 2FA.",
+      disabled: "L'autenticazione a due fattori ora è disabilitata.",
+      recoveryTitle: "Salva i tuoi codici di recupero",
+      recoveryDesc: "Se perdi la tua app di autenticazione, uno di questi codici monouso ti farà rientrare.",
+      recoveryWarn: "Questi codici vengono mostrati una sola volta e memorizzati solo come hash. Mettili al sicuro ora — in un gestore di password o su carta stampata.",
+      recoveryDone: "Ho salvato i miei codici",
+      recoveryCopy: "Copia tutti i codici",
+      recoveryCopied: "Copiato!",
+    },
+    },
+
+    data: {
+      noSubscribers: "Ancora nessun iscritto. Il tuo modulo di iscrizione è attivo sulla tua pagina pubblica.",
+      clearAll: "Cancella tutto",
+      subscriberCount: "{count, plural, =1 {# iscritto.} other {# iscritti.}}",
+      deleteConfirmIcu: "Eliminare definitivamente tutti i {count} iscritti? Questa azione non può essere annullata.",
+      restoring: "Ripristino…",
+      clearing: "Pulizia…",
+
+      clearAllAnalytics: "Cancella tutte le analitiche",
+
+      restoreBackup: "Ripristina backup",
+
+      data: "Dati",
+
+      retentionHint2: "Esegui il backup o il ripristino dei tuoi contenuti e controlla la conservazione delle analitiche.",
+
+      emailSubscribers: "Iscritti email",
+
+      subscribersDesc: "Gli indirizzi email compaiono qui quando i visitatori si iscrivono sulla tua pagina pubblica.",
+
+      exportBackup: "Esporta backup",
+
+      retentionHint: "Le analitiche più vecchie vengono eliminate automaticamente. Predefinito 90 giorni — imposta 0 per conservare tutto.",
+
+      checkReleases: "Controlla le nuove versioni sulla dashboard.",
+
+      restoreWarning: "Questo SOSTITUIRÀ tutti i link, il profilo, le impostazioni e i temi attuali. Questa azione non può essere annullata.",
+
+      restore: "Ripristina",
+
+      clearWarning: "Elimina definitivamente TUTTE le analitiche (visualizzazioni + clic) e azzera i contatori dei clic. Questa azione non può essere annullata.",
+
+      clear: "Cancella",
+
+      cancel: "Annulla",
+      backupRestored: "Backup ripristinato.",
+      restoreFailed: "Ripristino non riuscito.",
+      keepForeverHint: "0 = conserva per sempre",
+      analyticsCleared: "Analitiche cancellate.",
+      consentYes: "Sì",
+      notAvailable: "N/D",
+      title: "Dati",
+      description: "Esporta, esegui il backup e gestisci i tuoi dati.",
+      exportCsv: "Esporta CSV",
+      retentionLabel: "Conservazione analitiche (giorni)",
+      updateNotifications: "Notifiche di aggiornamento",
+      restoreTitle: "Ripristinare il backup?",
+      clearAnalyticsTitle: "Cancellare tutte le analitiche?",
+      clearTitle: "Cancellare tutti gli iscritti?",
+      colEmail: "Email",
+      colSubscribed: "Iscritto il",
+      colConsent: "Consenso",
+    },
+
+    backups: {
+      title: "Backup pianificati",
+      description: "Backup automatici dei tuoi contenuti, memorizzati sul tuo server.",
+      enable: "Backup automatici",
+      enableHint: "Disattivati per impostazione predefinita - nulla cambia finché non li attivi.",
+      frequency: "Frequenza",
+      daily: "Giornaliero",
+      weekly: "Settimanale",
+      monthly: "Mensile",
+      timeLabel: "Orario preferito",
+      timeHint: "Parte alla prima attività a partire da quest'orario. I backup sono interni all'app - nessun cron richiesto.",
+      retentionLabel: "Backup da conservare",
+      runNow: "Esegui backup ora",
+      running: "Backup in corso…",
+      runDone: "Backup creato.",
+      lastRun: "Ultimo backup: {time}",
+      never: "Ultimo backup: mai",
+      result_ok: "Successo",
+      result_disk_full: "Non riuscito: spazio su disco insufficiente",
+      result_write_failed: "Non riuscito: impossibile scrivere il file di backup",
+      result_serialize_failed: "Non riuscito: impossibile leggere il database",
+      result_busy: "Saltato: un altro backup o ripristino era in corso",
+      storageLabel: "Archiviati in",
+      freeSpace: "{mb} MB liberi",
+      lowDisk: "Spazio su disco insufficiente - i backup automatici sono in pausa finché non ci sono almeno {mb} MB liberi.",
+      storedBackups: "Backup archiviati",
+      noBackups: "Ancora nessun backup.",
+      restore: "Ripristina",
+      delete: "Elimina backup",
+      restoreTitle: "Ripristinare questo backup?",
+      restoreWarning: "I tuoi link, profilo, impostazioni e temi attuali saranno sostituiti da questo backup. Questa azione non può essere annullata.",
+      restoreConfirm: "Ripristina",
+      deleteTitle: "Eliminare questo backup?",
+      deleteWarning: "Il file di backup sarà rimosso definitivamente dal tuo server.",
+      deleteConfirm: "Elimina",
+      cancel: "Annulla",
+      backupRestored: "Backup ripristinato.",
+      backupDeleted: "Backup eliminato.",
+      restoreFailed: "Ripristino non riuscito.",
+      deleteFailed: "Eliminazione non riuscita.",
+    },
+
+    qr: {
+      saving: "Salvataggio…",
+
+      saveStyle: "Salva stile",
+
+      savedBang: "Salvato!",
+
+      codeColor: "Colore del codice",
+
+      backgroundColor: "Sfondo",
+
+      themeColors: "Colori del tema",
+
+      logoHint: "Con un logo la correzione errori viene alzata a High, così il codice resta scansionabile.",
+
+      exportSize: "Dimensione esportazione PNG",
+
+      px: "px",
+
+      svg: "SVG",
+
+      png: "PNG",
+
+      reset: "Reimposta",
+
+
+
+
+
+      styleLabel: "Stile del codice QR",
+      colorLabel: "Colore del codice QR",
+      bgLabel: "Colore di sfondo del QR",
+      centerLogo: "Logo al centro",
+      previewAlt: "Anteprima del codice QR",
+    },
+  },
+
+  pageSwitcher: {
+    newPage: "Nuova pagina",
+    deletePage: "Elimina pagina {name}",
+    viewPage: "Vedi pagina pubblica /{slug}",
+    makeDefault: "Imposta {name} come pagina predefinita",
+    nowDefault: "\\\"{name}\\\" è ora la tua pagina predefinita",
+  },
+
+  linkDetail: {
+    backToLinks: "Torna ai link",
+    clicksOverTime: "Clic nel tempo",
+    dailyClicks: "Clic giornalieri per questo link",
+    topReferrers: "Referrer principali",
+    referrersDesc: "Provenienza di questi clic",
+    noReferrerData: "Ancora nessun dato sui referrer.",
+  },
+
+  migration: {
+    socialFallback: "Sociale",
+    importItemCount: "{count, plural, one {Importa # elemento} other {Importa # elementi}}",
+
+    socialProfilesInstagramYoutubeEtcAreAuto: "I profili social (Instagram, YouTube, ecc.) vengono rilevati automaticamente e aggiunti come icone social.",
+
+
+    reviewTheExtractedLinksBelowUncheckAnyYo: "Rivedi i link estratti qui sotto. Deseleziona quelli che non vuoi importare.",
+
+    noLinksFoundOnThisPageTryADifferentUrl: "Nessun link trovato su questa pagina. Prova con un URL diverso.",
+
+    linktreeBentoLnkBioTapLinkHoppLittlelink: "Linktree, Bento, Lnk.bio, Tap.link, Hopp, LittleLink, Beacons, Solo.to e molti altri.",
+
+    importLinksFromLinktreeBentoLnkBioLittle: "Importa link da Linktree, Bento, Lnk.bio, LittleLink o da qualsiasi altra pagina link-in-bio.",
+
+
+    importComplete: "Importazione completata",
+
+    importedCounts: "{links} link importati",
+
+    andSocial: "e {count} profili social",
+
+    intoThisPage: "in questa pagina.",
+
+    iconFallbackWarning: "{count, plural, one {# link importato non ha ottenuto l'icona del sito e mostrerà un segnaposto con la lettera.} other {# link importati non hanno ottenuto le icone del sito e mostreranno segnaposto con le lettere.}}",
+
+    iconFallbackHint: "Modifica e salva di nuovo quei link per ritentare il recupero dell'icona.",
+
+    importAnother: "Importa un'altra pagina",
+
+    viewLinks: "Vedi i link",
+
+
+
+    back: "Indietro",
+
+    importing: "Importazione...",
+
+    migrationWizard: "Assistente di migrazione",
+
+
+    url: "URL",
+
+    file: "File",
+
+    fetchingLinks: "Recupero dei link...",
+
+    fetchLinks: "Recupera link",
+
+    parsingFile: "Analisi del file...",
+
+    uploadExtract: "Carica & estrai",
+
+    supportedPlatforms: "Piattaforme supportate:",
+
+
+
+    linksCount: "Link ({count})",
+
+    socialProfilesCount: "Profili social ({count})",
+    extractFailed: "Impossibile estrarre i link",
+    importFailed: "Importazione non riuscita",
+    pageUrlLabel: "URL della pagina",
+    previewImport: "Anteprima importazione",
+    fileLabel: "File HTML o JSON",
+    fileHint: "Salva una pagina concorrente come HTML, oppure carica un'esportazione JSON.",
+  },
+
+  onboarding: {
+    heading: "Per iniziare",
+    subtitleStart: "Pochi passi per preparare la tua pagina.",
+    subtitleProgress: "{done} di {total} completati — continua così!",
+    setProfile: "Imposta nome e bio",
+    setTheme: "Scegli un tema",
+    setLinks: "Aggiungi il tuo primo link",
+    dismiss: "Ignora",
+  },
+
+  preview: {
+    refresh: "Aggiorna anteprima",
+    openNewTab: "Apri in una nuova scheda",
+    close: "Chiudi anteprima",
+    livePreview: "Anteprima live",
+  },
+
+  errors: {
+    errorBoundary: {
+      title: "Qualcosa è andato storto",
+      description:
+        "Si è verificato un errore imprevisto durante il caricamento di questa pagina. Riprova e, se il problema persiste, controlla i log del server o riavvia il container.",
+      errorId: "ID errore",
+      retry: "Riprova",
+      backToDashboard: "Torna alla dashboard",
+    },
+    somethingWentWrong: "Qualcosa è andato storto. Riprova.",
+    uploadFailed: "Caricamento non riuscito. Riprova.",
+
+    // backup pianificati (#83)
+    backupNotFound: "File di backup non trovato",
+    invalidBackupFilename: "Nome file di backup non valido",
+    backupInProgress: "Un backup o un ripristino è già in corso",
+    backupDiskFull: "Spazio su disco insufficiente per scrivere un backup",
+    backupFailed: "Backup non riuscito. Controlla i log del server.",
+    backupFrequencyInvalid: "Scegli una frequenza di backup valida",
+    backupTimeInvalid: "Inserisci un orario valido",
+    backupRetentionInvalid: "La conservazione dei backup deve essere tra 1 e 52",
+    backupRetentionInt: "La conservazione dei backup deve essere un numero intero",
+    invalidCredentials: "Nome utente o password non validi.",
+    unauthorized: "Non autorizzato",
+    invalidInput: "Input non valido",
+    invalidJson: "JSON non valido",
+    notFound: "Non trovato",
+    usernameRequired: "Il nome utente è obbligatorio",
+    usernameTooShort: "Il nome utente deve essere di almeno 3 caratteri",
+    usernameChars: "Il nome utente può contenere solo lettere, numeri, punti, trattini e underscore",
+    passwordRequired: "La password è obbligatoria",
+    invalidEmail: "Inserisci un'email valida",
+    slugRequired: "Lo slug è obbligatorio",
+    slugCharsUnderscore: "Lo slug può contenere solo lettere, numeri, trattini e underscore",
+    slugTooLong: "Lo slug deve essere di 80 caratteri o meno",
+    titleRequired: "Il titolo è obbligatorio",
+    invalidIconName: "Nome icona non valido",
+    invalidPosition: "Posizione non valida",
+    rateLimited: "Troppe richieste. Riprova tra {seconds}s.",
+    demoReadOnly: "Questa è una demo in sola lettura. Distribuisci la tua istanza per fare modifiche.",
+    setupCompleted: "La configurazione è già stata completata",
+    setupFailed: "Qualcosa è andato storto durante la configurazione. Riprova.",
+    usernameTaken: "Nome utente già in uso",
+    pageDeleteFailed: "Qualcosa è andato storto durante l'eliminazione della pagina. Riprova.",
+    slugExists: "Esiste già una pagina con questo slug",
+    defaultPageProtected: "La pagina predefinita non può essere eliminata",
+    pageNotFound: "Pagina non trovata",
+    invalidPageId: "ID pagina non valido",
+    missingPageId: "ID pagina mancante",
+    linkNotFound: "Link non trovato",
+    invalidLinkId: "ID link non valido",
+    missingLinkId: "ID link mancante",
+    invalidSectionId: "ID sezione non valido",
+    missingSectionId: "ID sezione mancante",
+    invalidOrderPayload: "Payload dell'ordine non valido",
+    urlRequired: "L'URL è obbligatorio",
+    urlSchemeNotAllowed: "Lo schema URL non è consentito per questo tipo di link",
+    themeNameExists: "Esiste già un tema con questo nome",
+    themeNotFound: "Tema non trovato",
+    invalidThemeId: "ID tema non valido",
+    builtinThemeProtected: "I temi incorporati non possono essere eliminati",
+    activeThemeProtected: "Impossibile eliminare il tema attivo",
+    noActiveTheme: "Nessun tema attivo",
+    noThemeToCustomize: "Nessun tema da personalizzare",
+    noThemeToDuplicate: "Nessun tema da duplicare",
+    noFile: "Nessun file fornito",
+    fileRequired: "Il file è obbligatorio",
+    fileEmpty: "Il file è vuoto",
+    fileNotImage: "Il file deve essere un'immagine",
+    fileNotVideo: "Il file deve essere un video",
+    fileTooLarge1: "File troppo grande (max 1 MB)",
+    fileTooLarge2: "File troppo grande (max 2 MB)",
+    fileTooLargeMb: "File troppo grande (max {mb} MB)",
+    fileTooLarge5: "File troppo grande (max 5 MB)",
+    unsupportedFileType: "Tipo di file non supportato",
+    unsupportedMedia: "Tipo di file non supportato. Usa un'immagine o un video .mp4/.webm",
+    unsupportedFavicon: "Tipo di file non supportato. Usa .ico, .png, .svg, .gif o .webp",
+    unsupportedFont: "Tipo di file non supportato. Usa .woff2 o .woff",
+    fontNotFound: "Font non trovato",
+    invalidFontId: "ID font non valido",
+    fontGone: "Quel font personalizzato non esiste più",
+    invalidFontFile: "Non è un file font valido (atteso woff2 o woff)",
+    fontTooLarge: "Il font incorporato è troppo grande (max 2 MB)",
+    fontStoreFailed: "Impossibile memorizzare il file del font. Controlla spazio su disco e permessi.",
+    fontRestoreFailed: "Impossibile ripristinare il file del font incorporato",
+    noBackupFile: "Nessun file di backup fornito",
+    invalidBackup: "Non è un backup LinkBreeze valido",
+    backupMalformedData: "Il backup contiene dati malformati — le righe non corrispondono allo schema previsto",
+    backupMalformedSections: "Il backup contiene sezioni malformate",
+    backupMalformedFonts: "Il backup contiene font personalizzati malformati",
+    restoreIncompatible: "Ripristino non riuscito — il backup potrebbe essere incompatibile",
+    invalidImportData: "Dati di importazione non validi",
+    invalidJsonFile: "File JSON non valido",
+    unsupportedImportFile: "Sono supportati solo file HTML e JSON",
+    importCooldown: "Attendi 30 secondi tra un'importazione e l'altra",
+    fetchFailed: "Impossibile recuperare la pagina",
+    parseFailed: "Impossibile analizzare il file",
+    targetPageNotFound: "Pagina di destinazione non trovata",
+    wrongCurrentPassword: "La password attuale non è corretta",
+    passwordTooShort: "La password deve essere di almeno 8 caratteri",
+    passwordNeedsUpper: "La password deve contenere almeno una lettera maiuscola",
+    passwordNeedsLower: "La password deve contenere almeno una lettera minuscola",
+    passwordNeedsNumber: "La password deve contenere almeno un numero",
+    displayNameRequired: "Il nome visualizzato è obbligatorio",
+    slugChars: "Lo slug può contenere solo lettere, numeri e trattini",
+    nameRequired: "Il nome è obbligatorio",
+    invalidDeleteMode: "Modalità di eliminazione non valida",
+    invalidSubmission: "Invio non valido",
+    customFont: "Font personalizzato",
+    invalidDomain: "Inserisci un nome di dominio valido, es. jane.com",
+    domainExists: "Questo dominio è già associato",
+    primaryDomainExists: "Questa pagina ha già un dominio primario",
+    domainNotFound: "Dominio non trovato",
+  },
+
+  // ─── Domini personalizzati (#85) ──────────────────────────────────────
+  domains: {
+    title: "Domini",
+    description:
+      "Punta i tuoi domini alle pagine. Un'associazione si attiva alla prima visita reale, oppure attivala manualmente per i test.",
+    addTitle: "Aggiungi un dominio",
+    hostLabel: "Dominio",
+    hostPlaceholder: "jane.com",
+    pageLabel: "Pagina",
+    kindLabel: "Tipo",
+    kindPrimary: "Primario",
+    kindAlias: "Alias",
+    behaviorLabel: "Comportamento",
+    behaviorServe: "Mostra la pagina",
+    behaviorRedirectCanonical: "Reindirizza al dominio primario (stesso percorso)",
+    behaviorRedirectSlug: "Reindirizza allo slug della pagina",
+    statusActive: "Attivo",
+    statusPending: "In attesa",
+    activate: "Attiva ora",
+    activateHint: "Per test in stile /etc/hosts prima che il DNS si propaghi.",
+    dnsCheck: "Verifica DNS",
+    dnsChecking: "Verifica in corso…",
+    dnsFound: "Record DNS:",
+    dnsNone: "Ancora nessun record DNS — il dominio potrebbe non essersi propagato.",
+    dnsHint: "Punta un record A/AAAA o CNAME su questo server, poi visita il dominio una volta.",
+    empty: "Ancora nessun dominio associato.",
+    scopeTitle: "Ambito della pagina",
+    scopeDescription: "Cosa espone un dominio associato.",
+    scopeExclusive: "Esclusivo",
+    scopeExclusiveHint: "Il dominio È la pagina — gli altri slug restituiscono 404.",
+    scopeHub: "Hub",
+    scopeHubHint: "La pagina viene mostrata alla radice; ogni slug continua a risolversi sotto il dominio.",
+    policyTitle: "Politica di routing",
+    policyDescription: "Comportamento a livello di istanza per i domini personalizzati.",
+    primaryHostLabel: "Host primario",
+    primaryHostHint: "L'host su cui vive il tuo admin. La variabile d'ambiente LINKBREEZE_PRIMARY_HOST sovrascrive questo campo.",
+    adminLockLabel: "Blocco host admin",
+    adminLockStrict: "Stretto — 404 per l'admin su altri host",
+    adminLockOff: "Disattivato",
+    fallbackLabel: "Host sconosciuti",
+    fallbackPath: "Mostra per percorso (comportamento attuale)",
+    fallback404: "404",
+    fallbackRedirectPrimary: "Reindirizza all'host primario",
+    wwwLabel: "Gestione di www",
+    wwwRedirect: "Reindirizza www al dominio associato",
+    wwwServe: "Mostra www come il dominio associato",
+    wwwOff: "Disattivato — usa alias espliciti",
+    canonicalLabel: "Strategia canonica",
+    canonical301: "301 slug → dominio (consigliato)",
+    canonicalTag: "Solo tag canonical",
+    canonicalOff: "Disattivata",
+    deleteConfirm: "Rimuovere questa associazione di dominio?",
+    save: "Salva",
+    scope: "Ambito",
+  },
+
+  update: {
+    cardTitle: "Aggiornamenti",
+    cardDesc: "Confronta la versione installata con l'ultima release su GitHub e sul sito web.",
+    installed: "Versione installata",
+    githubLatest: "Ultima su GitHub",
+    websiteLatest: "Ultima sul sito web",
+    onLatest: "Sei all'ultima versione.",
+    updateAvailable: "Puoi aggiornare alla v{version}.",
+    recheck: "Riverifica",
+    lastChecked: "Ultimo controllo {time}",
+    statusUnknown: "Impossibile determinare l'ultima versione.",
+    checksDisabled: "I controlli automatici degli aggiornamenti sono attualmente disattivati.",
+    staleSource: "Impossibile raggiungere {source} - mostro l'ultimo valore noto da {time}.",
+    available: "LinkBreeze v{version} è disponibile",
+    running: "Stai eseguendo la v{version}",
+    viewReleaseNotes: "Vedi note di release",
+    checkAgain: "Verifica di nuovo",
+    updateCommand: "docker pull omnirise/linkbreeze:latest && docker restart linkbreeze",
+    orScript: "oppure one-shot: curl -fsSL https://linkbreeze.omnirise.dev/update.sh | sh",
+    dismiss: "Ignora la notifica di aggiornamento",
+  },
+};
+
+export default it;

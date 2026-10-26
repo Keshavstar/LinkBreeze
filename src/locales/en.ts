@@ -950,6 +950,8 @@ const en = {
   },
 
   migration: {
+    socialFallback: "Social",
+    importItemCount: "{count, plural, one {Import # item} other {Import # items}}",
 
     socialProfilesInstagramYoutubeEtcAreAuto: "Social profiles (Instagram, YouTube, etc.) are auto-detected and added as social icons.",
 

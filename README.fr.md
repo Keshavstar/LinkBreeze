@@ -4,7 +4,7 @@
 
 ---
 
-[English](README.md) · [Español](README.es.md) · **Français** · [Deutsch](README.de.md) · [中文](README.zh.md) · [العربية](README.ar.md) · [Português (Brasil)](README.pt-BR.md)
+[English](README.md) · [العربية](README.ar.md) · [中文](README.zh.md) · **Français** · [Deutsch](README.de.md) · [Italiano](README.it.md) · [日本語](README.ja.md) · [Português (Brasil)](README.pt-BR.md) · [Русский](README.ru.md) · [Español](README.es.md) · [Türkçe](README.tr.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Docker](https://img.shields.io/badge/omnirise%2Flinkbreeze-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/omnirise/linkbreeze)
@@ -21,7 +21,7 @@
 
 ---
 
-> **Arrêtez de payer 35 $/mois pour Linktree.**  LinkBreeze est un hub de liens gratuit et auto-hébergé : rapide, personnalisable, avec des statistiques intégrées. **Installez en une commande.**
+> **Arrêtez de payer 15 $/mois pour Linktree.**  LinkBreeze est un hub de liens gratuit et auto-hébergé : rapide, personnalisable, avec des statistiques intégrées. **Installez en une commande.**
 
 <div align="center">
 
@@ -53,7 +53,7 @@
     <td valign="top">🎯 <strong>QR codes</strong><br/>Générés automatiquement, couleurs personnalisables, avatar ou favicon au centre, SVG/PNG jusqu'à 1024 px</td>
   </tr>
   <tr>
-    <td width="50%" valign="top">🌐 <strong>Domaines personnalisés</strong><br/>Associez vos propres domaines à vos pages — les visiteurs arrivent sur jane.com, sans /slug</td>
+    <td width="50%" valign="top">🌐 <strong>Domaines personnalisés</strong><br/>Associez vos propres domaines à vos pages - les visiteurs arrivent sur jane.com, sans /slug</td>
     <td valign="top">⏰ <strong>Sauvegardes programmées</strong><br/>Sauvegardes internes quotidiennes/hebdomadaires/mensuelles avec restauration en un clic, sans cron</td>
   </tr>
 </table>
@@ -399,13 +399,13 @@ Les réglages à l'exécution (slug de la page, titre, SEO, thème) se gèrent d
 
 ## 🌐 Domaines personnalisés
 
-Pointez vos propres domaines vers vos pages — une instance, plusieurs identités. Les visiteurs arrivent sur `https://jane.com/` et voient directement la page de Jane, avec redirections canoniques automatiques, sitemaps optimisés SEO et verrou admin strict par hôte. Les liaisons s'activent lors de leur première vraie visite (DNS auto-vérifié), et la portée par page décide si un domaine EST la page (exclusive) ou un hub pour tous les slugs.
+Pointez vos propres domaines vers vos pages - une instance, plusieurs identités. Les visiteurs arrivent sur `https://jane.com/` et voient directement la page de Jane, avec redirections canoniques automatiques, sitemaps optimisés SEO et verrou admin strict par hôte. Les liaisons s'activent lors de leur première vraie visite (DNS auto-vérifié), et la portée par page décide si un domaine EST la page (exclusive) ou un hub pour tous les slugs.
 
-Configuration complète — DNS, TLS wildcard et configs reverse-proxy prêtes à coller pour Caddy, nginx et Traefik — dans **[docs/custom-domains.md](docs/custom-domains.md)**.
+Configuration complète - DNS, TLS wildcard et configs reverse-proxy prêtes à coller pour Caddy, nginx et Traefik - dans **[docs/custom-domains.md](docs/custom-domains.md)**.
 
 ## 🎨 Système de thèmes
 
-11 préréglages sont inclus d'office : **Aurora** (la vitrine animée), **Glassmorphism**, **Neon Cyberpunk**, **Editorial Paper**, **Terminal Mono**, **Pastel Soft**, **Brutalist**, **Retro Sunset**, **Minimal Light**, **8-Bit Retro** et **Frutiger Aero**.
+11 préréglages sont inclus d'office : **Aurora** (le thème phare animé), **Glassmorphism**, **Neon Cyberpunk**, **Editorial Paper**, **Terminal Mono**, **Pastel Soft**, **Brutalist**, **Retro Sunset**, **Minimal Light**, **8-Bit Retro** et **Frutiger Aero**.
 
 <details>
 <summary>🎛️ &nbsp;Ce que contrôle le personnalisateur</summary>

@@ -4,7 +4,7 @@
 
 ---
 
-[English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · **中文** · [العربية](README.ar.md) · [Português (Brasil)](README.pt-BR.md)
+[English](README.md) · [العربية](README.ar.md) · **中文** · [Français](README.fr.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · [日本語](README.ja.md) · [Português (Brasil)](README.pt-BR.md) · [Русский](README.ru.md) · [Español](README.es.md) · [Türkçe](README.tr.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Docker](https://img.shields.io/badge/omnirise%2Flinkbreeze-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/omnirise/linkbreeze)
@@ -53,7 +53,7 @@
     <td valign="top">🎯 <strong>QR 码</strong><br/>自动生成，自定义颜色，中心嵌入头像或 favicon，SVG/PNG 最高 1024px</td>
   </tr>
   <tr>
-    <td width="50%" valign="top">🌐 <strong>自定义域名</strong><br/>将自有域名绑定到页面——访客直接访问 jane.com，无需 /slug</td>
+    <td width="50%" valign="top">🌐 <strong>自定义域名</strong><br/>将自有域名绑定到页面 - 访客直接访问 jane.com，无需 /slug</td>
     <td valign="top">⏰ <strong>定时备份</strong><br/>应用内每日/每周/每月备份，一键恢复，无需 cron</td>
   </tr>
 </table>
@@ -399,9 +399,9 @@ cloudflared tunnel --url http://localhost:3000
 
 ## 🌐 自定义域名
 
-将自有域名指向页面——一个实例，多个身份。访客打开 `https://jane.com/` 即可直接看到 Jane 的页面，并配有自动 canonical 重定向、利于 SEO 的站点地图和严格的管理后台主机锁定。绑定会在首次真实访问时激活（DNS 自验证），页面范围决定域名是该页面本身（独占）还是所有 slug 的中心。
+将自有域名指向页面 - 一个实例，多个身份。访客打开 `https://jane.com/` 即可直接看到 Jane 的页面，并配有自动 canonical 重定向、利于 SEO 的站点地图和严格的管理后台主机锁定。绑定会在首次真实访问时激活（DNS 自验证），页面范围决定域名是该页面本身（独占）还是所有 slug 的中心。
 
-完整设置——DNS、泛域名 TLS 以及 Caddy、nginx、Traefik 的即拷即用反向代理配置——见 **[docs/custom-domains.md](docs/custom-domains.md)**。
+完整设置 - DNS、泛域名 TLS 以及 Caddy、nginx、Traefik 的即拷即用反向代理配置 - 见 **[docs/custom-domains.md](docs/custom-domains.md)**。
 
 ## 🎨 主题系统
 

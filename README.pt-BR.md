@@ -4,7 +4,7 @@
 
 ---
 
-[English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [中文](README.zh.md) · [العربية](README.ar.md) · **Português (Brasil)**
+[English](README.md) · [العربية](README.ar.md) · [中文](README.zh.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · [日本語](README.ja.md) · **Português (Brasil)** · [Русский](README.ru.md) · [Español](README.es.md) · [Türkçe](README.tr.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Docker](https://img.shields.io/badge/omnirise%2Flinkbreeze-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/omnirise/linkbreeze)
@@ -53,7 +53,7 @@
     <td valign="top">🎯 <strong>Códigos QR</strong><br/>Gerados automaticamente, cores personalizáveis, avatar ou favicon no centro, SVG/PNG até 1024px</td>
   </tr>
   <tr>
-    <td width="50%" valign="top">🌐 <strong>Domínios personalizados</strong><br/>Aponte seus próprios domínios para páginas — visitantes chegam em jane.com, sem /slug</td>
+    <td width="50%" valign="top">🌐 <strong>Domínios personalizados</strong><br/>Aponte seus próprios domínios para páginas - visitantes chegam em jane.com, sem /slug</td>
     <td valign="top">⏰ <strong>Backups agendados</strong><br/>Backups internos diários/semanais/mensais com restauração em um clique, sem cron</td>
   </tr>
 </table>
@@ -315,7 +315,7 @@ cloudflared tunnel --url http://localhost:3000
     </tr>
     <tr>
     <td><img src="public/screenshots/Settings(General).jpeg" alt="Página de Configurações [Aba Geral]" /></td>
-    <td><img src="public/screenshots/Settings(Appearance).jpeg" alt="Página de Configurações [Aba Aparência]" />
+    <td><img src="public/screenshots/Settings(Appearance).jpeg" alt="Página de Configurações [Aba Aparência]" /></td>
     <tr>
     <td>Configurações [Segurança]</td>
     <td>Configurações [Dados]</td>
@@ -399,9 +399,9 @@ As configurações de tempo de execução (slug da página, título, SEO, tema) 
 
 ## 🌐 Domínios personalizados
 
-Aponte seus próprios domínios para páginas — uma instância, várias identidades. Visitantes chegam em `https://jane.com/` e veem a página de Jane diretamente, com redirecionamentos canônicos automáticos, sitemaps prontos para SEO e bloqueio de admin estrito por host. Os vínculos são ativados na primeira visita real (DNS autoverificado), e o escopo por página decide se um domínio É a página (exclusivo) ou um hub para todos os slugs.
+Aponte seus próprios domínios para páginas - uma instância, várias identidades. Visitantes chegam em `https://jane.com/` e veem a página de Jane diretamente, com redirecionamentos canônicos automáticos, sitemaps prontos para SEO e bloqueio de admin estrito por host. Os vínculos são ativados na primeira visita real (DNS autoverificado), e o escopo por página decide se um domínio É a página (exclusivo) ou um hub para todos os slugs.
 
-Configuração completa — DNS, TLS curinga e configurações de proxy reverso prontas para copiar para Caddy, nginx e Traefik — em **[docs/custom-domains.md](docs/custom-domains.md)**.
+Configuração completa - DNS, TLS curinga e configurações de proxy reverso prontas para copiar para Caddy, nginx e Traefik - em **[docs/custom-domains.md](docs/custom-domains.md)**.
 
 ## 🎨 Sistema de Temas
 

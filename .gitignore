@@ -52,6 +52,7 @@ next-env.d.ts
 *.db-journal
 *.db-wal
 *.db-shm
+*.db.bak*
 *.swp
 
 # auto-generated session secret (from instrumentation.ts)

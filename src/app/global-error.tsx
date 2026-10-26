@@ -72,6 +72,38 @@ const COPY: Record<string, Record<string, string>> = {
     errorId: "ID do erro",
     retry: "Tentar novamente",
   },
+  it: {
+    lang: "it",
+    title: "Qualcosa è andato storto",
+    description:
+      "Si è verificato un errore critico. Prova a ricaricare la pagina. Se il problema persiste, riavvia il contenitore o controlla i log del server.",
+    errorId: "ID errore",
+    retry: "Riprova",
+  },
+  ru: {
+    lang: "ru",
+    title: "Что-то пошло не так",
+    description:
+      "Произошла критическая ошибка. Попробуйте перезагрузить страницу. Если проблема не исчезнет, перезапустите контейнер или проверьте журналы сервера.",
+    errorId: "ID ошибки",
+    retry: "Попробовать снова",
+  },
+  tr: {
+    lang: "tr",
+    title: "Bir şeyler ters gitti",
+    description:
+      "Kritik bir hata oluştu. Sayfayı yeniden yüklemeyi dene. Sorun devam ederse kapsayıcıyı yeniden başlat veya sunucu günlüklerini kontrol et.",
+    errorId: "Hata kimliği",
+    retry: "Tekrar dene",
+  },
+  ja: {
+    lang: "ja",
+    title: "問題が発生しました",
+    description:
+      "重大なエラーが発生しました。ページを再読み込みしてください。問題が解決しない場合は、コンテナを再起動するか、サーバーのログを確認してください。",
+    errorId: "エラー ID",
+    retry: "再試行",
+  },
 };
 
 function copyFor(): Record<string, string> {

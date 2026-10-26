@@ -4,7 +4,7 @@
 
 ---
 
-[English](README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [中文](README.zh.md) · **العربية** · [Português (Brasil)](README.pt-BR.md)
+[English](README.md) · **العربية** · [中文](README.zh.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · [日本語](README.ja.md) · [Português (Brasil)](README.pt-BR.md) · [Русский](README.ru.md) · [Español](README.es.md) · [Türkçe](README.tr.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Docker](https://img.shields.io/badge/omnirise%2Flinkbreeze-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/omnirise/linkbreeze)
@@ -53,7 +53,7 @@
     <td valign="top">🎯 <strong>رموز QR</strong><br/>تُولَّد تلقائيًا، ألوان مخصصة، صورة رمزية أو أيقونة الموقع في المنتصف، SVG/PNG حتى 1024 بكسل</td>
   </tr>
   <tr>
-    <td width="50%" valign="top">🌐 <strong>نطاقات مخصصة</strong><br/>اربط نطاقاتك الخاصة بالصفحات — يصل الزوار إلى jane.com مباشرة دون /slug</td>
+    <td width="50%" valign="top">🌐 <strong>نطاقات مخصصة</strong><br/>اربط نطاقاتك الخاصة بالصفحات - يصل الزوار إلى jane.com مباشرة دون /slug</td>
     <td valign="top">⏰ <strong>نسخ احتياطي مجدول</strong><br/>نسخ احتياطية داخلية يومية/أسبوعية/شهرية مع استعادة بنقرة واحدة، دون cron</td>
   </tr>
 </table>
@@ -399,9 +399,9 @@ cloudflared tunnel --url http://localhost:3000
 
 ## 🌐 النطاقات المخصصة
 
-وجّه نطاقاتك الخاصة إلى الصفحات — نسخة واحدة، هويات متعددة. يصل الزوار إلى `https://jane.com/` فيرون صفحة Jane مباشرة، مع تحويلات canonical تلقائية وخرائط مواقع صديقة لمحركات البحث وقفل إدارة صارم حسب المستضيف. تتفعّل الروابط عند أول زيارة حقيقية (DNS ذاتي التحقق)، ويحدد نطاق كل صفحة ما إن كان النطاق هو الصفحة نفسها (حصري) أم مركزًا لجميع المعرّفات.
+وجّه نطاقاتك الخاصة إلى الصفحات - نسخة واحدة، هويات متعددة. يصل الزوار إلى `https://jane.com/` فيرون صفحة Jane مباشرة، مع تحويلات canonical تلقائية وخرائط مواقع صديقة لمحركات البحث وقفل إدارة صارم حسب المستضيف. تتفعّل الروابط عند أول زيارة حقيقية (DNS ذاتي التحقق)، ويحدد نطاق كل صفحة ما إن كان النطاق هو الصفحة نفسها (حصري) أم مركزًا لجميع المعرّفات.
 
-الإعداد الكامل — DNS وTLS wildcard وتكوينات وكيل عكسي جاهزة للنسخ لـ Caddy وnginx وTraefik — في **[docs/custom-domains.md](docs/custom-domains.md)**.
+الإعداد الكامل - DNS وTLS wildcard وتكوينات وكيل عكسي جاهزة للنسخ لـ Caddy وnginx وTraefik - في **[docs/custom-domains.md](docs/custom-domains.md)**.
 
 ## 🎨 نظام الثيمات
 

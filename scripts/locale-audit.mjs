@@ -2,7 +2,14 @@
 /**
  * Locale audit: deeper than the hash gate — key parity vs en, placeholder
  * ({x}/ICU) mismatches, untranslated-value suspects, duplicate values.
+ * Covers EVERY locale in src/locales/ (not just fr/es) so a forgotten key,
+ * a broken placeholder, or an untranslated string in ANY language is caught.
+ *
  * Run alongside the gates when touching locale files: npm run i18n:audit
+ * Exit code: 1 when a CI-failing defect is found (key parity / placeholder
+ * parity), 0 otherwise. Untranslated suspects are reported as warnings only —
+ * legitimately-identical values (brand names, technical terms) make them too
+ * noisy to gate on.
  */
 import ts from "typescript";
 import fs from "node:fs";
@@ -38,62 +45,105 @@ function flattenDeep(file) {
   return out;
 }
 
-const en = flattenDeep(path.join(root, "src/locales/en.ts"));
-const fr = flattenDeep(path.join(root, "src/locales/fr.ts"));
-const es = flattenDeep(path.join(root, "src/locales/es.ts"));
+const localesDir = path.join(root, "src/locales");
+const en = flattenDeep(path.join(localesDir, "en.ts"));
 
-// ── 1. key parity en↔fr/es ───────────────────────────────────────────────
+// Discover every non-English locale file dynamically (fr, es, de, zh, ar,
+// pt-BR, it, ja, ru, tr, …) so a new locale is audited the day it lands.
+const localeDicts = fs
+  .readdirSync(localesDir)
+  .filter((f) => f.endsWith(".ts") && f !== "en.ts")
+  .sort()
+  .map((f) => ({ name: f.replace(/\.ts$/, ""), dict: flattenDeep(path.join(localesDir, f)) }));
+
+if (localeDicts.length === 0) {
+  console.error("No locale files found next to en.ts");
+  process.exit(1);
+}
+
 const enKeys = new Set(Object.keys(en));
-const frKeys = new Set(Object.keys(fr));
-const missingInFr = [...enKeys].filter((k) => !frKeys.has(k));
-const extraInFr = [...frKeys].filter((k) => !enKeys.has(k));
-const esKeys = new Set(Object.keys(es));
-const missingInEs = [...enKeys].filter((k) => !esKeys.has(k));
-const extraInEs = [...esKeys].filter((k) => !enKeys.has(k));
-console.log("== en→fr parity ==");
-console.log("missing in fr:", missingInFr.length ? missingInFr : "none");
-console.log("extra in fr:   ", extraInFr.length ? extraInFr : "none");
-console.log("== en→es parity ==");
-console.log("missing in es:", missingInEs.length ? missingInEs : "none");
-console.log("extra in es:  ", extraInEs.length ? extraInEs : "none");
 
-// ── 2. placeholder parity ({x} / {count} / ICU) ──────────────────────────
+// CI-failing defects vs warnings.
+const errors = [];
+const warnings = [];
+
+// ── 1. key parity en↔<each locale> ──────────────────────────────────────
+console.log(`== key parity (en vs ${localeDicts.length} locales) ==`);
+for (const { name, dict } of localeDicts) {
+  const keys = new Set(Object.keys(dict));
+  const missing = [...enKeys].filter((k) => !keys.has(k));
+  const extra = [...keys].filter((k) => !enKeys.has(k));
+  if (missing.length || extra.length) {
+    console.log(`  ${name}: missing=${missing.length} extra=${extra.length}`);
+    if (missing.length) {
+      console.log(`    missing: ${missing.join(", ")}`);
+      errors.push(`${name}: ${missing.length} missing key(s)`);
+    }
+    if (extra.length) {
+      console.log(`    extra:   ${extra.join(", ")}`);
+      warnings.push(`${name}: ${extra.length} extra (not in en)`);
+    }
+  } else {
+    console.log(`  ${name}: ok (${keys.size} keys)`);
+  }
+}
+
+// ── 2. placeholder parity ({x} / {count} / ICU) per locale ──────────────
 function ph(v) {
   const s = new Set();
-  // strip ICU plural internals, keep outer placeholders
-  const stripped = v.replace(/\{(\w+),\s*plural[^}]*\{[^}]*\}[^}]*\}/g, "PLURAL");
-  for (const m of stripped.matchAll(/\{(\w+)\}/g)) s.add(m[1]);
+  // Capture placeholder NAMES from both simple {name} and ICU {name, plural,
+  // ...} forms. The ICU construct's name is what the caller passes, so it must
+  // be PRESERVED (the old code stripped the whole ICU block to a literal and
+  // lost the name, making en look placeholder-less vs ja/zh which drop ICU
+  // plurals and keep a plain {name} — a false mismatch on correct translations).
+  // Requires { immediately followed by word chars then , or } so internal ICU
+  // branch labels (`one {`, `=1 {`) and `#` are never captured.
+  for (const m of v.matchAll(/\{(\w+)(?:,|\})/g)) s.add(m[1]);
   return s;
 }
-console.log("\n== placeholder mismatches en vs {fr,es} ==");
-let phCount = 0;
-for (const [name, dict] of [["fr", fr], ["es", es]]) {
+console.log("\n== placeholder mismatches en vs each locale ==");
+let phTotal = 0;
+for (const { name, dict } of localeDicts) {
+  let phCount = 0;
   for (const k of Object.keys(en)) {
     if (!(k in dict)) continue;
     const a = ph(en[k]);
     const b = ph(dict[k]);
     if (a.size !== b.size || [...a].some((x) => !b.has(x))) {
       phCount++;
-      console.log(`  ${k}: en=${[...a]} ${name}=${[...b]}`);
+      console.log(`  ${name} ${k}: en=${[...a]} ${name}=${[...b]}`);
     }
   }
+  if (phCount) errors.push(`${name}: ${phCount} placeholder mismatch(es)`);
+  phTotal += phCount;
 }
-if (!phCount) console.log("  none");
+if (!phTotal) console.log("  none");
 
-// ── 3. untranslated / suspicious values in fr/es ─────────────────────────
-for (const [name, dict] of [["fr", fr], ["es", es]]) {
-  console.log(`\n== ${name} values identical to en (possible untranslated) ==`);
+// ── 3. untranslated / suspicious values per locale (WARNING only) ───────
+// Single-word technical terms / brand names that legitimately stay identical
+// across languages. Multi-word identical values are reported but not fatal.
+const IDENTICAL_OK = /^(URL|SVG|PNG|KB|SMS|Bio|Star|Auto|Center|Tile|Contain|Cover|Gel|Mesh|Pixel|Néon|Radial|Glass|Regular|Semibold|Profil|Terminal|Design|links|Setup)$/i;
+console.log("\n== values identical to en (possible untranslated — warning only) ==");
+for (const { name, dict } of localeDicts) {
   let idCount = 0;
+  const samples = [];
   for (const k of Object.keys(en)) {
     if (!(k in dict)) continue;
     if (en[k] === dict[k] && /[a-z]{3,}/i.test(en[k])) {
       // ignore single-word technical terms that legitimately stay the same
-      if (en[k].split(/\s+/).length === 1 && /^(URL|SVG|PNG|KB|SMS|Bio|Star|Auto|Center|Tile|Contain|Cover|Gel|Mesh|Pixel|Néon|Radial|Glass|Regular|Semibold|Profil|Terminal|Design|links|Setup)$/i.test(en[k])) continue;
+      if (en[k].split(/\s+/).length === 1 && IDENTICAL_OK.test(en[k])) continue;
       idCount++;
-      console.log(`  ${k}: "${en[k].slice(0, 60)}"`);
+      if (samples.length < 5) samples.push(`${k}: "${en[k].slice(0, 48)}"`);
     }
   }
-  if (!idCount) console.log("  none");
+  if (idCount) {
+    console.log(`  ${name}: ${idCount} suspect(s)`);
+    for (const s of samples) console.log(`    ${s}`);
+    if (idCount > 5) console.log(`    … and ${idCount - 5} more`);
+    warnings.push(`${name}: ${idCount} possibly-untranslated value(s)`);
+  } else {
+    console.log(`  ${name}: none`);
+  }
 }
 
 // ── 4. duplicate values within en ────────────────────────────────────────
@@ -164,5 +214,19 @@ const unused = leaves.filter((k) => {
 });
 console.log(`  ${unused.length} possibly-unused keys:`);
 for (const k of unused) console.log(`    ${k}`);
+if (unused.length) warnings.push(`${unused.length} possibly-unused key(s) in en.ts`);
 
+// ── summary + exit code ─────────────────────────────────────────────────
+console.log("\n== summary ==");
+if (warnings.length) {
+  console.log(`  warnings (${warnings.length}):`);
+  for (const w of warnings) console.log(`    ! ${w}`);
+}
+if (errors.length) {
+  console.log(`  ERRORS (${errors.length}):`);
+  for (const e of errors) console.log(`    ✗ ${e}`);
+  console.log("\nLocale audit FAILED — fix the errors above.");
+  process.exit(1);
+}
+console.log("  no CI-failing errors.");
 console.log("\nDone.");

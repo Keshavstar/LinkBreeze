@@ -1,0 +1,141 @@
+# Packaging sync — pushes the packaging/ manifests to the three catalog repos
+# after a release tag. Canonical sources live in packaging/ in THIS repo and are
+# bumped during the release fold; this workflow only copies them outward.
+#
+# Requires secret: PACKAGING_SYNC_TOKEN
+#   A token (classic PAT with repo scope, or fine-grained with Contents:read/write)
+#   scoped to exactly these three repos:
+#     - OmniRise/LinkBreeze-Runtipi-Store
+#     - OmniRise/LinkBreeze-Unraid-Templates
+#     - OmniRise/LinkBreeze-CasaOS-AppStore
+#
+# Test without a release: run this workflow from Actions with dry_run = true
+# (plans and prints, publishes nothing). Per repo policy, a dry-run dispatch
+# after ANY edit to this file is mandatory before trusting it.
+
+name: Packaging sync
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Plan only: show what would be synced, publish nothing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: packaging-sync-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  RUNTIPI_REPO: OmniRise/LinkBreeze-Runtipi-Store
+  UNRAID_REPO: OmniRise/LinkBreeze-Unraid-Templates
+  CASAOS_REPO: OmniRise/LinkBreeze-CasaOS-AppStore
+  CASAOS_BRANCH: add-linkbreeze
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Resolve version
+        id: ver
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "vversion=v${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Syncing LinkBreeze v${VERSION} (from package.json at ${GITHUB_SHA})"
+
+      - name: Guard — manifest tags match package.json
+        run: |
+          set -euo pipefail
+          V="${{ steps.ver.outputs.version }}"
+          grep -q "linkbreeze:v${V}" packaging/casaos/Apps/LinkBreeze/docker-compose.yml
+          grep -q "linkbreeze:v${V}" packaging/runtipi/apps/linkbreeze/docker-compose.yml
+          grep -q "<Tag>v${V}</Tag>" packaging/unraid/linkbreeze.xml
+          echo "All three manifests pin v${V}. OK."
+
+      - name: Plan
+        if: ${{ inputs.dry_run }}
+        # shellcheck disable=SC2129
+        run: |
+          {
+            echo "### Dry run — would sync to:"
+            echo "- ${{ env.RUNTIPI_REPO }} (main)"
+            echo "- ${{ env.UNRAID_REPO }} (main)"
+            echo "- ${{ env.CASAOS_REPO }} (${{ env.CASAOS_BRANCH }})"
+            echo "Publishing skipped (dry_run)."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # ---- Runtipi store ----
+      - name: Sync Runtipi store
+        if: ${{ !inputs.dry_run }}
+        env:
+          TOKEN: ${{ secrets.PACKAGING_SYNC_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git clone --depth 1 "https://x-access-token:${TOKEN}@github.com/${RUNTIPI_REPO}.git" runtipi
+          cp -a packaging/runtipi/apps/. runtipi/apps/
+          cp packaging/runtipi/README.md runtipi/README.md
+          cd runtipi
+          if git diff --quiet; then
+            echo "Runtipi store already in sync." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git add -A
+          git commit -m "chore: sync LinkBreeze ${{ steps.ver.outputs.vversion }}"
+          git push origin main
+          echo "Runtipi store: pushed." >> "$GITHUB_STEP_SUMMARY"
+
+      # ---- Unraid templates ----
+      - name: Sync Unraid templates
+        if: ${{ !inputs.dry_run }}
+        env:
+          TOKEN: ${{ secrets.PACKAGING_SYNC_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git clone --depth 1 "https://x-access-token:${TOKEN}@github.com/${UNRAID_REPO}.git" unraid
+          cp packaging/unraid/linkbreeze.xml packaging/unraid/ca_profile.xml unraid/
+          cd unraid
+          if git diff --quiet; then
+            echo "Unraid templates already in sync." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git add -A
+          git commit -m "chore: sync LinkBreeze ${{ steps.ver.outputs.vversion }}"
+          git push origin main
+          echo "Unraid templates: pushed." >> "$GITHUB_STEP_SUMMARY"
+
+      # ---- CasaOS fork branch (updates the open upstream PR) ----
+      - name: Sync CasaOS fork branch
+        if: ${{ !inputs.dry_run }}
+        env:
+          TOKEN: ${{ secrets.PACKAGING_SYNC_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git clone --depth 1 --branch "$CASAOS_BRANCH" \
+            "https://x-access-token:${TOKEN}@github.com/${CASAOS_REPO}.git" casaos
+          rm -rf casaos/Apps/LinkBreeze
+          cp -a packaging/casaos/Apps/LinkBreeze casaos/Apps/LinkBreeze
+          cd casaos
+          if git diff --quiet; then
+            echo "CasaOS branch already in sync." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git add -A
+          git commit -m "chore: sync LinkBreeze ${{ steps.ver.outputs.vversion }}"
+          git push origin "$CASAOS_BRANCH"
+          echo "CasaOS branch: pushed (upstream PR updates automatically)." >> "$GITHUB_STEP_SUMMARY"

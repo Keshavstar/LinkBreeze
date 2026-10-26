@@ -23,12 +23,16 @@ import {
 
 const Dictionaries = {
   en: () => import("@/locales/en"),
-  fr: () => import("@/locales/fr"),
-  es: () => import("@/locales/es"),
-  de: () => import("@/locales/de"),
-  zh: () => import("@/locales/zh"),
   ar: () => import("@/locales/ar"),
+  zh: () => import("@/locales/zh"),
+  fr: () => import("@/locales/fr"),
+  de: () => import("@/locales/de"),
+  it: () => import("@/locales/it"),
+  ja: () => import("@/locales/ja"),
   "pt-BR": () => import("@/locales/pt-BR"),
+  ru: () => import("@/locales/ru"),
+  es: () => import("@/locales/es"),
+  tr: () => import("@/locales/tr"),
 } satisfies Record<
   (typeof AVAILABLE_LOCALES)[number],
   () => Promise<{ default: unknown }>

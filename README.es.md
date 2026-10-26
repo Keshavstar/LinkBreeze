@@ -4,7 +4,7 @@
 
 ---
 
-[English](README.md) · **Español** · [Français](README.fr.md) · [Deutsch](README.de.md) · [中文](README.zh.md) · [العربية](README.ar.md) · [Português (Brasil)](README.pt-BR.md)
+[English](README.md) · [العربية](README.ar.md) · [中文](README.zh.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · [日本語](README.ja.md) · [Português (Brasil)](README.pt-BR.md) · [Русский](README.ru.md) · **Español** · [Türkçe](README.tr.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Docker](https://img.shields.io/badge/omnirise%2Flinkbreeze-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/omnirise/linkbreeze)
@@ -53,7 +53,7 @@
     <td valign="top">🎯 <strong>Códigos QR</strong><br/>Generados automáticamente, colores personalizados, avatar o favicon en el centro, SVG/PNG hasta 1024px</td>
   </tr>
   <tr>
-    <td width="50%" valign="top">🌐 <strong>Dominios personalizados</strong><br/>Apunta tus propios dominios a páginas — los visitantes llegan a jane.com, sin /slug</td>
+    <td width="50%" valign="top">🌐 <strong>Dominios personalizados</strong><br/>Apunta tus propios dominios a páginas - los visitantes llegan a jane.com, sin /slug</td>
     <td valign="top">⏰ <strong>Copias programadas</strong><br/>Copias internas diarias/semanales/mensuales con restauración en un clic, sin cron</td>
   </tr>
 </table>
@@ -399,9 +399,9 @@ Los ajustes en tiempo de ejecución (slug de la página, título, SEO, tema) se 
 
 ## 🌐 Dominios personalizados
 
-Apunta tus propios dominios a tus páginas — una instancia, muchas identidades. Los visitantes llegan a `https://jane.com/` y ven la página de Jane directamente, con redirecciones canónicas automáticas, sitemaps listos para SEO y un bloqueo de admin estricto por host. Las vinculaciones se activan en su primera visita real (DNS autoverificado), y el alcance por página decide si un dominio ES la página (exclusivo) o un hub para todos los slugs.
+Apunta tus propios dominios a tus páginas - una instancia, muchas identidades. Los visitantes llegan a `https://jane.com/` y ven la página de Jane directamente, con redirecciones canónicas automáticas, sitemaps listos para SEO y un bloqueo de admin estricto por host. Las vinculaciones se activan en su primera visita real (DNS autoverificado), y el alcance por página decide si un dominio ES la página (exclusivo) o un hub para todos los slugs.
 
-Configuración completa — DNS, TLS comodín y configuraciones de proxy inverso listas para copiar para Caddy, nginx y Traefik — en **[docs/custom-domains.md](docs/custom-domains.md)**.
+Configuración completa - DNS, TLS comodín y configuraciones de proxy inverso listas para copiar para Caddy, nginx y Traefik - en **[docs/custom-domains.md](docs/custom-domains.md)**.
 
 ## 🎨 Sistema de temas
 
