@@ -38,11 +38,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Dependency updates (#126, #127)** — Merged two Dependabot minor-and-patch groups: #126 (`lucide-react` 1.59.0→1.61.0, `shadcn` 4.22.0→4.22.1, `sql.js` 1.15.0→1.15.1) and #127 (`next` 16.4.2→16.4.3, `eslint-config-next` 16.4.2→16.4.3, a bug-fix backport). Both merged with green CI and byte-exact lockfiles. Also bumped the `fast-uri` override ^3.1.7→^3.1.9 and added a `body-parser` ^2.4.0 override, resolving Dependabot alerts #66–70 (both packages are transitive through the shadcn CLI's express/MCP SDK chain, dev-tooling only). `node-forge` (#58) stays unchanged: no patched release exists, and `passkit-generator` uses it only for pass signing, never verification.
+
 - **Locale parity gate in CI** — CI now runs the locale hash gate (`npm run i18n:check`) and a generalized `scripts/locale-audit.mjs` across all ten locales, checking key parity, ICU placeholder parity, and untranslated-string suspects. The audit previously covered only French and Spanish and ran manually, so a broken `{placeholder}` in another language could reach main; its ICU handling was also corrected (it stripped plural placeholders, which would falsely flag Japanese and Chinese — both correctly drop ICU plurals — as mismatches).
 
 - **Language lists reordered: English first, then alphabetical** — one convention everywhere languages are listed: the admin language dropdown (picker order), the README translation rows in all eleven READMEs, `docs/TRANSLATIONS.md`, and the website locale lists (routing, sitemap, hreflang alternates) now read English · العربية · 中文 · Français · Deutsch · Italiano · 日本語 · Português (Brasil) · Русский · Español · Türkçe instead of historical add-order.
-
-- **Dependency updates** — Overrides bumped for `fast-uri` ^3.1.7→^3.1.9 and a new `body-parser` ^2.4.0 override, resolving Dependabot alerts #66–70 (both packages are transitive through the shadcn CLI's express/MCP SDK chain, dev-tooling only). `node-forge` (#58) stays unchanged: no patched release exists, and `passkit-generator` uses it only for pass signing, never verification.
 
 - **Canonical repo URLs point at OmniRise/LinkBreeze** — All living documentation (README ×7, CONTRIBUTING, SECURITY, TROUBLESHOOTING) now references `github.com/OmniRise/LinkBreeze` instead of the pre-transfer `Manak-hash/LinkBreeze` URLs. The old links redirect, so nothing was broken; this makes the canonical location explicit and consistent with the Docker Hub namespace, the website, and the app-store listings.
 
