@@ -27,5 +27,5 @@ Feature requests are welcome - open an issue or join the [Discord](https://disco
 
 Recent highlights - the full history lives in [CHANGELOG.md](CHANGELOG.md):
 
+- **v1.5.1** - 11-language admin and READMEs, first-party CasaOS, Runtipi and Unraid app-store packaging, the Settings update status card, a Linktree import fix, and a demo-guard security fix.
 - **v1.5.0** - custom domains for pages, automatic scheduled backups, custom `/go/` redirect slugs, `@` in page slugs, Poster Hero OG cards, official `omnirise/linkbreeze` Docker image, one-shot `update.sh`.
-- **v1.4.1** - previous stable release.

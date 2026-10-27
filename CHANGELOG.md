@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-10-27
+
 ### Added
 
 - **Admin UI and README in Italian, Russian, Turkish, and Japanese** — four new languages, bringing the admin to 11 and the README to 11 translations: the Settings language dropdown, /login, /setup, the 2FA step, and the global error screen all switch (Russian uses the formal register standard for Russian software; Japanese drops ICU plural forms by design, as Chinese already does). Public pages stay English by design. Translated by AI agents and verified by a terminology-review pass; as with all machine-drafted locales, a native-speaker read before relying on a locale in production is worth it (docs/TRANSLATIONS.md policy).
@@ -47,6 +49,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Canonical repo URLs point at OmniRise/LinkBreeze** — All living documentation (README ×7, CONTRIBUTING, SECURITY, TROUBLESHOOTING) now references `github.com/OmniRise/LinkBreeze` instead of the pre-transfer `Manak-hash/LinkBreeze` URLs. The old links redirect, so nothing was broken; this makes the canonical location explicit and consistent with the Docker Hub namespace, the website, and the app-store listings.
 
 ### Fixed
+
+- **The update checker's GitHub fallback still queried the pre-transfer repo** — the update-check module called `api.github.com/repos/Manak-hash/LinkBreeze/releases/latest`; the canonical-URL pass in this release covered documentation only, and this one code path kept the old name. GitHub's rename redirect kept it working, but the checker now queries `OmniRise/LinkBreeze` directly.
 
 - **Local `npm run test` failed on the TOTP lifecycle test (#128)** — the enroll → activate → verify → disable lifecycle hashes 8 recovery codes with bcryptjs at cost 12 (single-threaded JavaScript: ~7.9s measured on modest dev hardware), well past vitest's 5-second default, so every local full-suite run died on `Test timed out in 5000ms` while CI's faster runner squeaked under and kept main green. The test now carries an explicit 20s budget with a comment; the hashing strength (cost 12) is untouched. Diagnosed as budget, not regression: the clean tree failed identically and the same run passed at a 30s timeout.
 
