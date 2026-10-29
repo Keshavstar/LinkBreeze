@@ -1,0 +1,9 @@
+name = "kclink"
+compatibility_date = "2024-11-01"
+compatibility_flags = [ "nodejs_compat" ]
+pages_build_output_dir = ".next"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "linkbreeze-db"
+database_id = "e975267b-10ef-4655-ae7a-3a9a3a5f2bd6"
